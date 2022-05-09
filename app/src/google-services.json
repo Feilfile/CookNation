@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1022998234366",
+    "project_id": "cooknation-99cf0",
+    "storage_bucket": "cooknation-99cf0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022998234366:android:7fcd0706ab5b868ffa51af",
+        "android_client_info": {
+          "package_name": "com.ema.cooknation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022998234366-kot8dkhhiv6bda6fsdbe4na7qlmihoab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClpNLDOkC5XhqbrjVpH5hD6Gkqhg0emq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022998234366-kot8dkhhiv6bda6fsdbe4na7qlmihoab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
