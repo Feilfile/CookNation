@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CookNation</string>
-    <string name="useless_button">Useless Button</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
 </resources>
