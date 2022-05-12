@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CookNation</string>
+    <string name="useless_button">Useless Button</string>
 </resources>
