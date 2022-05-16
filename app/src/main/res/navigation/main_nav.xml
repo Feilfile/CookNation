@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/placeholder">
+
+    <fragment android:id="@+id/placeholder" />
+    <fragment android:id="@+id/placeholder2" />
+    <fragment android:id="@+id/placeholder3" />
+    <fragment android:id="@+id/placeholder4" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.ema.cooknation.LoginActivity"
+        android:label="s4_login"
+        tools:layout="@layout/s4_login" />
+    <item
+        android:id="@+id/"
+        />
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.ema.cooknation.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
+</navigation>
