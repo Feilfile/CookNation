@@ -4,17 +4,17 @@
     <item
         android:title="@string/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:id="@+id/home"/>
+        android:id="@+id/m1_home"/>
     <item
         android:title="@string/explore"
         android:icon="@drawable/ic_baseline_explore_24"
-        android:id="@+id/explore"/>
+        android:id="@+id/m2_explore"/>
     <item
         android:title="@string/search"
         android:icon="@drawable/ic_baseline_search_24"
-        android:id="@+id/search"/>
+        android:id="@+id/m3_search"/>
     <item
         android:title="@string/profile"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:id="@+id/profile"/>
+        android:id="@+id/m4_profile"/>
 </menu>

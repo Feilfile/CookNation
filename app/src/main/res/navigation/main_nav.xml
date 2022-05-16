@@ -3,23 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/placeholder">
-
-    <fragment android:id="@+id/placeholder" />
-    <fragment android:id="@+id/placeholder2" />
-    <fragment android:id="@+id/placeholder3" />
-    <fragment android:id="@+id/placeholder4" />
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="com.ema.cooknation.LoginActivity"
-        android:label="s4_login"
-        tools:layout="@layout/s4_login" />
-    <item
-        android:id="@+id/"
-        />
+    app:startDestination="@id/m1_home">
     <fragment
-        android:id="@+id/testFragment"
-        android:name="com.ema.cooknation.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        android:id="@+id/m1_home"
+        android:name="com.ema.cooknation.m1_home"
+        android:label="fragment_m1_home"
+        tools:layout="@layout/fragment_m1_home" />
+    <fragment
+        android:id="@+id/m2_explore"
+        android:name="com.ema.cooknation.m2_explore"
+        android:label="fragment_m2_explore"
+        tools:layout="@layout/fragment_m2_explore" />
+    <fragment
+        android:id="@+id/m3_search"
+        android:name="com.ema.cooknation.m3_search"
+        android:label="fragment_m3_search"
+        tools:layout="@layout/fragment_m3_search" />
+    <fragment
+        android:id="@+id/m4_profile"
+        android:name="com.ema.cooknation.m4_profile"
+        android:label="fragment_m4_profile"
+        tools:layout="@layout/fragment_m4_profile" />
 </navigation>
