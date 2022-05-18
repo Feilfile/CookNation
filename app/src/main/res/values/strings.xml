@@ -9,4 +9,6 @@
     <string name="hello_blank_fragment2" >m2</string>
     <string name="hello_blank_fragment3" >m3></string>
     <string name="hello_blank_fragment4" >m3</string>
+    <string name="sign_out">Sign out</string>
+    <string name="profile_name">Profile name</string>
 </resources>

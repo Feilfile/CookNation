@@ -1,10 +1,13 @@
 package com.ema.cooknation
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,19 +24,29 @@ class m4_profile : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var mAuth: FirebaseAuth? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
+
+    /*@Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        ImageView imageView = (ImageView) getView().findViewById(R.id.foo);*/
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_m4_profile, container, false)
     }
 
@@ -56,4 +69,21 @@ class m4_profile : Fragment() {
                 }
             }
     }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
+        mAuth = FirebaseAuth.getInstance()
+        if (btnSignOut != null) {
+            btnSignOut.setOnClickListener{
+                mAuth!!.signOut()
+                val changeToLogin = Intent(activity, LoginActivity::class.java)
+                startActivity (changeToLogin)
+            }
+        }
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
 }
