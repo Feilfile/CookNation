@@ -2,15 +2,11 @@ package com.ema.cooknation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -21,16 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         val btnSignOut = findViewById<Button>(R.id.btnSignOut)
-
-        /*btnSignOut.setOnClickListener {
-            /*mAuth!!.signOut()
-            startActivity(
-                Intent(
-                    this@MainActivity,
-                    LoginActivity::class.java
-                )
-            )*/
-        }*/
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = findNavController(R.id.fragmentContainerView1)

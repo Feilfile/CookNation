@@ -47,7 +47,8 @@ class LoginActivity : AppCompatActivity() {
                 etLoginPassword!!.requestFocus()
             }
             else -> {
-                mAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                mAuth!!.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(
                             this@LoginActivity,
@@ -58,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this@LoginActivity,
-                            "Login Error" + task.exception!!.message,
+                            "Login Error\n" + task.exception!!.message,
                             Toast.LENGTH_SHORT
                         ).show()
                     }

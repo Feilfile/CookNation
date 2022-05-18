@@ -75,6 +75,13 @@ class m4_profile : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
         mAuth = FirebaseAuth.getInstance()
+
+        val user = mAuth!!.currentUser
+        if (user == null) {
+            startActivity(Intent(activity, LoginActivity::class.java))
+        }
+
+        // Setup Signout Button when Loading Fragment
         if (btnSignOut != null) {
             btnSignOut.setOnClickListener{
                 mAuth!!.signOut()

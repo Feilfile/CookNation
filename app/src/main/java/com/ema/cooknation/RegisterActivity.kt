@@ -45,7 +45,8 @@ class RegisterActivity : AppCompatActivity() {
                 etRegPassword!!.requestFocus()
             }
             else -> {
-                mAuth!!.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                mAuth!!.createUserWithEmailAndPassword(email, password).
+                addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(
                             this@RegisterActivity,
