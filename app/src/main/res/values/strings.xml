@@ -4,11 +4,9 @@
     <string name="explore">Explore</string>
     <string name="search">Search</string>
     <string name="profile">Profile</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment1" >m1</string>
-    <string name="hello_blank_fragment2" >m2</string>
-    <string name="hello_blank_fragment3" >m3></string>
-    <string name="hello_blank_fragment4" >m3</string>
     <string name="sign_out">Sign out</string>
     <string name="profile_name">Profile name</string>
+    <string name="welcome_message">Welcome to\nCookNation</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
