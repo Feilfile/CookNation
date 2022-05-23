@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.s4_login)
+        setContentView(R.layout.s4_login_old)
         etLoginEmail = findViewById(R.id.etLoginEmail)
         etLoginPassword = findViewById(R.id.etLoginEmail)
         val tvRegisterHere = findViewById<TextView>(R.id.tvRegisterHere)
