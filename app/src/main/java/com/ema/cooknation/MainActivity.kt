@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    public fun openUploadFragment(fragment: Fragment, addToBackStack:Boolean) {
-        openFragment(fragment, addToBackStack)
+    public fun openUploadFragment(addToBackStack:Boolean) {
+        val uploadFragment = s2_upload.newInstance("a", "a")
+        openFragment(uploadFragment, addToBackStack)
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

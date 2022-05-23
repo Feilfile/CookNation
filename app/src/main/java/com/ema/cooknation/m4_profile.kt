@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +25,6 @@ class m4_profile : Fragment() {
     private var param2: String? = null
 
     private var mAuth: FirebaseAuth? = null
-    private var fragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         mAuth = FirebaseAuth.getInstance()
@@ -75,14 +73,13 @@ class m4_profile : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
-
         val btnProfileUpload = getView()?.findViewById<Button>(R.id.btnProfileUpload)
 
-        /*btnProfileUpload.setOnClickListener{
-            val UploadFragment = m1_home.newInstance("a","b")
-            openUploadFragment(homeFragment, false)
-            return@OnNavigationItemSelectedListener true
-        }*/
+        if (btnProfileUpload != null) {
+            btnProfileUpload.setOnClickListener{
+                (activity as MainActivity).openUploadFragment(true)
+            }
+        }
 
         /*mAuth = FirebaseAuth.getInstance()
 
