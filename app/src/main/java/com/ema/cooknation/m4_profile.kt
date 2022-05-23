@@ -75,6 +75,15 @@ class m4_profile : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
+
+        val btnProfileUpload = getView()?.findViewById<Button>(R.id.btnProfileUpload)
+
+        /*btnProfileUpload.setOnClickListener{
+            val UploadFragment = m1_home.newInstance("a","b")
+            openUploadFragment(homeFragment, false)
+            return@OnNavigationItemSelectedListener true
+        }*/
+
         /*mAuth = FirebaseAuth.getInstance()
 
         val user = mAuth!!.currentUser
