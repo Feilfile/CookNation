@@ -15,7 +15,7 @@ class RegisterActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.s5_register)
+        setContentView(R.layout.s5_register_old)
         etRegEmail = findViewById(R.id.etRegEmail)
         etRegPassword = findViewById(R.id.etRegPass)
         val tvLoginHere = findViewById<TextView>(R.id.tvLoginHere)

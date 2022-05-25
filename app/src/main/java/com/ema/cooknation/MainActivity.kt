@@ -1,5 +1,6 @@
 package com.ema.cooknation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -29,9 +30,21 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    public fun openUploadFragment(addToBackStack:Boolean) {
+    fun openUploadFragment(addToBackStack:Boolean) {
         val uploadFragment = s2_upload.newInstance("a", "a")
         openFragment(uploadFragment, addToBackStack)
+    }
+
+    fun openLoginFragment(addToBackStack:Boolean) {
+        /*val loginFragment = s4_login.newInstance("a", "a")
+        openFragment(loginFragment, addToBackStack)*/
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+    }
+
+    fun openRegisterFragment(addToBackStack:Boolean) {
+        /*val registerFragment = s5_register.newInstance("a", "a")
+        openFragment(registerFragment, addToBackStack)*/
+        startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

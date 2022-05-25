@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.s4_login_old)
         etLoginEmail = findViewById(R.id.etLoginEmail)
-        etLoginPassword = findViewById(R.id.etLoginEmail)
+        etLoginPassword = findViewById(R.id.etLoginPass)
         val tvRegisterHere = findViewById<TextView>(R.id.tvRegisterHere)
         val btnLogin = findViewById<TextView>(R.id.btnLogin)
         mAuth = FirebaseAuth.getInstance()
