@@ -1,25 +1,17 @@
 package com.ema.cooknation
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [s4_login.newInstance] factory method to
- * create an instance of this fragment.
- */
-class s4_login : Fragment() {
+
+class S4Login : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +25,6 @@ class s4_login : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_s4_login, container, false)
-    }
-
-    companion object {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,13 +1,12 @@
 package com.ema.cooknation
-
-import android.app.appsearch.AppSearchResult.RESULT_OK
+/*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 
 class ActivityResultLauncher {
-   /* private val signInLauncher = registerForActivityResult(
+    private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
         this.onSignInResult(res)
@@ -39,5 +38,5 @@ class ActivityResultLauncher {
             // ...
         }
     }
- */
-}
+
+}*/

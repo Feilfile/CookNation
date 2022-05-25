@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".s2_upload">
+    tools:context=".S2Upload">
 
     <TextView
         android:id="@+id/tvUpload"

@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [m3_search.newInstance] factory method to
+ * Use the [S2Upload.newInstance] factory method to
  * create an instance of this fragment.
  */
-class m3_search : Fragment() {
+class S2Upload : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +34,7 @@ class m3_search : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_m3_search, container, false)
+        return inflater.inflate(R.layout.s2_upload, container, false)
     }
 
     companion object {
@@ -44,12 +44,12 @@ class m3_search : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment m3_search.
+         * @return A new instance of fragment s2_upload.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            m3_search().apply {
+            S2Upload().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -16,10 +16,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [m4_profile.newInstance] factory method to
+ * Use the [M4x1profile.newInstance] factory method to
  * create an instance of this fragment.
  */
-class m4_profile : Fragment() {
+class M4x1profile : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -61,7 +61,7 @@ class m4_profile : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            m4_profile().apply {
+            M4x1profile().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -75,10 +75,8 @@ class m4_profile : Fragment() {
         val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
         val btnProfileUpload = getView()?.findViewById<Button>(R.id.btnProfileUpload)
 
-        if (btnProfileUpload != null) {
-            btnProfileUpload.setOnClickListener{
-                (activity as MainActivity).openUploadFragment(true)
-            }
+        btnProfileUpload?.setOnClickListener{
+            (activity as MainActivity).openUploadFragment(true)
         }
 
         /*mAuth = FirebaseAuth.getInstance()
@@ -97,13 +95,11 @@ class m4_profile : Fragment() {
                 null,
             )
         }*/
-        // Setup Signout Button when Loading Fragment
-        if (btnSignOut != null) {
-            btnSignOut.setOnClickListener{
-                mAuth!!.signOut()
-                val changeToLogin = Intent(activity, LoginActivity::class.java)
-                startActivity (changeToLogin)
-            }
+        // Setup SignOut Button when Loading Fragment
+        btnSignOut?.setOnClickListener{
+            mAuth!!.signOut()
+            val changeToLogin = Intent(activity, LoginActivity::class.java)
+            startActivity (changeToLogin)
         }
         super.onViewCreated(view, savedInstanceState)
     }
