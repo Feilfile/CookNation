@@ -30,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/recipe_name" />
@@ -47,6 +48,7 @@
         app:layout_constraintVertical_bias="0.807">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etRecipeDescription"
             android:layout_width="match_parent"
             android:layout_height="151dp"
             android:hint="Zubereitung" />
@@ -68,7 +70,7 @@
 
     <ImageView
         android:paddingStart="15dp"
-        android:id="@+id/imageView2"
+        android:id="@+id/ivPreview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
@@ -87,7 +89,7 @@
         android:text="@string/select"
         app:layout_constraintBottom_toTopOf="@+id/tiDirections"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/ivPreview"
         app:layout_constraintTop_toBottomOf="@+id/tiRecipeName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

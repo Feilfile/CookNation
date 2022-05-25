@@ -2,6 +2,8 @@ package com.ema.cooknation
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
+import android.content.ClipDescription
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +13,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -30,6 +37,7 @@ class S2Upload : Fragment() {
     private var param2: String? = null
 
     lateinit var filepath : Uri
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +46,8 @@ class S2Upload : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        database = Firebase.database.reference
+
     }
 
     override fun onCreateView(
@@ -52,8 +62,8 @@ class S2Upload : Fragment() {
         val btnUpload = getView()?.findViewById<Button>(R.id.btnUpload)
         val btnSelect = getView()?.findViewById<Button>(R.id.btnSelectImage)
 
-        if (btnUpload != null) {
-            btnUpload.setOnClickListener{
+        if (btnSelect != null) {
+            btnSelect.setOnClickListener{
                 selectImage()
             }
         }
@@ -64,21 +74,38 @@ class S2Upload : Fragment() {
             }
         }
     }
-    fun uploadRecipe() {}
 
-    fun selectImage() {
-        val intent = Intent()
-        intent.setType("image/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
-        startActivityForResult(Intent.createChooser(intent,"Select Image"), 100)
+    private fun selectImage() {
+        val i = Intent()
+        i.setType("image/*")
+        i.setAction(Intent.ACTION_GET_CONTENT)
+        startActivityForResult(Intent.createChooser(i,"Select Image"), 100)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode === 100 && resultCode === Activity.RESULT_OK && data != null) {
             filepath = data.data!!
-            var bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
-            imageView.setImageBitmap(bitmap)
+            var bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, filepath)
+            val iv = view?.findViewById<ImageView>(R.id.ivPreview)
+            iv?.setImageBitmap(bitmap)
+        }
+    }
+
+    data class Recipe(val recipeTitle: String? = null, val recipeDescription: String? = null){}
+
+    fun addReciüe(inputTitle: String, inputDescription: String) {
+        val recipe = Recipe(inputTitle, inputDescription)
+        //TODO: replace Placeholder with userId ->
+        database.child("Recipes").child("Placeholder").setValue(inputTitle)
+
+    }
+
+    private fun uploadRecipe() {
+        val title = view?.findViewById<TextInputEditText>(R.id.etRecipeName).toString()
+        val description = view?.findViewById<TextInputEditText>(R.id.etRecipeDescription).toString()
+        if(filepath!=null && title!=null && description!=null) {
+
         }
     }
 
