@@ -54,11 +54,11 @@ class MainActivity : AppCompatActivity() {
             R.id.m4_profile -> {
                 // check if uer i logged in
                 val user = mAuth!!.currentUser
-                if (user == null) {
+                /*if (user == null) {
                     val loginRegiterFragment = m4_2_register_login.newInstance("a","b")
                     openFragment(loginRegiterFragment, false)
                     return@OnNavigationItemSelectedListener true
-                }
+                }*/
 
                 val profileFragment = m4_profile.newInstance("g","h")
                 openFragment(profileFragment, false)

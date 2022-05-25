@@ -1,8 +1,10 @@
 package com.ema.cooknation.model
 
-import com.google.firebase.firestore.IgnoreExtraProperties
 
-@IgnoreExtraProperties
-public class Recipe {
-
+class Recipe {
+    var name: String=""
+    var directions: String=""
+    var ratingAvg: Number=0
+    var ratingCount: Number=0
+    var ingredients: String=""
 }
