@@ -53,7 +53,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/uploadButton"
+        android:id="@+id/btnUpload"
         android:layout_width="230dp"
         android:layout_height="52dp"
         android:backgroundTint="#ff15"
@@ -79,7 +79,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/selectButton"
+        android:id="@+id/btnSelectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="94dp"
