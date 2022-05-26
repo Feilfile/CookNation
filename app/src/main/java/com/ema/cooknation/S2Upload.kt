@@ -4,21 +4,30 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
 import android.content.ClipDescription
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import com.ema.cooknation.model.Recipe
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.storageMetadata
+import java.io.ByteArrayOutputStream
+import java.time.LocalDateTime
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +46,7 @@ class S2Upload : Fragment() {
     private var param2: String? = null
 
     lateinit var filepath : Uri
-    private lateinit var database: DatabaseReference
+    lateinit var bitmap : Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +55,6 @@ class S2Upload : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        database = Firebase.database.reference
 
     }
 
@@ -77,16 +85,16 @@ class S2Upload : Fragment() {
 
     private fun selectImage() {
         val i = Intent()
-        i.setType("image/*")
-        i.setAction(Intent.ACTION_GET_CONTENT)
-        startActivityForResult(Intent.createChooser(i,"Select Image"), 100)
+        i.type = "image/*"
+        i.action =Intent.ACTION_GET_CONTENT
+        startActivityForResult(i, 100)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode === 100 && resultCode === Activity.RESULT_OK && data != null) {
             filepath = data.data!!
-            var bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, filepath)
+            bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, filepath)
             val iv = view?.findViewById<ImageView>(R.id.ivPreview)
             iv?.setImageBitmap(bitmap)
         }
@@ -94,18 +102,43 @@ class S2Upload : Fragment() {
 
     data class Recipe(val recipeTitle: String? = null, val recipeDescription: String? = null){}
 
-    fun addReciüe(inputTitle: String, inputDescription: String) {
-        val recipe = Recipe(inputTitle, inputDescription)
-        //TODO: replace Placeholder with userId ->
-        database.child("Recipes").child("Placeholder").setValue(inputTitle)
+    private fun addRecipe(inputTitle: String, inputDescription: String) {
+
+        val storageRef = FirebaseStorage.getInstance().getReference("Recipes/$inputTitle")
+        storageRef.putFile(filepath).
+                addOnCompleteListener{
+                //TODO: add Listener
+
+                }.addOnFailureListener{
+
+        }
+        val recipe = hashMapOf(
+            //TODO: add current date -> Date Format and ingredients -> Array Format
+            "title" to inputTitle,
+            "date" to "Placeholder",
+            "picturePath" to storageRef,
+            "directions" to inputDescription,
+            "ingredients" to "Placeholder",
+            "ratingCount" to 0
+            )
+        val db = Firebase.firestore
+        db.collection("recipes")
+            .add(recipe)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+
 
     }
 
     private fun uploadRecipe() {
-        val title = view?.findViewById<TextInputEditText>(R.id.etRecipeName).toString()
-        val description = view?.findViewById<TextInputEditText>(R.id.etRecipeDescription).toString()
+        val title = view?.findViewById<TextInputEditText>(R.id.etRecipeName)?.text.toString()
+        val description = view?.findViewById<TextInputEditText>(R.id.etRecipeDescription)?.text.toString()
         if(filepath!=null && title!=null && description!=null) {
-
+            addRecipe(title, description)
         }
     }
 
