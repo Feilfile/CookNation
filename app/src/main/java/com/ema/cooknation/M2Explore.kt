@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ema.cooknation.adapter.RecipeAdapter
+import com.ema.cooknation.adapter.CardAdapter
 import com.ema.cooknation.databinding.FragmentM2ExploreBinding
 import com.ema.cooknation.model.Recipe
 import com.ema.cooknation.model.recipeList
@@ -32,14 +32,14 @@ class M2Explore : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+
+
     }
 
     private var _binding : FragmentM2ExploreBinding? = null
     private val binding get() = _binding!!
-
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,29 +47,17 @@ class M2Explore : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         populateRecipes()
+        //val view = inflater.inflate(R.layout.fragment_m2_explore,container, false)
 
 
         _binding = FragmentM2ExploreBinding.inflate(inflater, container, false)
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(activity?.applicationContext, 3)
-            adapter = RecipeAdapter(recipeList)
+            adapter = CardAdapter(recipeList)
         }
 
-
-
-
-
-
-
-
-
-
         //return inflater.inflate(R.layout.fragment_m2_explore, container, false)
-
-
-
-
 
         return binding.root
     }
@@ -81,42 +69,112 @@ class M2Explore : Fragment() {
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe1)
+
         val recipe2 = Recipe(
             R.drawable.bowl,
             "Soup",
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe2)
+
         val recipe3 = Recipe(
             R.drawable.fruitbowl,
             "Fruitbowl",
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe3)
+
         val recipe4 = Recipe(
             R.drawable.grilledcheese,
             "Grilled Cheese",
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe4)
+
         val recipe5 = Recipe(
             R.drawable.macncheese,
             "Cheeseburger",
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe5)
+
         val recipe6 = Recipe(
             R.drawable.pizza,
             "Pizza",
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe6)
+
         val recipe7 = Recipe(
             R.drawable.rampen,
             "Ramen",
             "Leon Braun",
             "ABC 123"
         )
+        recipeList.add(recipe7)
+
+        val recipe8 = Recipe(
+            R.drawable.cheeseburger,
+            "Cheeseburger",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe8)
+
+        val recipe9 = Recipe(
+            R.drawable.bowl,
+            "Soup",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe9)
+
+        val recipe10 = Recipe(
+            R.drawable.fruitbowl,
+            "Fruitbowl",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe10)
+
+        val recipe11 = Recipe(
+            R.drawable.grilledcheese,
+            "Grilled Cheese",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe11)
+
+        val recipe12 = Recipe(
+            R.drawable.macncheese,
+            "Cheeseburger",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe12)
+
+        val recipe13 = Recipe(
+            R.drawable.pizza,
+            "Pizza",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe13)
+
+        val recipe14 = Recipe(
+            R.drawable.rampen,
+            "Ramen",
+            "Leon Braun",
+            "ABC 123"
+        )
+        recipeList.add(recipe14)
+
     }
 
     companion object {

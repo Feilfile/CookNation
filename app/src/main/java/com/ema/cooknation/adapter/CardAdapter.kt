@@ -7,7 +7,7 @@ import com.ema.cooknation.CardViewHolder
 import com.ema.cooknation.databinding.CardCellBinding
 import com.ema.cooknation.model.Recipe
 
-class RecipeAdapter(private val recipes: List<Recipe>)
+class CardAdapter(private val recipes: List<Recipe>)
     : RecyclerView.Adapter<CardViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
