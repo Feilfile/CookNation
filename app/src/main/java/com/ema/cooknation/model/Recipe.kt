@@ -1,11 +1,14 @@
 package com.ema.cooknation.model
 
+var recipeList = mutableListOf<Recipe>()
 
-data class Recipe (
-    val name: String,
-    val directions: String)
-{
-    var ratingAvg: Number=0
-    var ratingCount: Number=0
-    var ingredients: String=""
-}
+class Recipe (
+    var recipeImg: Int,
+    var recipeName: String,
+    var author: String,
+    var directions: String,
+    /*var ratingAvg: Number,
+    var ratingCount: Number,
+    var ingredients: String,*/
+    val id: Int? = recipeList.size
+    )

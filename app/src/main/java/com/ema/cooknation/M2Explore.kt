@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import com.ema.cooknation.adapter.RecipeAdapter
+import com.ema.cooknation.databinding.FragmentM2ExploreBinding
+import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.model.recipeList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,12 +34,89 @@ class M2Explore : Fragment() {
         }
     }
 
+    private var _binding : FragmentM2ExploreBinding? = null
+    private val binding get() = _binding!!
+
+
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_m2_explore, container, false)
+        populateRecipes()
+
+
+        _binding = FragmentM2ExploreBinding.inflate(inflater, container, false)
+
+        binding.recyclerView.apply {
+            layoutManager = GridLayoutManager(activity?.applicationContext, 3)
+            adapter = RecipeAdapter(recipeList)
+        }
+
+
+
+
+
+
+
+
+
+
+        //return inflater.inflate(R.layout.fragment_m2_explore, container, false)
+
+
+
+
+
+        return binding.root
+    }
+
+    private fun populateRecipes() {
+        val recipe1 = Recipe(
+            R.drawable.cheeseburger,
+            "Cheeseburger",
+            "Leon Braun",
+            "ABC 123"
+        )
+        val recipe2 = Recipe(
+            R.drawable.bowl,
+            "Soup",
+            "Leon Braun",
+            "ABC 123"
+        )
+        val recipe3 = Recipe(
+            R.drawable.fruitbowl,
+            "Fruitbowl",
+            "Leon Braun",
+            "ABC 123"
+        )
+        val recipe4 = Recipe(
+            R.drawable.grilledcheese,
+            "Grilled Cheese",
+            "Leon Braun",
+            "ABC 123"
+        )
+        val recipe5 = Recipe(
+            R.drawable.macncheese,
+            "Cheeseburger",
+            "Leon Braun",
+            "ABC 123"
+        )
+        val recipe6 = Recipe(
+            R.drawable.pizza,
+            "Pizza",
+            "Leon Braun",
+            "ABC 123"
+        )
+        val recipe7 = Recipe(
+            R.drawable.rampen,
+            "Ramen",
+            "Leon Braun",
+            "ABC 123"
+        )
     }
 
     companion object {
