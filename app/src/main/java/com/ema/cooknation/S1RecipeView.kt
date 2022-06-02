@@ -6,6 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ema.cooknation.databinding.CardCellBinding
+import com.ema.cooknation.databinding.FragmentM2ExploreBinding
+import com.ema.cooknation.databinding.S1RecipeviewBinding
+import com.ema.cooknation.model.RECIPE_ID_EXTRA
+import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.model.recipeList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,9 +36,7 @@ class S1RecipeView : Fragment() {
         }
     }
 
-    private var _binding: CardCellBinding? = null
-    // This property is only valid between onCreateView and
-// onDestroyView.
+    private var _binding: S1RecipeviewBinding? = null
     private val binding get() = _binding!!
 
 
@@ -42,7 +45,26 @@ class S1RecipeView : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.s1_recipeview, container, false)
+        _binding = S1RecipeviewBinding.inflate(inflater, container, false)
+        val recipeID = activity?.intent?.getIntExtra(RECIPE_ID_EXTRA, -1)
+        val recipe = recipeFromID(recipeID)
+        if(recipe != null) {
+            binding.recipeImg.setImageResource(recipe.recipeImg)
+            binding.recipeName.text = recipe.recipeName
+            binding.author.text = recipe.author
+            binding.ingredients.text = recipe.ingredients
+            binding.directions.text = recipe.directions
+
+        }
+        return binding.root
+    }
+
+    private fun recipeFromID(recipeID: Int?): Recipe? {
+        for(recipe in recipeList) {
+            if(recipe.id == recipeID)
+                return recipe
+        }
+        return null
     }
 
     companion object {

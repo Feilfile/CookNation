@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
     }
 
+    fun openRecipeViewFragment( String: String, Int: Int?,  addToBackStack:Boolean) {
+        val recipeViewFragment = S1RecipeView.newInstance("a", "b")
+        openFragment(recipeViewFragment, addToBackStack)
+    }
+
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.m1_home -> {

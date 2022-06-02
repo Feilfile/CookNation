@@ -1,5 +1,6 @@
 package com.ema.cooknation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ema.cooknation.adapter.CardAdapter
 import com.ema.cooknation.databinding.FragmentM2ExploreBinding
+import com.ema.cooknation.model.RECIPE_ID_EXTRA
 import com.ema.cooknation.model.Recipe
 import com.ema.cooknation.model.recipeList
 
@@ -21,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [M2Explore.newInstance] factory method to
  * create an instance of this fragment.
  */
-class M2Explore : Fragment() {
+class M2Explore : Fragment(), RecipeClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -47,19 +49,18 @@ class M2Explore : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         populateRecipes()
-        //val view = inflater.inflate(R.layout.fragment_m2_explore,container, false)
-
-
         _binding = FragmentM2ExploreBinding.inflate(inflater, container, false)
 
+        val m2Explore = this
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(activity?.applicationContext, 3)
-            adapter = CardAdapter(recipeList)
+            adapter = CardAdapter(recipeList, m2Explore)
         }
-
-        //return inflater.inflate(R.layout.fragment_m2_explore, container, false)
-
         return binding.root
+    }
+
+    override fun onClick(recipe: Recipe) {
+        (activity as MainActivity).openRecipeViewFragment(RECIPE_ID_EXTRA, recipe.id, true)
     }
 
     private fun populateRecipes() {
@@ -67,7 +68,8 @@ class M2Explore : Fragment() {
             R.drawable.cheeseburger,
             "Cheeseburger",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe1)
 
@@ -75,7 +77,8 @@ class M2Explore : Fragment() {
             R.drawable.bowl,
             "Soup",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe2)
 
@@ -83,7 +86,8 @@ class M2Explore : Fragment() {
             R.drawable.fruitbowl,
             "Fruitbowl",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe3)
 
@@ -91,7 +95,8 @@ class M2Explore : Fragment() {
             R.drawable.grilledcheese,
             "Grilled Cheese",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe4)
 
@@ -99,7 +104,8 @@ class M2Explore : Fragment() {
             R.drawable.macncheese,
             "Cheeseburger",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe5)
 
@@ -107,7 +113,8 @@ class M2Explore : Fragment() {
             R.drawable.pizza,
             "Pizza",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe6)
 
@@ -115,7 +122,8 @@ class M2Explore : Fragment() {
             R.drawable.rampen,
             "Ramen",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe7)
 
@@ -123,7 +131,8 @@ class M2Explore : Fragment() {
             R.drawable.cheeseburger,
             "Cheeseburger",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe8)
 
@@ -131,7 +140,8 @@ class M2Explore : Fragment() {
             R.drawable.bowl,
             "Soup",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe9)
 
@@ -139,7 +149,8 @@ class M2Explore : Fragment() {
             R.drawable.fruitbowl,
             "Fruitbowl",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe10)
 
@@ -147,7 +158,8 @@ class M2Explore : Fragment() {
             R.drawable.grilledcheese,
             "Grilled Cheese",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe11)
 
@@ -155,7 +167,8 @@ class M2Explore : Fragment() {
             R.drawable.macncheese,
             "Cheeseburger",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe12)
 
@@ -163,7 +176,8 @@ class M2Explore : Fragment() {
             R.drawable.pizza,
             "Pizza",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe13)
 
@@ -171,7 +185,8 @@ class M2Explore : Fragment() {
             R.drawable.rampen,
             "Ramen",
             "Leon Braun",
-            "ABC 123"
+            "ABC 123",
+            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
         )
         recipeList.add(recipe14)
 
@@ -196,4 +211,6 @@ class M2Explore : Fragment() {
                 }
             }
     }
+
+
 }
