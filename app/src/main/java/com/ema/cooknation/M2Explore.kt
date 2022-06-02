@@ -1,17 +1,19 @@
 package com.ema.cooknation
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.adapter.CardAdapter
-import com.ema.cooknation.databinding.FragmentM2ExploreBinding
-import com.ema.cooknation.model.RECIPE_ID_EXTRA
 import com.ema.cooknation.model.Recipe
-import com.ema.cooknation.model.recipeList
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,10 +25,15 @@ private const val ARG_PARAM2 = "param2"
  * Use the [M2Explore.newInstance] factory method to
  * create an instance of this fragment.
  */
-class M2Explore : Fragment(), RecipeClickListener {
+class M2Explore : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var db: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recipeArrayList: ArrayList<Recipe>
+    private lateinit var cardAdapter: CardAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,162 +41,54 @@ class M2Explore : Fragment(), RecipeClickListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
-
-
     }
 
-    private var _binding : FragmentM2ExploreBinding? = null
-    private val binding get() = _binding!!
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        db = Firebase.firestore
+        recyclerView = requireActivity().findViewById(R.id.rvRecyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this.context, 2)
+        recyclerView.setHasFixedSize(true)
+
+        recipeArrayList = arrayListOf()
+
+        cardAdapter = CardAdapter(recipeArrayList)
+
+        recyclerView.adapter = cardAdapter
+
+        eventChangeListener()
+    }
+
+    private fun eventChangeListener() {
+        db.collection("recipes")
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(
+                    value: QuerySnapshot?,
+                    error: FirebaseFirestoreException?
+                ) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.message.toString())
+                        return
+                    }
+
+                    for (dc: DocumentChange in value?.documentChanges!!) {
+                        if (dc.type == DocumentChange.Type.ADDED) {
+                            recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
+                        }
+                    }
+
+                    cardAdapter.notifyDataSetChanged()
+                }
+            })
+    }
+
+    /*private var _binding : FragmentM2ExploreBinding? = null
+    private val binding get() = _binding!!*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        populateRecipes()
-        _binding = FragmentM2ExploreBinding.inflate(inflater, container, false)
-
-        val m2Explore = this
-        binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(activity?.applicationContext, 3)
-            adapter = CardAdapter(recipeList, m2Explore)
-        }
-        return binding.root
-    }
-
-    override fun onClick(recipe: Recipe) {
-        (activity as MainActivity).openRecipeViewFragment(RECIPE_ID_EXTRA, recipe.id, true)
-    }
-
-    private fun populateRecipes() {
-        val recipe1 = Recipe(
-            R.drawable.cheeseburger,
-            "Cheeseburger",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe1)
-
-        val recipe2 = Recipe(
-            R.drawable.bowl,
-            "Soup",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe2)
-
-        val recipe3 = Recipe(
-            R.drawable.fruitbowl,
-            "Fruitbowl",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe3)
-
-        val recipe4 = Recipe(
-            R.drawable.grilledcheese,
-            "Grilled Cheese",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe4)
-
-        val recipe5 = Recipe(
-            R.drawable.macncheese,
-            "Cheeseburger",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe5)
-
-        val recipe6 = Recipe(
-            R.drawable.pizza,
-            "Pizza",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe6)
-
-        val recipe7 = Recipe(
-            R.drawable.rampen,
-            "Ramen",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe7)
-
-        val recipe8 = Recipe(
-            R.drawable.cheeseburger,
-            "Cheeseburger",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe8)
-
-        val recipe9 = Recipe(
-            R.drawable.bowl,
-            "Soup",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe9)
-
-        val recipe10 = Recipe(
-            R.drawable.fruitbowl,
-            "Fruitbowl",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe10)
-
-        val recipe11 = Recipe(
-            R.drawable.grilledcheese,
-            "Grilled Cheese",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe11)
-
-        val recipe12 = Recipe(
-            R.drawable.macncheese,
-            "Cheeseburger",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe12)
-
-        val recipe13 = Recipe(
-            R.drawable.pizza,
-            "Pizza",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe13)
-
-        val recipe14 = Recipe(
-            R.drawable.rampen,
-            "Ramen",
-            "Leon Braun",
-            "ABC 123",
-            "Käse, Hackfleisch, Brötchen, Ketchup Mayo, Eisbergsalat"
-        )
-        recipeList.add(recipe14)
-
+    ): View? {return inflater.inflate(R.layout.fragment_m2_explore, container, false)
     }
 
     companion object {
@@ -211,6 +110,4 @@ class M2Explore : Fragment(), RecipeClickListener {
                 }
             }
     }
-
-
 }
