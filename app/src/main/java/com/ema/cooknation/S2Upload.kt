@@ -142,7 +142,7 @@ class S2Upload : Fragment() {
             ).show()
         } else  {
             addRecipe(title, description)
-            activity?.supportFragmentManager?.popBackStack()
+            //activity?.supportFragmentManager?.popBackStack()
         }
     }
 

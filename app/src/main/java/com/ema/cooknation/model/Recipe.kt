@@ -96,7 +96,7 @@ class Recipe {
 data class Recipe(
     var title: String? = null,
     var date: String? = null,
-    //var picturePath: String? = null,
+    var picturePath: String? = null,
     var directions: String? = null,
     var ingredients: String? = null,
     var numRatings: Int = 0,
