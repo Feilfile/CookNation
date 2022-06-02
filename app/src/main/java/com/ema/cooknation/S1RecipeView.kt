@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import com.ema.cooknation.databinding.CardCellBinding
 import com.ema.cooknation.databinding.FragmentM2ExploreBinding
 import com.ema.cooknation.databinding.S1RecipeviewBinding
-import com.ema.cooknation.model.RECIPE_ID_EXTRA
+//import com.ema.cooknation.model.RECIPE_ID_EXTRA
 import com.ema.cooknation.model.Recipe
-import com.ema.cooknation.model.recipeList
+//import com.ema.cooknation.model.recipeList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,7 +45,7 @@ class S1RecipeView : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = S1RecipeviewBinding.inflate(inflater, container, false)
+        /*_binding = S1RecipeviewBinding.inflate(inflater, container, false)
         val recipeID = activity?.intent?.getIntExtra(RECIPE_ID_EXTRA, -1)
         val recipe = recipeFromID(recipeID)
         if(recipe != null) {
@@ -56,7 +56,6 @@ class S1RecipeView : Fragment() {
             binding.directions.text = recipe.directions
 
         }
-        return binding.root
     }
 
     private fun recipeFromID(recipeID: Int?): Recipe? {
@@ -64,7 +63,8 @@ class S1RecipeView : Fragment() {
             if(recipe.id == recipeID)
                 return recipe
         }
-        return null
+        return null*/
+        return binding.root
     }
 
     companion object {
