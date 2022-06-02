@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_CookNation)
         setContentView(R.layout.main_activity)
         mAuth = FirebaseAuth.getInstance()
 

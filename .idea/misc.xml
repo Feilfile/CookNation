@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.315" />
+        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/drawable/ic_baseline_food_bank_24.xml" value="0.1995" />
+        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/drawable/splash_image.xml" value="0.2795" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/card_cell.xml" value="0.21" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/dialog_create_recipe.xml" value="0.33" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_m1_home.xml" value="0.17391304347826086" />
