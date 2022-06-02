@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/recipeImg"
+                android:id="@+id/ivRecipeImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/rampen"
@@ -27,7 +27,7 @@
                 android:contentDescription="recipeImg"/>
 
             <TextView
-                android:id="@+id/recipeName"
+                android:id="@+id/tvRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

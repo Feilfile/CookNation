@@ -106,7 +106,8 @@ class S2Upload : Fragment() {
             "picturePath" to FirebaseStorage.getInstance().getReference("Recipes/$inputTitle").path,
             "directions" to inputDescription,
             "ingredients" to "Placeholder",
-            "ratingCount" to 0
+            "ratingCount " to 0,
+            "avgRating" to 0.0
             )
         val db = Firebase.firestore
         db.collection("recipes").document(inputTitle)
@@ -141,6 +142,7 @@ class S2Upload : Fragment() {
             ).show()
         } else  {
             addRecipe(title, description)
+            activity?.supportFragmentManager?.popBackStack()
         }
     }
 
