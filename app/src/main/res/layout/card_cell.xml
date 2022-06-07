@@ -15,17 +15,19 @@
         app:cardElevation="7dp">
 
         <LinearLayout
+            android:id="@+id/llCardCell"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/ivRecipeImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/rampen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:contentDescription="recipeImg"/>
+                android:contentDescription="recipeImg"
+                android:scaleType="centerInside"
+                android:src="@drawable/rampen" />
 
             <TextView
                 android:id="@+id/tvRecipeName"
@@ -39,7 +41,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/author"
+                android:id="@+id/tvAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.legacyfiles
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -56,6 +56,7 @@ class S1RecipeView : Fragment() {
             binding.directions.text = recipe.directions
 
         }
+        return binding.root
     }
 
     private fun recipeFromID(recipeID: Int?): Recipe? {

@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.legacyfiles
 /*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract

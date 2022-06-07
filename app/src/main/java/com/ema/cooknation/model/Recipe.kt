@@ -1,5 +1,9 @@
 package com.ema.cooknation.model
 
+import java.io.Serializable
+import java.sql.Date
+import java.sql.Timestamp
+
 /*var recipeList = mutableListOf<Recipe>()
 
 class Recipe {
@@ -32,10 +36,6 @@ class Recipe {
         this.ingredients = ingredients
         this.numRatings = numRatings
         this.avgRating = avgRating
-    }
-
-    fun getTitle(): String? {
-        return title
     }
 
     fun setTitle(title: String?) {
@@ -93,11 +93,13 @@ class Recipe {
 
 }*/
 
-data class Recipe(
+data class Recipe (
     var title: String? = null,
-    var date: String? = null,
+    var author: String? = null,
+    var date: java.util.Date? = null,
     var picturePath: String? = null,
     var directions: String? = null,
     var ingredients: String? = null,
     var numRatings: Int = 0,
-    var avgRating: Double = 0.0)
+    var avgRating: Double = 0.0) : Serializable {
+    }

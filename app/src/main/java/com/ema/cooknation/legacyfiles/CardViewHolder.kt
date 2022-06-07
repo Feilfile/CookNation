@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.legacyfiles
 
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.databinding.CardCellBinding

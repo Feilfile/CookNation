@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.legacyfiles
 
 import com.ema.cooknation.model.Recipe
 

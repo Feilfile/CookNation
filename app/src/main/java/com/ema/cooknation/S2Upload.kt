@@ -16,10 +16,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.ema.cooknation.model.User
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.sql.Timestamp
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +44,8 @@ class S2Upload : Fragment() {
 
     private lateinit var filepath : Uri
     private lateinit var bitmap : Bitmap
+    private lateinit var db: FirebaseFirestore
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +66,8 @@ class S2Upload : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mAuth = FirebaseAuth.getInstance()
+        db = Firebase.firestore
         val btnUpload = getView()?.findViewById<Button>(R.id.btnUpload)
         val btnSelect = getView()?.findViewById<Button>(R.id.btnSelectImage)
 
@@ -99,18 +108,20 @@ class S2Upload : Fragment() {
                 }.addOnFailureListener{
 
         }
+        val picturePath = FirebaseStorage.getInstance().getReference("Recipes/$inputTitle").path
+        val date = getCurrentDate()
         val recipe = hashMapOf(
                 //TODO: add current date -> Date Format and ingredients -> Array Format
+            "author" to null,
             "title" to inputTitle,
-            "date" to "Placeholder",
-            "picturePath" to FirebaseStorage.getInstance().getReference("Recipes/$inputTitle").path,
+            "date" to date,
+            "picturePath" to picturePath,
             "directions" to inputDescription,
             "ingredients" to "Placeholder",
             "ratingCount " to 0,
             "avgRating" to 0.0
             )
-        val db = Firebase.firestore
-        db.collection("recipes").document(inputTitle)
+        db.collection("recipes").document("${mAuth.uid}.$inputTitle")
             .set(recipe)
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully written!")
@@ -119,6 +130,7 @@ class S2Upload : Fragment() {
                     "Recipe successfully added!",
                     Toast.LENGTH_SHORT
                 ).show()
+                addUserNameToCollection(inputTitle)
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e)
                 Toast.makeText(
@@ -164,6 +176,30 @@ class S2Upload : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun addUserNameToCollection(inputTitle: String) {
+        db.collection("user")
+            .document(mAuth.uid.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.d("UserDataBase", "User Successfully found")
+                val user = document.toObject<User>()
+                val author = user?.username.toString()
+                db.collection("recipes")
+                    .document("${mAuth.uid}.$inputTitle")
+                    .update("author", author)
+                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+            } .addOnFailureListener{ e ->
+                Log.w(TAG, "Document not found", e)
+            }
+
+    }
+
+    private fun getCurrentDate(): Timestamp? {
+        val tsLong : Long = System.currentTimeMillis()
+        return Timestamp(tsLong)
     }
 }
 

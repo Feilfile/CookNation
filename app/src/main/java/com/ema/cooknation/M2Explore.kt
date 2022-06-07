@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.adapter.CardAdapter
 import com.ema.cooknation.model.Recipe
@@ -33,7 +32,6 @@ class M2Explore : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

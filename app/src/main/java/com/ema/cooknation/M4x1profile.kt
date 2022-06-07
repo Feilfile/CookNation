@@ -1,13 +1,17 @@
 package com.ema.cooknation
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.ema.cooknation.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +28,7 @@ class M4x1profile : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var mAuth: FirebaseAuth? = null
+    private lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
 
         mAuth = FirebaseAuth.getInstance()
@@ -74,32 +78,25 @@ class M4x1profile : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
         val btnProfileUpload = getView()?.findViewById<Button>(R.id.btnProfileUpload)
+        val tvProfileName = getView()?.findViewById<TextView>(R.id.tvProfileName)
+
+        val db = Firebase.firestore
+        //dc.document.toObject((Recipe::class.java))
+        db.collection("user")
+            .document(mAuth.uid.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject<User>()
+                tvProfileName?.text = user?.username
+            }
 
         btnProfileUpload?.setOnClickListener{
             (activity as MainActivity).openUploadFragment(true)
         }
-
-        /*mAuth = FirebaseAuth.getInstance()
-
-        val user = mAuth!!.currentUser
-        if (user == null) {
-            startActivity(Intent(activity, LoginActivity::class.java))
-        }*/
-
-        /*mAuth = FirebaseAuth.getInstance()
-
-        val user = mAuth!!.currentUser
-        if (user == null) {
-            fragment?.findNavController()?.navigate(
-                R.id.move_to_login,
-                null,
-            )
-        }*/
         // Setup SignOut Button when Loading Fragment
         btnSignOut?.setOnClickListener{
-            mAuth!!.signOut()
-            val changeToLogin = Intent(activity, LoginActivity::class.java)
-            startActivity (changeToLogin)
+            mAuth.signOut()
+            (activity as MainActivity).performLogout(false)
         }
         super.onViewCreated(view, savedInstanceState)
     }

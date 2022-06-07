@@ -44,11 +44,11 @@ class M4x2RegisterLogin : Fragment() {
         val btnRegister = getView()?.findViewById<Button>(R.id.btnRegisterWelcomeScreen)
 
         btnLogin?.setOnClickListener{
-            (activity as MainActivity).openLoginFragment()
+            (activity as MainActivity).openLoginActivity()
         }
 
         btnRegister?.setOnClickListener{
-            (activity as MainActivity).openRegisterFragment()
+            (activity as MainActivity).openRegisterActivity()
         }
 
     }

@@ -31,28 +31,25 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    fun openUploadFragment(addToBackStack:Boolean) {
+    fun openUploadFragment(addToBackStack: Boolean) {
         val uploadFragment = S2Upload.newInstance("a", "a")
         openFragment(uploadFragment, addToBackStack)
     }
 
-    fun openLoginFragment() {
-        /*val loginFragment = s4_login.newInstance("a", "a")
-        openFragment(loginFragment, addToBackStack)*/
+    fun performLogout(addToBackStack: Boolean) {
+        val registerLogin = M4x2RegisterLogin.newInstance("", "")
+        openFragment(registerLogin, addToBackStack)
+    }
+
+    fun openLoginActivity() {
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
     }
 
-    fun openRegisterFragment() {
-        /*val registerFragment = s5_register.newInstance("a", "a")
-        openFragment(registerFragment, addToBackStack)*/
+    fun openRegisterActivity() {
         startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
     }
 
-    fun openRecipeViewFragment( String: String, Int: Int?,  addToBackStack:Boolean) {
-        val recipeViewFragment = S1RecipeView.newInstance("a", "b")
-        openFragment(recipeViewFragment, addToBackStack)
-    }
-
+    //TODO: remove/change parsed fragment parameters
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {

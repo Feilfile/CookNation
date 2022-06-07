@@ -14,4 +14,18 @@
         <!-- Customize your theme here. -->
 
     </style>
+
+    <style name="ThemeOverlay.CookNation.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <style name="Theme.CookNation.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.CookNation.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.CookNation.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
