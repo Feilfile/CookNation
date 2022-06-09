@@ -17,17 +17,17 @@
         <LinearLayout
             android:id="@+id/llCardCell"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:orientation="vertical">
 
-            <ImageView
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/ivRecipeImg"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="140dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="recipeImg"
-                android:scaleType="centerInside"
-                android:src="@drawable/rampen" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/buffer" />
 
             <TextView
                 android:id="@+id/tvRecipeName"

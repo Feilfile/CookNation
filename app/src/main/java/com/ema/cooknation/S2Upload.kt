@@ -93,8 +93,9 @@ class S2Upload : Fragment() {
         if(requestCode === 100 && resultCode === Activity.RESULT_OK && data != null) {
             filepath = data.data!!
             bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, filepath)
+            val resized = Bitmap.createScaledBitmap(bitmap, 960,640,false)
             val iv = view?.findViewById<ImageView>(R.id.ivPreview)
-            iv?.setImageBitmap(bitmap)
+            iv?.setImageBitmap(resized)
         }
     }
 

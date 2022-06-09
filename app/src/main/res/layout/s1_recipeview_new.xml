@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0">
+
+    <RelativeLayout
+        android:id="@+id/rlRecpie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/recipeImg"
+            android:src="@drawable/buffer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/recipeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/avgRating"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Recipe Name"
+            android:textColor="@android:color/black" />
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/avgRating"
+            style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/author"
+            android:layout_alignLeft="@+id/recipeName"
+            app:mrb_progressTint="@android:color/white"
+            app:mrb_secondaryProgressTint="@android:color/white" />
+
+        <TextView
+            android:id="@+id/restaurant_num_ratings"
+            style="@style/AppTheme.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/restaurant_rating"
+            android:layout_alignBottom="@+id/restaurant_rating"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/restaurant_rating"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            tools:text="(10)" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -44,7 +44,7 @@ class M2Explore : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = Firebase.firestore
-        recyclerView = requireActivity().findViewById(R.id.rvRecyclerView)
+        recyclerView = requireActivity().findViewById(R.id.exploreRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(this.context, 2)
         recyclerView.setHasFixedSize(true)
 

@@ -52,7 +52,7 @@ class CardAdapter(private val recipes: ArrayList<Recipe>)
         val localFile = File.createTempFile("tempFile", ".jpg")
         storageRef.getFile(localFile)
             .addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                var bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 holder.picture.setImageBitmap(bitmap)
             }.addOnFailureListener{
                 //TODO: implement OnFailureListener in loadPictureInContainer
