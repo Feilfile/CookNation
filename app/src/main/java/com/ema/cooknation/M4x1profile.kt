@@ -91,12 +91,12 @@ class M4x1profile : Fragment() {
             }
 
         btnProfileUpload?.setOnClickListener{
-            (activity as MainActivity).openUploadFragment(true)
+            (activity as MainActivity).openUploadFragment()
         }
         // Setup SignOut Button when Loading Fragment
         btnSignOut?.setOnClickListener{
             mAuth.signOut()
-            (activity as MainActivity).performLogout(false)
+            (activity as MainActivity).performLogout()
         }
         super.onViewCreated(view, savedInstanceState)
     }

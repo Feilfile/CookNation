@@ -19,26 +19,23 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
         //load initial fragment -> here m1_home
-        openFragment(M1Home.newInstance("a","b"), false)
+        openFragment(M1Home.newInstance("a","b"))
     }
 
-    private fun openFragment(fragment: Fragment, addToBackStack: Boolean) {
+    private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerView1, fragment)
-        if (addToBackStack) {
-            transaction.addToBackStack(null)
-        }
         transaction.commit()
     }
 
-    fun openUploadFragment(addToBackStack: Boolean) {
+    fun openUploadFragment() {
         val uploadFragment = S2Upload.newInstance("a", "a")
-        openFragment(uploadFragment, addToBackStack)
+        openFragment(uploadFragment)
     }
 
-    fun performLogout(addToBackStack: Boolean) {
+    fun performLogout() {
         val registerLogin = M4x2RegisterLogin.newInstance("", "")
-        openFragment(registerLogin, addToBackStack)
+        openFragment(registerLogin)
     }
 
     fun openLoginActivity() {
@@ -55,17 +52,21 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.m1_home -> {
                 val homeFragment = M1Home.newInstance("a","b")
-                openFragment(homeFragment, false)
+                openFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m2_explore -> {
+                val emptyFragment = EmptyFragment.newInstance("","")
                 val exploreFragment = M2Explore.newInstance("c","d")
-                openFragment(exploreFragment, false)
+                openFragment(emptyFragment)
+                openFragment(exploreFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m3_search -> {
+                val emptyFragment = EmptyFragment.newInstance("","")
                 val searchFragment = M3Search.newInstance("e","f")
-                openFragment(searchFragment, false)
+                openFragment(emptyFragment)
+                openFragment(searchFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m4_profile -> {
@@ -73,12 +74,12 @@ class MainActivity : AppCompatActivity() {
                 val user = mAuth!!.currentUser
                 if (user == null) {
                     val loginRegisterFragment = M4x2RegisterLogin.newInstance("a","b")
-                    openFragment(loginRegisterFragment, false)
+                    openFragment(loginRegisterFragment)
                     return@OnNavigationItemSelectedListener true
                 }
 
                 val profileFragment = M4x1profile.newInstance("g","h")
-                openFragment(profileFragment, false)
+                openFragment(profileFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
