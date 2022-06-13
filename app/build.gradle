@@ -48,6 +48,9 @@ android {
 
 dependencies {
 
+    // Rating bar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
+
     // GIF support
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 

@@ -108,4 +108,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="directions">Directions</string>
+    <string name="lorem_ipsum_list">- Lorem ipsum dolor sit amet\n- consetetur sadipscing elitr\n- sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat\n- sed diam voluptua\n- At vero eos et accusam et justo duo dolores et ea rebum\n- Stet clita kasd gubergren\n- no sea takimata sanctus est Lorem ipsum dolor sit amet</string>
 </resources>
