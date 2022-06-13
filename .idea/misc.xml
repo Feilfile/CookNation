@@ -3,11 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/drawable/gradient_up.xml" value="0.199" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.2975" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout-w936dp/gradient_up.xml" value="0.1423106350420811" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/activity_s1_recipe_view.xml" value="0.14722222222222223" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/activity_s1_recipe_view_new.xml" value="0.33" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/activity_scrolling_test.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/card_cell.xml" value="0.25" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/dialog_create_recipe.xml" value="0.33" />
@@ -19,13 +15,10 @@
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_s2_upload.xml" value="0.25" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_s4_login.xml" value="0.1884498480243161" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_s5_register.xml" value="0.20208333333333334" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/gradient.xml" value="0.20652173913043478" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/gradient_up.xml" value="0.1879432624113475" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/m4x2_myprofile.xml" value="0.328804347826087" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/main_activity.xml" value="0.17391304347826086" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s1_recipeview.xml" value="0.1884498480243161" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s1_recipeview_new.xml" value="0.33" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s1_recipeview_old.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s1_recipeview_new.xml" value="0.20652173913043478" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s2_upload.xml" value="0.17391304347826086" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s4_login.xml" value="0.3875" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s4_login_old.xml" value="0.371875" />

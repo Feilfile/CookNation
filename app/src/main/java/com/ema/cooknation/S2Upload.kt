@@ -198,7 +198,7 @@ class S2Upload : Fragment() {
 
     }
 
-    private fun getCurrentDate(): Timestamp? {
+    private fun getCurrentDate(): Timestamp {
         val tsLong : Long = System.currentTimeMillis()
         return Timestamp(tsLong)
     }

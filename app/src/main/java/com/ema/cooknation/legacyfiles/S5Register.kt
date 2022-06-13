@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.legacyfiles/*package com.ema.cooknation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -56,4 +56,4 @@ class S5Register : Fragment() {
                 }
             }
     }
-}
+}*/

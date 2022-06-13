@@ -86,7 +86,8 @@ class M2Explore : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {return inflater.inflate(R.layout.fragment_m2_explore, container, false)
+    ): View? {
+        return inflater.inflate(R.layout.fragment_m2_explore, container, false)
     }
 
     companion object {

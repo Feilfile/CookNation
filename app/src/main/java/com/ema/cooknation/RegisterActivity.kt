@@ -21,7 +21,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.s5_register_old)
+        setContentView(R.layout.s5_register)
         etRegEmail = findViewById(R.id.etRegEmail)
         etRegUsername = findViewById(R.id.etRegUsername)
         etRegPassword = findViewById(R.id.etRegPass)

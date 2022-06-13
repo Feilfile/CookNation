@@ -1,8 +1,6 @@
 package com.ema.cooknation.model
 
 import java.io.Serializable
-import java.sql.Date
-import java.sql.Timestamp
 
 /*var recipeList = mutableListOf<Recipe>()
 
@@ -12,7 +10,7 @@ class Recipe {
     val FIELD_DATE = "date"
     val FIELD_PICTURE_PATH = "picturePath"
     val FIELD_DIRECTIONS = "directions"
-    val FIELD_INGREDIANTS = "ingredients"
+    val FIELD_INGREDIENTS = "ingredients"
     val FIELD_AVG_RATING = "avgRating"
 
     private var title: String? = null
@@ -101,5 +99,4 @@ data class Recipe (
     var directions: String? = null,
     var ingredients: String? = null,
     var numRatings: Int = 0,
-    var avgRating: Double = 0.0) : Serializable {
-    }
+    var avgRating: Double = 0.0) : Serializable
