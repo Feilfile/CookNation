@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.ema.cooknation.model.User
@@ -79,6 +80,7 @@ class M4x1profile : Fragment() {
         val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
         val btnProfileUpload = getView()?.findViewById<Button>(R.id.btnProfileUpload)
         val tvProfileName = getView()?.findViewById<TextView>(R.id.tvProfileName)
+        val ibButtonImpressum = getView()?.findViewById<ImageButton>(R.id.ibButtonImpressum)
 
         val db = Firebase.firestore
         //dc.document.toObject((Recipe::class.java))
@@ -89,6 +91,11 @@ class M4x1profile : Fragment() {
                 val user = document.toObject<User>()
                 tvProfileName?.text = user?.username
             }
+
+        // Button to go to WebView
+        ibButtonImpressum?.setOnClickListener {
+            (activity as MainActivity).setContentView(R.layout.web_view)
+        }
 
         btnProfileUpload?.setOnClickListener{
             (activity as MainActivity).openUploadFragment()

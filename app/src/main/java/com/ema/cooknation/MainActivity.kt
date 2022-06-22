@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         mAuth = FirebaseAuth.getInstance()
 
-
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
         //load initial fragment -> here m1_home
