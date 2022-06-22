@@ -2,13 +2,17 @@ package com.ema.cooknation
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.ema.cooknation.viewmodel.AppViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
+
+    val model: AppViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CookNation)
@@ -19,6 +23,12 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
         //load initial fragment -> here m1_home
         openFragment(M1Home.newInstance("a","b"))
+        //val currentFragment = model.currentFragment.value
+        //val username = model.username.value
+        //val homeFragment = currentFragment.newInstance("e","f")
+        model.currentFragment.observe(this) { fragment ->
+            openFragment(fragment)
+        }
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -55,16 +65,12 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m2_explore -> {
-                val emptyFragment = EmptyFragment.newInstance("","")
                 val exploreFragment = M2Explore.newInstance("c","d")
-                openFragment(emptyFragment)
                 openFragment(exploreFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m3_search -> {
-                val emptyFragment = EmptyFragment.newInstance("","")
                 val searchFragment = M3Search.newInstance("e","f")
-                openFragment(emptyFragment)
                 openFragment(searchFragment)
                 return@OnNavigationItemSelectedListener true
             }

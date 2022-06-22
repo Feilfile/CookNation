@@ -3,13 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/drawable/ic_baseline_food_bank_24.xml" value="0.278" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/activity_s1_recipe_view.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/activity_scrolling_test.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/card_cell.xml" value="0.25" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/dialog_create_recipe.xml" value="0.33" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_empty.xml" value="0.27708333333333335" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_m1_home.xml" value="0.33" />
+        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_m1_home.xml" value="0.17391304347826086" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_m2_explore.xml" value="0.33" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_m3_search.xml" value="0.17391304347826086" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/fragment_m4_2_register_login.xml" value="0.1884498480243161" />
@@ -25,7 +23,6 @@
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s4_login.xml" value="0.3875" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s4_login_old.xml" value="0.371875" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/s5_register_old.xml" value="0.20208333333333334" />
-        <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/layout/web_view.xml" value="0.2760416666666667" />
         <entry key="..\:/Users/Leon/StudioProjects/cook-nation/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.148" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/activity_main.xml" value="0.24682971014492755" />
@@ -33,10 +30,11 @@
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/activity_scrolling_test.xml" value="0.223731884057971" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/card_cell.xml" value="0.33" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/content_scrolling.xml" value="0.33" />
+        <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_empty.xml" value="0.33" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_fullscreen_test.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_m1_home.xml" value="0.25" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_m2_explore.xml" value="0.25" />
-        <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_m3_search.xml" value="0.24682971014492755" />
+        <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_m3_search.xml" value="0.33" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_m4_2_register_login.xml" value="0.25" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_m4_profile.xml" value="0.25" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/fragment_s4_login.xml" value="0.25" />
@@ -54,6 +52,7 @@
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/m4x2_myprofile.xml" value="0.25" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/main_activity.xml" value="0.25" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/s1_recipeview.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/s1_recipeview_old.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/s2_upload.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/s3_edit.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/s4_login.xml" value="0.25" />
@@ -64,6 +63,7 @@
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/layout/test.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3359375" />
         <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/menu/menu_scrolling_activity_test.xml" value="0.2677083333333333" />
+        <entry key="..\:/Users/Matthias/StudioProjects/cook-nation-fromgit/app/src/main/res/menu/searching_item.xml" value="0.67" />
       </map>
     </option>
   </component>
