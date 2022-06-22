@@ -142,6 +142,10 @@ class M3Search : Fragment() {
 
                         if(it.title?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
                             temprecipeArrayList.add(it)
+                        } else if (it.author?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
+                            temprecipeArrayList.add(it)
+                        } else if (it.ingredients?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
+                            temprecipeArrayList.add(it)
                         }
                     }
                     cardAdapter.notifyDataSetChanged()
