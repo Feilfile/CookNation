@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,8 +40,8 @@ class M3Search : Fragment() {
     private lateinit var temprecipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
 
-    //Searching Elements
     private lateinit var searchBarText: SearchView
+    private lateinit var sorter: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,23 +53,32 @@ class M3Search : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeElements(view)
+        setupRecyclerView()
+        activateSearchBar()
+    }
+
+    private fun initializeElements(view : View) {
         db = Firebase.firestore
-        //recyclerView = requireActivity().findViewById(R.id.rvSearchRecyclerView)
+        sorter = view.findViewById(R.id.ibSearchButton)
+        sorter.setOnClickListener{
+            sortElementsByNewest()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        // 2 cards per row
         val layoutManager = GridLayoutManager(this.context, 2)
-        //layoutManager.orientation = GridLayoutManager.HORIZONTAL
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-
         recipeArrayList = arrayListOf()
         temprecipeArrayList = arrayListOf()
-
         cardAdapter = CardAdapter(temprecipeArrayList)
-
         recyclerView.adapter = cardAdapter
-
         eventChangeListener()
     }
 
+    //Loads all Elements into the adapter and sorts it before they load
     private fun eventChangeListener() {
         db.collection("recipes")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
@@ -86,8 +97,7 @@ class M3Search : Fragment() {
                         }
                     }
                     temprecipeArrayList.addAll(recipeArrayList)
-                    cardAdapter.notifyDataSetChanged()
-                    activateSearchBar()
+                    sortElementsByTitle()
                 }
             })
     }
@@ -99,7 +109,6 @@ class M3Search : Fragment() {
         val searchView = item?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -126,6 +135,35 @@ class M3Search : Fragment() {
         })
     }*/
 
+    private fun sortElementsByTitle(){
+        val sortedList = temprecipeArrayList.sortedWith(compareBy {
+            it.title.toString().lowercase()
+        })
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsByNewest(){
+        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
+            it.date
+        })
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsByOldest(){
+        val sortedList = temprecipeArrayList.sortedWith(compareBy {
+            it.date
+        })
+        refreshAdapter(sortedList)
+    }
+
+    //TODO: private fun SortByRating(){} and other sorting possibilities
+
+    private fun refreshAdapter(sortedList: List<Recipe>){
+        temprecipeArrayList.clear()
+        temprecipeArrayList.addAll(sortedList)
+        cardAdapter.notifyDataSetChanged()
+    }
+
     private fun activateSearchBar() {
 
         searchBarText.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -135,30 +173,45 @@ class M3Search : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 temprecipeArrayList.clear()
-                val searchBarText = newText!!.lowercase(Locale.getDefault())
+                //conversion to lowercase
+                var searchBarText = newText!!.lowercase(Locale.getDefault())
+                //deletion of whitespaces TODO: extract in separate Function
+                searchBarText = searchBarText.replace("\\s".toRegex(), "")
                 if (searchBarText.isNotEmpty()) {
+                    //all tags get split after a ',' and separated in a new array called words
+                    var words = searchBarText.split(",").toTypedArray()
+                    words = removeDuplicates(words)
+                    val lastItem = words.last()
 
                     recipeArrayList.forEach{
-
-                        if(it.title?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
-                            temprecipeArrayList.add(it)
-                        } else if (it.author?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
-                            temprecipeArrayList.add(it)
-                        } else if (it.ingredients?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
-                            temprecipeArrayList.add(it)
+                        //checks if all tags are found inside the Recipe and if so it adds it into the bew list
+                        for(word in words) {
+                            if (it.title?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word)
+                                || it.author?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word)
+                                || it.ingredients?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word))
+                            {
+                                if(word == lastItem) {
+                                    temprecipeArrayList.add(it)
+                                }
+                                continue
+                            } else {
+                                break
+                            }
                         }
                     }
                     cardAdapter.notifyDataSetChanged()
                 } else {
-                    temprecipeArrayList.clear()
-                    temprecipeArrayList.addAll(recipeArrayList)
-                    cardAdapter.notifyDataSetChanged()
+                    refreshAdapter(recipeArrayList)
                 }
 
                 return false
             }
 
         })
+    }
+
+    fun removeDuplicates(array: Array<String>): Array<String>{
+        return array.distinct().toTypedArray()
     }
 
     override fun onCreateView(

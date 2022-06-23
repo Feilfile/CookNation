@@ -19,27 +19,30 @@
 
     <SearchView
         android:id="@+id/etSearchBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="10dp"
         app:layout_constraintBottom_toTopOf="@+id/rvSearchRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/ibSearchButton"
+        app:layout_constraintLeft_toRightOf="@+id/ibSearchButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--<ImageButton
+    <ImageButton
         android:id="@+id/ibSearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
+        android:layout_marginEnd="4dp"
         android:minHeight="48dp"
         android:src="@drawable/ic_baseline_search_24"
         app:layout_constraintBottom_toTopOf="@+id/rvSearchRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:showAsAction="always|collapseActionView"/>
--->
+        app:showAsAction="always|collapseActionView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
