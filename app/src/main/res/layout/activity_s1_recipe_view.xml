@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -47,8 +48,16 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/tvAuthor"
                 android:layout_alignStart="@+id/tvRecipeName"
+                app:mrb_fillBackgroundStars="false"
                 app:mrb_progressTint="@android:color/white"
                 app:mrb_secondaryProgressTint="@android:color/white" />
+
+            <View
+                android:id="@+id/vRatingButton"
+                android:layout_marginStart="8dp"
+                android:layout_width="180dp"
+                android:layout_height="38dp"
+                android:layout_below="@+id/tvRecipeName"/>
 
             <TextView
                 android:id="@+id/numRatings"
@@ -59,9 +68,10 @@
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@id/avgRating"
                 android:gravity="center"
+                android:text="@string/no_reviews"
                 android:textColor="@android:color/white"
-                android:text="(0)"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/tvAuthor"
@@ -77,13 +87,14 @@
 
             <TextView
                 android:id="@+id/text_divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/tvAuthor"
                 android:layout_toEndOf="@+id/tvAuthor"
-                android:text="@string/divider"
-                android:textSize="20sp"
+                android:text="  •  "
                 android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/tvDate"
@@ -91,10 +102,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvAuthor"
                 android:layout_alignTop="@+id/tvAuthor"
-                android:layout_toRightOf="@+id/text_divider"
-                android:text="Date"
+                android:layout_toEndOf="@+id/text_divider"
+                android:text="@string/date"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                tools:ignore="TextContrastCheck" />
         </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -148,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/lorem_ipsum"
                 android:textSize="17sp" />
 

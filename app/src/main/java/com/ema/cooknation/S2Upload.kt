@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -69,7 +70,7 @@ class S2Upload : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
         val btnUpload = getView()?.findViewById<Button>(R.id.btnUpload)
-        val btnSelect = getView()?.findViewById<Button>(R.id.btnSelectImage)
+        val btnSelect = getView()?.findViewById<ImageButton>(R.id.ibPreview)
 
         btnSelect?.setOnClickListener{
             selectImage()
@@ -94,12 +95,12 @@ class S2Upload : Fragment() {
             filepath = data.data!!
             bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, filepath)
             val resized = Bitmap.createScaledBitmap(bitmap, 960,640,false)
-            val iv = view?.findViewById<ImageView>(R.id.ivPreview)
+            val iv = view?.findViewById<ImageView>(R.id.ibPreview)
             iv?.setImageBitmap(resized)
         }
     }
 
-    private fun addRecipe(inputTitle: String, inputDescription: String) {
+    private fun addRecipe(inputTitle: String, inputDirections: String, inputIngredients: String) {
 
         val storageRef = FirebaseStorage.getInstance().getReference("Recipes/$inputTitle")
         storageRef.putFile(filepath).
@@ -117,8 +118,8 @@ class S2Upload : Fragment() {
             "title" to inputTitle,
             "date" to date,
             "picturePath" to picturePath,
-            "directions" to inputDescription,
-            "ingredients" to "Placeholder",
+            "directions" to inputDirections,
+            "ingredients" to inputIngredients,
             "ratingCount " to 0,
             "avgRating" to 0.0
             )
@@ -140,21 +141,20 @@ class S2Upload : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
-
     }
 
     private fun uploadRecipe() {
         val title = view?.findViewById<TextInputEditText>(R.id.etRecipeName)?.text.toString()
-        val description = view?.findViewById<TextInputEditText>(R.id.etRecipeDescription)?.text.toString()
-        if(TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(filepath.toString())) {
+        val directions = view?.findViewById<TextInputEditText>(R.id.etDirections)?.text.toString()
+        val ingredients = view?.findViewById<TextInputEditText>(R.id.etIngredients)?.text.toString()
+        if(TextUtils.isEmpty(title) || TextUtils.isEmpty(directions) || TextUtils.isEmpty(ingredients) || TextUtils.isEmpty(filepath.toString())) {
             Toast.makeText(
                 activity,
                 "Empty field not allowed!",
                 Toast.LENGTH_SHORT
             ).show()
         } else  {
-            addRecipe(title, description)
+            addRecipe(title, directions, ingredients)
             //activity?.supportFragmentManager?.popBackStack()
         }
     }

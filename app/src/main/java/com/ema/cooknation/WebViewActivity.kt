@@ -12,17 +12,23 @@ import androidx.annotation.RequiresApi
 
 class WebViewActivity : AppCompatActivity() {
 
-    val webView : WebView = findViewById(R.id.webView)
 
+    @SuppressLint("SetJavaScriptEnabled")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.web_view)
 
-
-        webViewSetup()
+        val webView : WebView = findViewById(R.id.webView)
+        webView.apply {
+            loadUrl("https://www.example.com/")
+            settings.javaScriptEnabled = true
+            settings.safeBrowsingEnabled = true
+            settings.domStorageEnabled = true
+        }
+        //webViewSetup()
     }
-
+/*
     @SuppressLint("SetJavaScriptEnabled")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun webViewSetup() {
@@ -38,5 +44,5 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (webView.canGoBack()) webView.goBack() else super.onBackPressed()
-    }
+    }*/
 }

@@ -10,7 +10,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="select">Select img</string>
-    <string name="recipe_name">Rezeptname</string>
+    <string name="recipe_name">Recipe Name</string>
     <string name="upload">Upload</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -112,6 +112,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="directions">Directions</string>
     <string name="lorem_ipsum_list">- Lorem ipsum dolor sit amet\n- consetetur sadipscing elitr\n- sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat\n- sed diam voluptua\n- At vero eos et accusam et justo duo dolores et ea rebum\n- Stet clita kasd gubergren\n- no sea takimata sanctus est Lorem ipsum dolor sit amet</string>
-    <string name="divider">•</string>
     <string name="author">Author</string>
+    <string name="no_reviews">(0)</string>
+    <string name="date">Date</string>
 </resources>
