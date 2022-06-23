@@ -114,13 +114,14 @@ class S2Upload : Fragment() {
         val date = getCurrentDate()
         val recipe = hashMapOf(
                 //TODO: add current date -> Date Format and ingredients -> Array Format
+            "uid" to mAuth.uid.toString(),
             "author" to null,
             "title" to inputTitle,
             "date" to date,
             "picturePath" to picturePath,
             "directions" to inputDirections,
             "ingredients" to inputIngredients,
-            "ratingCount " to 0,
+            "ratingCount" to 0,
             "avgRating" to 0.0
             )
         db.collection("recipes").document("${mAuth.uid}.$inputTitle")

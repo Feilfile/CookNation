@@ -92,6 +92,7 @@ class Recipe {
 }*/
 
 data class Recipe (
+    var uid: String? = null,
     var title: String? = null,
     var author: String? = null,
     var date: java.util.Date? = null,
@@ -99,4 +100,17 @@ data class Recipe (
     var directions: String? = null,
     var ingredients: String? = null,
     var numRatings: Int = 0,
-    var avgRating: Double = 0.0) : Serializable
+    var avgRating: Double = 0.0) : Serializable {
+
+        fun addNewRating(userRating: Int) {
+            val tempValue = avgRating * numRatings + userRating.toDouble()
+            numRatings++
+            avgRating = tempValue/numRatings
+        }
+        fun updateExistingRaring(oldUserRating: Int, newUserRating: Int) {
+            val tempValue = avgRating * numRatings - oldUserRating.toDouble() + newUserRating.toDouble()
+            avgRating = tempValue/numRatings
+        }
+
+
+    }

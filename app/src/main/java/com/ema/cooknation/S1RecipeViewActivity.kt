@@ -31,8 +31,9 @@ class S1RecipeViewActivity : AppCompatActivity() {
         initializeVariables()
         setContent()
         ratingButton.setOnClickListener{
-            Log.d("onClickListenr", "success")
-            startActivity(Intent(this@S1RecipeViewActivity, PopupRating::class.java))
+            intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
+            intent.putExtra("recipe", recipe)
+            startActivity(intent)
         }
 
     }
