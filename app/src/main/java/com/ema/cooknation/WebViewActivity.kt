@@ -12,12 +12,13 @@ import androidx.annotation.RequiresApi
 
 class WebViewActivity : AppCompatActivity() {
 
-    var wbWebView : WebView = findViewById(R.id.wbWebView)
+    val webView : WebView = findViewById(R.id.webView)
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.web_view)
+
 
         webViewSetup()
     }
@@ -25,10 +26,10 @@ class WebViewActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun webViewSetup() {
-        wbWebView.webViewClient = WebViewClient()
+        webView.webViewClient = WebViewClient()
 
-        wbWebView.apply {
-            loadUrl("https://www.gooogle.com/")
+        webView.apply {
+            loadUrl("https://www.google.com/")
             settings.javaScriptEnabled = true
             settings.safeBrowsingEnabled = true
             settings.domStorageEnabled = true
@@ -36,6 +37,6 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(wbWebView.canGoBack()) wbWebView.goBack() else super.onBackPressed()
+        if (webView.canGoBack()) webView.goBack() else super.onBackPressed()
     }
 }

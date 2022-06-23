@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         openFragment(registerLogin)
     }
 
+    fun openWebViewActivity() {
+        startActivity(Intent(this@MainActivity, WebViewActivity::class.java))
+    }
+
     fun openLoginActivity() {
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
     }

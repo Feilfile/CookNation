@@ -1,5 +1,6 @@
 package com.ema.cooknation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -94,7 +95,7 @@ class M4x1profile : Fragment() {
 
         // Button to go to WebView
         ibButtonImpressum?.setOnClickListener {
-            (activity as MainActivity).setContentView(R.layout.web_view)
+            (activity as MainActivity).openWebViewActivity()
         }
 
         btnProfileUpload?.setOnClickListener{
