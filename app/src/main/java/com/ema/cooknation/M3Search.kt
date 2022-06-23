@@ -184,7 +184,7 @@ class M3Search : Fragment() {
                     val lastItem = words.last()
 
                     recipeArrayList.forEach{
-                        //checks if all tags are found inside the Recipe and if so it adds it into the bew list
+                        //checks if all tags are found inside the Recipe and so it adds it into the bew list
                         for(word in words) {
                             if (it.title?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word)
                                 || it.author?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word)

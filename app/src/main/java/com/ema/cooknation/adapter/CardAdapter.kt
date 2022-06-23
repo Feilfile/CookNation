@@ -2,6 +2,7 @@ package com.ema.cooknation.adapter
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,10 +53,10 @@ class CardAdapter(private val recipes: ArrayList<Recipe>)
         val localFile = File.createTempFile("tempFile", ".jpg")
         storageRef.getFile(localFile)
             .addOnSuccessListener {
-                var bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 holder.picture.setImageBitmap(bitmap)
             }.addOnFailureListener{
-                //TODO: implement OnFailureListener in loadPictureInContainer
+                Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }
     }
 
