@@ -116,4 +116,11 @@
     <string name="no_reviews">(0)</string>
     <string name="date">Date</string>
     <string name="recipe_img">Recipe Img</string>
+    <string name="image_of_recipe">Image of Recipe</string>
+    <string name="icon_for_fav_button">Icon for fav-Button</string>
+    <string name="edit_button">Edit-Button</string>
+    <string name="delete_button">Delete-Button</string>
+    <string name="webview_impressum_button">Webview Impressum-Button</string>
+    <string name="username">Username</string>
+    <string name="profile_picture">Profile Picture</string>
 </resources>
