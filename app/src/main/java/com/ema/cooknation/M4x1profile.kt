@@ -1,6 +1,7 @@
 package com.ema.cooknation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,13 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.adapter.CardAdapter
+import com.ema.cooknation.model.Recipe
 import com.ema.cooknation.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -29,10 +35,18 @@ class M4x1profile : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var db: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recipeArrayList: ArrayList<Recipe>
+    private lateinit var temprecipeArrayList: ArrayList<Recipe>
+    private lateinit var cardAdapter: CardAdapter
     private lateinit var mAuth: FirebaseAuth
-    override fun onCreate(savedInstanceState: Bundle?) {
 
-        mAuth = FirebaseAuth.getInstance()
+    private lateinit var ibButtonImpressum: ImageButton
+    private lateinit var btnSignOut: Button
+    private lateinit var btnProfileUpload: Button
+    private lateinit var tvProfileName: TextView
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -50,8 +64,15 @@ class M4x1profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_m4_profile, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_m4_profile, container, false)
+        recyclerView = rootView.findViewById(R.id.rvProfileRecyclerView)
+        ibButtonImpressum = rootView.findViewById(R.id.ibButtonImpressum)
+        btnSignOut = rootView.findViewById(R.id.btnSignOut)
+        btnProfileUpload = rootView.findViewById(R.id.btnProfileUpload)
+        tvProfileName = rootView.findViewById(R.id.tvProfileName)
+        mAuth = FirebaseAuth.getInstance()
+        db = Firebase.firestore
+        return rootView
     }
 
     companion object {
@@ -77,12 +98,12 @@ class M4x1profile : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val btnSignOut = getView()?.findViewById<Button>(R.id.btnSignOut)
-        val btnProfileUpload = getView()?.findViewById<Button>(R.id.btnProfileUpload)
-        val tvProfileName = getView()?.findViewById<TextView>(R.id.tvProfileName)
-        val ibButtonImpressum = getView()?.findViewById<ImageButton>(R.id.ibButtonImpressum)
+        super.onViewCreated(view, savedInstanceState)
+        setUpElements()
+        setupRecyclerView()
+    }
 
-        val db = Firebase.firestore
+    private fun setUpElements() {
         //dc.document.toObject((Recipe::class.java))
         db.collection("user")
             .document(mAuth.uid.toString())
@@ -91,22 +112,70 @@ class M4x1profile : Fragment() {
                 val user = document.toObject<User>()
                 tvProfileName?.text = user?.username
             }
-
         // Button to go to WebView
-        ibButtonImpressum?.setOnClickListener {
+        ibButtonImpressum.setOnClickListener {
             (activity as MainActivity).openWebViewActivity()
         }
 
-        btnProfileUpload?.setOnClickListener{
+        btnProfileUpload.setOnClickListener{
             (activity as MainActivity).openUploadFragment()
         }
         // Setup SignOut Button when Loading Fragment
-        btnSignOut?.setOnClickListener{
+        btnSignOut.setOnClickListener{
             mAuth.signOut()
             (activity as MainActivity).performLogout()
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun setupRecyclerView() {
+        // 2 cards per row
+        val layoutManager = GridLayoutManager(this.context, 2)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        recipeArrayList = arrayListOf()
+        temprecipeArrayList = arrayListOf()
+        cardAdapter = CardAdapter(temprecipeArrayList)
+        recyclerView.adapter = cardAdapter
+        eventChangeListener()
+    }
+
+    private fun sortElementsByNewest(){
+        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
+            it.date
+        })
+        refreshAdapter(sortedList)
+    }
+
+    private fun refreshAdapter(sortedList: List<Recipe>){
+        temprecipeArrayList.clear()
+        temprecipeArrayList.addAll(sortedList)
+        cardAdapter.notifyDataSetChanged()
+    }
+
+    private fun eventChangeListener() {
+        db.collection("recipes")
+            .whereEqualTo("uid", mAuth.uid)
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(
+                    value: QuerySnapshot?,
+                    error: FirebaseFirestoreException?
+                ) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.message.toString())
+                        return
+                    }
+                    //recipeArray needs to be cleared otherwise the Dataset will be doubled after changing a recipe
+                    recipeArrayList.clear()
+
+                    for (dc: DocumentChange in value?.documentChanges!!) {
+                        if (dc.type == DocumentChange.Type.ADDED) {
+                            recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
+                        }
+                    }
+                    temprecipeArrayList.addAll(recipeArrayList)
+                    sortElementsByNewest()
+                }
+            })
+    }
 
 }

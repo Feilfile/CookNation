@@ -89,6 +89,8 @@ class M3Search : Fragment() {
                         Log.e("Firestore Error", error.message.toString())
                         return
                     }
+                    //recipeArray needs to be cleared otherwise the Dataset will be doubled after changing a recipe
+                    recipeArrayList.clear()
 
                     for (dc: DocumentChange in value?.documentChanges!!) {
                         if (dc.type == DocumentChange.Type.ADDED) {

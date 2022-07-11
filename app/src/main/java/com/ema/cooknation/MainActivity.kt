@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
 
-                val profileFragment = M4x1profile.newInstance("g","h")
+                val profileFragment = M4x1profile.newInstance("", "")
                 openFragment(profileFragment)
                 return@OnNavigationItemSelectedListener true
             }
