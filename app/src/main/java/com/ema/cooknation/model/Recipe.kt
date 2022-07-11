@@ -1,50 +1,70 @@
 package com.ema.cooknation.model
 
 import java.io.Serializable
+import java.util.*
 
 /*var recipeList = mutableListOf<Recipe>()
 
 class Recipe {
 
-    val FIELD_TITLE = "title"
-    val FIELD_DATE = "date"
-    val FIELD_PICTURE_PATH = "picturePath"
-    val FIELD_DIRECTIONS = "directions"
-    val FIELD_INGREDIENTS = "ingredients"
-    val FIELD_AVG_RATING = "avgRating"
-
+    private var author: String? = null
     private var title: String? = null
-    private var date: String? = null
+    private var date: Date? = null
     private var picturePath: String? = null
     private var directions: String? = null
     private var ingredients: String? = null
-    private var numRatings: Int? = null
+    private var ratingCount: Int? = null
     private var avgRating: Double? = null
-
-    constructor() {}
+    private var uid : String? = null
 
     constructor(
-        title: String?, date: String?, picturePath: String?, directions: String?,
-        ingredients: String?, numRatings: Int, avgRating: Double
+        author : String, avgRating: Double, date: Date, directions: String,
+        ingredients: String, picturePath: String, ratingCount: Int, title: String, uid: String
     ) {
+        this.author = author
         this.title = title
         this.date = date
         this.picturePath = picturePath
         this.directions = directions
         this.ingredients = ingredients
-        this.numRatings = numRatings
+        this.ratingCount = ratingCount
         this.avgRating = avgRating
+        this.uid = uid
+    }
+
+    fun getTitle(): String? {
+        return title
+    }
+
+    fun getAuthor(): String? {
+        return author
+    }
+
+    fun getIngredients(): String? {
+        return ingredients
+    }
+
+    fun getDirections(): String? {
+        return directions
+    }
+
+    fun getDate(): Date? {
+        return date
+    }
+
+    fun getRatingCount(): Int? {
+        return ratingCount
+    }
+
+    fun getAvgRating(): Double? {
+        return avgRating
     }
 
     fun setTitle(title: String?) {
         this.title = title
     }
 
-    fun getDate(): String? {
-        return date
-    }
-
-    fun setDate(date: String?) {
+    fun setDate(date: Date?) {
         this.date = date
     }
 
@@ -56,60 +76,35 @@ class Recipe {
         this.picturePath = picturePath
     }
 
-    fun getDirections(): String? {
-        return directions
-    }
-
-    fun setDirections(photo: String?) {
-        this.directions = directions
-    }
-
-    fun getIngredients(): String? {
-        return ingredients
-    }
-
     fun setIngredients(price: Int) {
         this.ingredients = ingredients
-    }
-
-    fun getNumRatings(): Int? {
-        return numRatings
-    }
-
-    fun setNumRatings(numRatings: Int) {
-        this.numRatings = numRatings
-    }
-
-    fun getAvgRating(): Double? {
-        return avgRating
     }
 
     fun setAvgRating(avgRating: Double) {
         this.avgRating = avgRating
     }
 
-
 }*/
 
-data class Recipe (
+data class Recipe(
     var uid: String? = null,
     var title: String? = null,
     var author: String? = null,
-    var date: java.util.Date? = null,
+    var date: Date? = null,
     var picturePath: String? = null,
     var directions: String? = null,
     var ingredients: String? = null,
-    var numRatings: Int = 0,
-    var avgRating: Double = 0.0) : Serializable {
+    var ratingCount: Int = 0,
+    var avgRating: Float = 0.0f) : Serializable {
 
         fun addNewRating(userRating: Int) {
-            val tempValue = avgRating * numRatings + userRating.toDouble()
-            numRatings++
-            avgRating = tempValue/numRatings
+            val tempValue = avgRating * ratingCount + userRating
+            ratingCount++
+            avgRating = tempValue/ratingCount
         }
-        fun updateExistingRaring(oldUserRating: Int, newUserRating: Int) {
-            val tempValue = avgRating * numRatings - oldUserRating.toDouble() + newUserRating.toDouble()
-            avgRating = tempValue/numRatings
+        fun updateExistingRating(oldUserRating: Int, newUserRating: Int) {
+            val tempValue: Float = avgRating * ratingCount - oldUserRating + newUserRating
+            avgRating = tempValue/ratingCount
         }
 
 

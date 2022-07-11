@@ -9,6 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ema.cooknation.model.Recipe
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
@@ -16,6 +19,7 @@ import java.io.File
 class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipe: Recipe
     private lateinit var avgRating: MaterialRatingBar
+    private lateinit var numRating: TextView
     private lateinit var recipeTitle: TextView
     private lateinit var recipeImage: ImageView
     private lateinit var recipeAuthor: TextView
@@ -24,21 +28,41 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeDate: TextView
     private lateinit var ratingButton: View
 
+    private lateinit var db: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s1_recipe_view)
         recipe = intent.extras?.get("recipe") as Recipe
         initializeVariables()
-        setContent()
-        ratingButton.setOnClickListener{
-            intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
-            intent.putExtra("recipe", recipe)
-            startActivity(intent)
-        }
+        refreshData()
+    }
 
+    override fun onRestart() {
+        super.onRestart()
+        recreate()
+    }
+
+    private fun refreshData() {
+        db.collection("recipes")
+            .document("${recipe.uid}.${recipe.title}")
+            .get()
+            .addOnSuccessListener { document ->
+                val newAvgRating = document.toObject(Recipe::class.java)!!.avgRating
+                val newRatingCount = document.toObject(Recipe::class.java)!!.ratingCount
+                recipe.avgRating = newAvgRating
+                recipe.ratingCount = newRatingCount
+                setContent()
+                ratingButton.setOnClickListener{
+                    intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
+                    intent.putExtra("recipe", recipe)
+                    startActivity(intent)
+                }
+            }
     }
 
     private fun initializeVariables() {
+        db = Firebase.firestore
         recipeTitle = findViewById(R.id.tvRecipeName)
         recipeImage = findViewById(R.id.ivRecipeImg)
         recipeAuthor = findViewById(R.id.tvAuthor)
@@ -46,6 +70,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipeDirections = findViewById(R.id.tvDirections)
         recipeDate = findViewById(R.id.tvDate)
         avgRating = findViewById(R.id.mrbAvgRating)
+        numRating = findViewById(R.id.tvNumRatings)
         ratingButton = findViewById(R.id.vRatingButton)
     }
 
@@ -56,10 +81,8 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipeIngredients.text = recipe.ingredients.toString()
         recipeDirections.text = recipe.directions.toString()
         recipeDate.text = recipe.date.toString()
-        //TODO: FIX FLOATING STARS
-        avgRating.rating = recipe.avgRating.toFloat()
-        //avgRating.setRating(recipe.avgRating.toFloat())
-        Log.d("avgRating", recipe.avgRating.toString())
+        numRating.text = recipe.ratingCount.toString()
+        avgRating.rating = recipe.avgRating
     }
 
 
