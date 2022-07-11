@@ -14,7 +14,7 @@
         android:clickable="true"
         app:cardElevation="7dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/llCardCell"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -33,27 +33,41 @@
                 android:id="@+id/tvRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/ivRecipeImg"
                 android:gravity="center"
+                android:padding="2dp"
                 android:text="@string/recipe_name"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvRecipeName"
+                android:layout_toRightOf="@id/mrbCardAvgRating"
+                android:gravity="center"
+                android:lines="1"
+                android:text="@string/author"
+                android:textColor="#404040"
+                android:textSize="21sp" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/mrbCardAvgRating"
                 style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_below="@id/tvRecipeName"
                 android:isIndicator="false"
                 android:numStars="5"
                 android:stepSize="0.1"
-                app:mrb_fillBackgroundStars="true"
-                app:mrb_progressTint="#b7dd29" />
+                app:mrb_fillBackgroundStars="false"
+                app:mrb_progressTint="@android:color/white"
+                app:mrb_secondaryProgressTint="@android:color/white" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -15,9 +15,9 @@ import com.ema.cooknation.R
 import com.ema.cooknation.S1RecipeViewActivity
 import com.ema.cooknation.model.Recipe
 import com.google.firebase.storage.FirebaseStorage
+import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
 import java.io.Serializable
-
 
 class CardAdapter(private val recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<CardAdapter.ViewHolder>()
@@ -33,7 +33,8 @@ class CardAdapter(private val recipes: ArrayList<Recipe>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : Recipe = recipes[position]
         holder.title.text = recipe.title
-        holder.author.text = recipe.author
+        //holder.author.text = recipe.author
+        holder.rating.rating = recipe.avgRating
         loadPictureInContainer(recipe, holder)
         setupOnClickListener(holder, position)
     }
@@ -41,8 +42,10 @@ class CardAdapter(private val recipes: ArrayList<Recipe>)
     //references the elements inside the card_cell
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val title : TextView = itemView.findViewById(R.id.tvRecipeName)
-        val author : TextView = itemView.findViewById(R.id.tvAuthor)
+        //val author : TextView = itemView.findViewById(R.id.tvAuthor)
         var picture : ImageView = itemView.findViewById(R.id.ivRecipeImg)
+
+        val rating : MaterialRatingBar = itemView.findViewById(R.id.mrbCardAvgRating)
     }
 
     override fun getItemCount(): Int = recipes.size

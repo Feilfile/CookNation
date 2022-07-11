@@ -115,4 +115,5 @@
     <string name="author">Author</string>
     <string name="no_reviews">(0)</string>
     <string name="date">Date</string>
+    <string name="recipe_img">Recipe Img</string>
 </resources>
