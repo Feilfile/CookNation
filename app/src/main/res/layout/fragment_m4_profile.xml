@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#fafafa">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,20 +54,31 @@
             android:scaleY="2"
             android:text="" />
 
-        <Button
-            android:layout_marginTop="50dp"
-            android:id="@+id/btnProfileUpload"
+        <TextView
+            android:id="@+id/tvMyUploads"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvProfileName"
-            android:layout_centerHorizontal="true"
-            android:text="@string/upload" />
+            android:layout_below="@+id/tvProfileName"
+            android:paddingStart="15dp"
+            android:text="My Uploads"
+            android:layout_marginTop="35dp"
+            android:textSize="25sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProfileRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnProfileUpload" />
+            android:layout_below="@id/tvMyUploads"
+            android:layout_marginTop="15dp" />
+
+        <Button
+            android:layout_marginTop="15dp"
+            android:id="@+id/btnProfileUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rvProfileRecyclerView"
+            android:layout_centerHorizontal="true"
+            android:text="@string/upload" />
 
     </RelativeLayout>
 </ScrollView>

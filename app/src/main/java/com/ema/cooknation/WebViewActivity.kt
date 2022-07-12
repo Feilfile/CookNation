@@ -17,13 +17,14 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(R.layout.web_view)
 
         val webView : WebView = findViewById(R.id.webView)
+        webView.setWebViewClient(myWebViewClient())
         webView.apply {
-            loadUrl("https://www.example.com/")
+            loadUrl("https://www.facebook.com/Cooknation-107542382025670")
             settings.javaScriptEnabled = true
             settings.safeBrowsingEnabled = true
             settings.domStorageEnabled = true
         }
-        //webViewSetup()
+        //https://www.facebook.com/Cooknation-107542382025670
     }
 /*
     @SuppressLint("SetJavaScriptEnabled")

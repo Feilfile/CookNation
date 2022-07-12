@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".M2Explore">
+    tools:context=".M2Explore"
+    android:background="#fafafa">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exploreRecyclerView"

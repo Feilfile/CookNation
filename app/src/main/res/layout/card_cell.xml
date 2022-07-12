@@ -36,18 +36,17 @@
                 android:gravity="center"
                 android:text="@string/recipe_name"
                 android:textColor="@color/black"
-                android:textSize="15sp"
-
+                android:paddingBottom="4dp"
+                android:textSize="18sp"
                 android:textStyle="bold"/>
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:isIndicator="true"
                 android:id="@+id/mrbCardAvgRating"
                 style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_below="@id/tvRecipeName"
-                android:isIndicator="false"
                 android:numStars="5"
                 android:stepSize="0.1"
                 app:mrb_fillBackgroundStars="true"

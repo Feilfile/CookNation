@@ -123,4 +123,6 @@
     <string name="webview_impressum_button">Webview Impressum-Button</string>
     <string name="username">Username</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="cooknation">Cooknation™</string>
+    <string name="logo_in_splash_screen">Logo in Splash Screen</string>
 </resources>
