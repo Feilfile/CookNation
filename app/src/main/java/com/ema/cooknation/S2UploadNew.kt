@@ -1,22 +1,19 @@
 package com.ema.cooknation
 
 import android.app.Activity
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.ema.cooknation.model.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -27,22 +24,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.sql.Timestamp
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [S2Upload.newInstance] factory method to
- * create an instance of this fragment.
- */
-class S2Upload : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class S2UploadNew : AppCompatActivity() {
     private lateinit var filepath : Uri
     private lateinit var bitmap : Bitmap
     private lateinit var db: FirebaseFirestore
@@ -50,33 +32,17 @@ class S2Upload : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.s2_upload, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setContentView(R.layout.activity_s2_upload_new)
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
-        val btnUpload = getView()?.findViewById<Button>(R.id.btnUpload)
-        val btnSelect = getView()?.findViewById<ImageButton>(R.id.ibPreview)
+        val btnUpload = findViewById<Button>(R.id.btnUpload)
+        val btnSelect = findViewById<ImageButton>(R.id.ibPreview)
 
-        btnSelect?.setOnClickListener{
+        btnSelect.setOnClickListener{
             selectImage()
         }
 
-        btnUpload?.setOnClickListener{
+        btnUpload.setOnClickListener{
             uploadRecipe()
         }
     }
@@ -84,7 +50,7 @@ class S2Upload : Fragment() {
     private fun selectImage() {
         val i = Intent()
         i.type = "image/*"
-        i.action =Intent.ACTION_GET_CONTENT
+        i.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(i, 100)
     }
 
@@ -93,27 +59,28 @@ class S2Upload : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode === 100 && resultCode === Activity.RESULT_OK && data != null) {
             filepath = data.data!!
-            bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, filepath)
+            bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
             val resized = Bitmap.createScaledBitmap(bitmap, 960,640,false)
-            val iv = view?.findViewById<ImageView>(R.id.ibPreview)
+            val iv = findViewById<ImageView>(R.id.ibPreview)
             iv?.setImageBitmap(resized)
         }
     }
 
     private fun addRecipe(inputTitle: String, inputDirections: String, inputIngredients: String) {
 
-        val storageRef = FirebaseStorage.getInstance().getReference("Recipes/$inputTitle")
+        val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${mAuth.uid.toString()}/${inputTitle}")
         storageRef.putFile(filepath).
-            addOnCompleteListener{
-                Log.d("Storage: ", "Picture successfully saved")
-            }.addOnFailureListener{
-               Log.e("Storage: ", "Error while saving Picture")
-            }
-        val picturePath = FirebaseStorage.getInstance().getReference("Recipes/$inputTitle").path
+        addOnCompleteListener{
+            Log.d("Storage: ", "Picture successfully saved")
+        }.addOnFailureListener{
+            Log.e("Storage: ", "Error while saving Picture")
+        }
+        val uid = mAuth.uid.toString()
+        val picturePath = FirebaseStorage.getInstance().getReference("Recipes/${uid}/$inputTitle").path
         val date = getCurrentDate()
         val recipe = hashMapOf(
-                //TODO: add current date -> Date Format and ingredients -> Array Format
-            "uid" to mAuth.uid.toString(),
+            //TODO: add current date -> Date Format and ingredients -> Array Format
+            "uid" to uid,
             "author" to null,
             "title" to inputTitle,
             "date" to date,
@@ -122,21 +89,21 @@ class S2Upload : Fragment() {
             "ingredients" to inputIngredients,
             "ratingCount" to 0,
             "avgRating" to 0.0
-            )
+        )
         db.collection("recipes").document("${mAuth.uid}.$inputTitle")
             .set(recipe)
             .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot successfully written!")
+                Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
                 Toast.makeText(
-                    activity,
+                    this,
                     "Recipe successfully added!",
                     Toast.LENGTH_SHORT
                 ).show()
                 addUserNameToCollection(inputTitle)
             }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e)
+            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e)
                 Toast.makeText(
-                    activity,
+                    this,
                     "Error: Recipe couldn't be added",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -144,12 +111,12 @@ class S2Upload : Fragment() {
     }
 
     private fun uploadRecipe() {
-        val title = view?.findViewById<TextInputEditText>(R.id.etRecipeName)?.text.toString()
-        val directions = view?.findViewById<TextInputEditText>(R.id.etDirections)?.text.toString()
-        val ingredients = view?.findViewById<TextInputEditText>(R.id.etIngredients)?.text.toString()
+        val title = findViewById<TextInputEditText>(R.id.etRecipeName)?.text.toString()
+        val directions = findViewById<TextInputEditText>(R.id.etDirections)?.text.toString()
+        val ingredients = findViewById<TextInputEditText>(R.id.etIngredients)?.text.toString()
         if(TextUtils.isEmpty(title) || TextUtils.isEmpty(directions) || TextUtils.isEmpty(ingredients) || TextUtils.isEmpty(filepath.toString())) {
             Toast.makeText(
-                activity,
+                this,
                 "Empty field not allowed!",
                 Toast.LENGTH_SHORT
             ).show()
@@ -157,26 +124,6 @@ class S2Upload : Fragment() {
             addRecipe(title, directions, ingredients)
             //activity?.supportFragmentManager?.popBackStack()
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment s2_upload.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            S2Upload().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
     private fun addUserNameToCollection(inputTitle: String) {
@@ -190,10 +137,13 @@ class S2Upload : Fragment() {
                 db.collection("recipes")
                     .document("${mAuth.uid}.$inputTitle")
                     .update("author", author)
-                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
-                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+                    .addOnSuccessListener {
+                        Log.d(ContentValues.TAG, "DocumentSnapshot successfully updated!")
+                        finish()
+                    }
+                    .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error updating document", e) }
             } .addOnFailureListener{ e ->
-                Log.w(TAG, "Document not found", e)
+                Log.w(ContentValues.TAG, "Document not found", e)
             }
 
     }
@@ -202,5 +152,5 @@ class S2Upload : Fragment() {
         val tsLong : Long = System.currentTimeMillis()
         return Timestamp(tsLong)
     }
-}
 
+}

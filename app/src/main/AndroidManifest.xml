@@ -16,6 +16,12 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".S2UploadNew"
+            android:exported="false" />
+        <activity
+            android:name=".S3Edit"
+            android:exported="false" />
+        <activity
             android:name=".PopupRating"
             android:exported="false" />
         <activity

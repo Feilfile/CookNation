@@ -136,6 +136,18 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 tools:ignore="TextContrastCheck" />
+
+            <ImageButton
+                android:id="@+id/ibEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="11dp"
+                app:srcCompat="@drawable/ic_baseline_edit_24"
+                android:visibility="invisible"
+                android:clickable="false"/>
         </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -2,21 +2,26 @@ package com.ema.cooknation
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ema.cooknation.model.Recipe
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
 
 class S1RecipeViewActivity : AppCompatActivity() {
+    private lateinit var recipeId: String
     private lateinit var recipe: Recipe
     private lateinit var avgRating: MaterialRatingBar
     private lateinit var numRating: TextView
@@ -27,41 +32,44 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeDirections: TextView
     private lateinit var recipeDate: TextView
     private lateinit var ratingButton: View
+    private lateinit var editButton: ImageButton
+    private lateinit var deleteButten: ImageButton
 
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s1_recipe_view)
-        recipe = intent.extras?.get("recipe") as Recipe
+        recipeId = intent.extras?.get("recipeId") as String
         initializeVariables()
         refreshData()
     }
 
     override fun onRestart() {
         super.onRestart()
-        recreate()
+        refreshData()
     }
 
     private fun refreshData() {
         db.collection("recipes")
-            .document("${recipe.uid}.${recipe.title}")
+            .document(recipeId)
             .get()
             .addOnSuccessListener { document ->
-                val newAvgRating = document.toObject(Recipe::class.java)!!.avgRating
-                val newRatingCount = document.toObject(Recipe::class.java)!!.ratingCount
-                recipe.avgRating = newAvgRating
-                recipe.ratingCount = newRatingCount
+                recipe = document.toObject((Recipe::class.java))!!
                 setContent()
                 ratingButton.setOnClickListener{
                     intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
                     intent.putExtra("recipe", recipe)
                     startActivity(intent)
                 }
+            } .addOnFailureListener{
+                finish()
             }
     }
 
     private fun initializeVariables() {
+        mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
         recipeTitle = findViewById(R.id.tvRecipeName)
         recipeImage = findViewById(R.id.ivRecipeImg)
@@ -72,6 +80,8 @@ class S1RecipeViewActivity : AppCompatActivity() {
         avgRating = findViewById(R.id.mrbAvgRating)
         numRating = findViewById(R.id.tvNumRatings)
         ratingButton = findViewById(R.id.vRatingButton)
+        editButton = findViewById(R.id.ibEditButton)
+        deleteButten = findViewById(R.id.ibDelete)
     }
 
     private fun setContent() {
@@ -83,12 +93,28 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipeDate.text = recipe.date.toString()
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
+        //enable editing and deleting when the User opens his own recipes
+        if (recipe.uid == mAuth.uid) {
+            editButton.visibility = View.VISIBLE
+            editButton.isClickable = true
+            deleteButten.visibility = View.VISIBLE
+            deleteButten.isClickable = true
+        }
+        editButton.setOnClickListener{
+            intent = Intent(this@S1RecipeViewActivity, S3Edit::class.java)
+            intent.putExtra("recipe", recipe)
+            startActivity(intent)
+        }
+        deleteButten.setOnClickListener{
+
+        }
     }
 
 
     private fun loadPictureInContainer (recipe: Recipe, view: ImageView) {
         //drop 1 to prevent a double "/"
         val storageRef = FirebaseStorage.getInstance().getReference(recipe.picturePath.toString().drop(1))
+        Log.d("SSSSSSSSSSSSSSSS", storageRef.toString())
         val localFile = File.createTempFile("tempFile", ".jpg")
         storageRef.getFile(localFile)
             .addOnSuccessListener {

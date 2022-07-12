@@ -38,8 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openUploadFragment() {
-        val uploadFragment = S2Upload.newInstance("a", "a")
-        openFragment(uploadFragment)
+        startActivity(Intent(this@MainActivity, S2UploadNew::class.java))
     }
 
     fun performLogout() {
