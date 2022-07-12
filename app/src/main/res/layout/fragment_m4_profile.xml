@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#fafafa">
+    android:background="#eeeeee">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,7 +12,6 @@
         tools:context=".M4x1profile">
 
         <ImageButton
-            android:contentDescription="@string/webview_impressum_button"
             android:id="@+id/ibButtonImpressum"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -21,8 +20,9 @@
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
             android:backgroundTint="@color/purple_500"
+            android:contentDescription="@string/webview_impressum_button"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_baseline_food_bank_24"/>
+            android:src="@drawable/ic_baseline_food_bank_24" />
 
         <Button
             android:id="@+id/btnSignOut"
@@ -49,20 +49,34 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ivProfilePic"
             android:layout_centerHorizontal="true"
-            android:padding="20dp"
+            android:fontFamily="@font/lora_semibold"
+            android:padding="18dp"
             android:scaleX="2"
             android:scaleY="2"
-            android:text="" />
+            android:text=""
+            android:textColor="#000" />
 
         <TextView
+            android:textColor="#000"
             android:id="@+id/tvMyUploads"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvProfileName"
-            android:paddingStart="15dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/lora_semibold"
             android:text="My Uploads"
-            android:layout_marginTop="35dp"
-            android:textSize="25sp" />
+            android:textSize="23sp" />
+
+        <Button
+            android:id="@+id/btnProfileUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvProfileName"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="24dp"
+            android:layout_toEndOf="@id/tvMyUploads"
+            android:text="+ Upload" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProfileRecyclerView"
@@ -71,14 +85,6 @@
             android:layout_below="@id/tvMyUploads"
             android:layout_marginTop="15dp" />
 
-        <Button
-            android:layout_marginTop="15dp"
-            android:id="@+id/btnProfileUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rvProfileRecyclerView"
-            android:layout_centerHorizontal="true"
-            android:text="@string/upload" />
 
     </RelativeLayout>
 </ScrollView>

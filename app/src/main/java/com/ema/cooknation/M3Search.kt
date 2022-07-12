@@ -3,9 +3,7 @@ package com.ema.cooknation
 //import androidx.appcompat.widget.SearchView
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -103,38 +101,10 @@ class M3Search : Fragment() {
             })
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.searching_item,menu)
-        val item = menu.findItem(R.id.iSearchAction)
-        val searchView = item?.actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                temprecipeArrayList.clear()
-                val searchBarText = newText!!.lowercase(Locale.getDefault())
-                if (searchBarText.isNotEmpty()) {
-
-                    recipeArrayList.forEach{
-
-                        if(it.title?.lowercase(Locale.getDefault())!!.contains(searchBarText)) {
-                            temprecipeArrayList.add(it)
-                        }
-                    }
-                    cardAdapter.notifyDataSetChanged()
-                } else {
-                    temprecipeArrayList.clear()
-                    temprecipeArrayList.addAll(recipeArrayList)
-                    cardAdapter.notifyDataSetChanged()
-                }
-
-                return false
-            }
-
-        })
-    }*/
+        inflater.inflate(R.menu.search_menu, menu)
+    }
 
     private fun sortElementsByTitle(){
         val sortedList = temprecipeArrayList.sortedWith(compareBy {

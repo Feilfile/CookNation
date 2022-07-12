@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/item1"
+        android:title="New Recipes"
+        app:showAsAction="never"/>
+    <item android:id="@+id/item2"
+        android:title="Top rated Recipes"
+        app:showAsAction="never"/>
+    <item android:id="@+id/item3"
+        android:title="Difficulty"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/difficulty1"
+                android:title="1 - Easy" />
+            <item
+                android:id="@+id/difficulty2"
+                android:title="2 - Normal" />
+            <item
+                android:id="@+id/difficulty3"
+                android:title="3 - Hard" />
+        </menu>
+    </item>
+</menu>

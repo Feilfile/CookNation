@@ -80,7 +80,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         avgRating = findViewById(R.id.mrbAvgRating)
         numRating = findViewById(R.id.tvNumRatings)
         ratingButton = findViewById(R.id.vRatingButton)
-        editButton = findViewById(R.id.ibEditButton)
+        editButton = findViewById(R.id.ibEdit)
         deleteButten = findViewById(R.id.ibDelete)
     }
 
