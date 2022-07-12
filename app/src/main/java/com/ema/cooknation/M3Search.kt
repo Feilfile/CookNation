@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +37,7 @@ class M3Search : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipeArrayList: ArrayList<Recipe>
-    private lateinit var temprecipeArrayList: ArrayList<Recipe>
+    private lateinit var tempRecipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
 
     private lateinit var searchBarText: SearchView
@@ -53,14 +56,66 @@ class M3Search : Fragment() {
         initializeElements(view)
         setupRecyclerView()
         activateSearchBar()
+        popupMenu()
+    }
+
+    private fun popupMenu() {
+        val popupMenu = PopupMenu(activity as MainActivity,sorter)
+        popupMenu.inflate(R.menu.search_menu)
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.iNewRecipe -> {
+                    Toast.makeText(activity as MainActivity, "Sorting by newest recipes...", Toast.LENGTH_SHORT).show()
+                    sortElementsByNewest()
+                    true
+                }
+                R.id.iTopRated -> {
+                Toast.makeText(activity as MainActivity, "Sorting by top rated recipes...", Toast.LENGTH_SHORT).show()
+                    sortElementsByTitle()
+                true
+                }
+                R.id.iDifficulty -> {
+                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.iDifficulty1 -> {
+                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.iDifficulty2 -> {
+                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.iDifficulty3 -> {
+                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> true
+            }
+        }
+
+        sorter.setOnClickListener {
+            try {
+            val popup = PopupMenu::class.java.getDeclaredField("mPopup")
+            popup.isAccessible = true
+            val menu = popup.get(popupMenu)
+            menu.javaClass
+                .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
+                .invoke(menu, true)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                popupMenu.show()
+            }
+        }
     }
 
     private fun initializeElements(view : View) {
         db = Firebase.firestore
-        sorter = view.findViewById(R.id.ibSearchButton)
-        sorter.setOnClickListener{
+        sorter = view.findViewById(R.id.ibSearchPopUpButton)
+        /*sorter.setOnClickListener{
             sortElementsByNewest()
-        }
+        }*/
     }
 
     private fun setupRecyclerView() {
@@ -69,8 +124,8 @@ class M3Search : Fragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recipeArrayList = arrayListOf()
-        temprecipeArrayList = arrayListOf()
-        cardAdapter = CardAdapter(temprecipeArrayList)
+        tempRecipeArrayList = arrayListOf()
+        cardAdapter = CardAdapter(tempRecipeArrayList)
         recyclerView.adapter = cardAdapter
         eventChangeListener()
     }
@@ -95,33 +150,49 @@ class M3Search : Fragment() {
                             recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
                         }
                     }
-                    temprecipeArrayList.addAll(recipeArrayList)
+                    tempRecipeArrayList.addAll(recipeArrayList)
                     sortElementsByTitle()
                 }
             })
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.search_menu, menu)
+/*
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        activity.menuInflater(R.menu.search_menu,menu)
     }
 
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.iNewRecipe -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+            R.id.iTopRated -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+            R.id.iDifficulty -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+            R.id.iDifficulty1 -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+            R.id.iDifficulty2 -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+            R.id.iDifficulty3 -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
+        }
+        return super.onContextItemSelected(item)
+    }
+*/
+
+
+
     private fun sortElementsByTitle(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy {
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
             it.title.toString().lowercase()
         })
         refreshAdapter(sortedList)
     }
 
     private fun sortElementsByNewest(){
-        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
+        val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
             it.date
         })
         refreshAdapter(sortedList)
     }
 
     private fun sortElementsByOldest(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy {
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
             it.date
         })
         refreshAdapter(sortedList)
@@ -130,8 +201,8 @@ class M3Search : Fragment() {
     //TODO: private fun SortByRating(){} and other sorting possibilities
 
     private fun refreshAdapter(sortedList: List<Recipe>){
-        temprecipeArrayList.clear()
-        temprecipeArrayList.addAll(sortedList)
+        tempRecipeArrayList.clear()
+        tempRecipeArrayList.addAll(sortedList)
         cardAdapter.notifyDataSetChanged()
     }
 
@@ -143,7 +214,7 @@ class M3Search : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                temprecipeArrayList.clear()
+                tempRecipeArrayList.clear()
                 //conversion to lowercase
                 var searchBarText = newText!!.lowercase(Locale.getDefault())
                 //deletion of whitespaces TODO: extract in separate Function
@@ -162,7 +233,7 @@ class M3Search : Fragment() {
                                 || it.ingredients?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word))
                             {
                                 if(word == lastItem) {
-                                    temprecipeArrayList.add(it)
+                                    tempRecipeArrayList.add(it)
                                 }
                                 continue
                             } else {

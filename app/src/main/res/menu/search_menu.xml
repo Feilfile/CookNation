@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/item1"
+    <item android:id="@+id/iNewRecipe"
         android:title="New Recipes"
         app:showAsAction="never"/>
-    <item android:id="@+id/item2"
+    <item android:id="@+id/iTopRated"
         android:title="Top rated Recipes"
         app:showAsAction="never"/>
-    <item android:id="@+id/item3"
+    <item android:id="@+id/iDifficulty"
         android:title="Difficulty"
         app:showAsAction="never">
         <menu>
             <item
-                android:id="@+id/difficulty1"
+                android:id="@+id/iDifficulty1"
                 android:title="1 - Easy" />
             <item
-                android:id="@+id/difficulty2"
+                android:id="@+id/iDifficulty2"
                 android:title="2 - Normal" />
             <item
-                android:id="@+id/difficulty3"
+                android:id="@+id/iDifficulty3"
                 android:title="3 - Hard" />
         </menu>
     </item>
