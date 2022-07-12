@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#eeeeee">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -14,6 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:textSize="40sp"
+            android:textColor="#000"
+            android:fontFamily="@font/lora_semi_bold"
             android:gravity="center"
             android:text="@string/upload"/>
 
@@ -23,6 +26,7 @@
             android:layout_marginBottom="10dp">
 
             <ImageButton
+                android:contentDescription="@string/preview_for_image_selection"
                 android:id="@+id/ibPreview"
                 android:layout_width="250dp"
                 android:layout_height="180dp"
@@ -31,6 +35,7 @@
                 android:background="#E0E0E0" />
 
             <ImageView
+                android:contentDescription="@string/icon_for_image_selection"
                 android:id="@+id/ivPhotoIcon"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"

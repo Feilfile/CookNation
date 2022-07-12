@@ -38,12 +38,15 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+    val bottomSheetPopupRating = BottomSheetPopupRating()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s1_recipe_view)
         recipeId = intent.extras?.get("recipeId") as String
         initializeVariables()
         refreshData()
+
     }
 
     override fun onRestart() {
@@ -59,9 +62,10 @@ class S1RecipeViewActivity : AppCompatActivity() {
                 recipe = document.toObject((Recipe::class.java))!!
                 setContent()
                 ratingButton.setOnClickListener{
-                    intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
+                    bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
+                    /*intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
                     intent.putExtra("recipe", recipe)
-                    startActivity(intent)
+                    startActivity(intent)*/
                 }
             } .addOnFailureListener{
                 finish()

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookNation">
         <activity
+            android:name=".PopupRating"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
@@ -20,9 +23,6 @@
             android:exported="false" />
         <activity
             android:name=".S3Edit"
-            android:exported="false" />
-        <activity
-            android:name=".PopupRating"
             android:exported="false" />
         <activity
             android:name=".WebViewActivity"

@@ -126,4 +126,8 @@
     <string name="cooknation">Cooknation™</string>
     <string name="logo_in_splash_screen">Logo in Splash Screen</string>
     <string name="icon_for_edit_button">Icon for Edit Button</string>
+    <string name="preview_for_image_selection">Preview for image selection</string>
+    <string name="icon_for_image_selection">Icon for image selection</string>
+    <string name="edit">Edit</string>
+    <string name="save">save</string>
 </resources>

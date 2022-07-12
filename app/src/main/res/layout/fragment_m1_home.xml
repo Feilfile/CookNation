@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".M1Home"
-    android:background="#fafafa">
+    android:background="#eeeeee">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homeRecyclerView"
@@ -25,7 +25,7 @@
         android:layout_marginTop="28dp"
         android:text="@string/home"
         android:textSize="28sp"
-        android:fontFamily="@font/lora_semibold"
+        android:fontFamily="@font/lora_semi_bold"
         android:textColor="#000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
