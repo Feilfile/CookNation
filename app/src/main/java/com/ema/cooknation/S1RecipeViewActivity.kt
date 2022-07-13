@@ -37,6 +37,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s1_recipe_view)
@@ -67,18 +68,16 @@ class S1RecipeViewActivity : AppCompatActivity() {
         deleteButten = findViewById(R.id.ibDelete)
     }
 
-    private fun loadData() {
+    fun loadData() {
         db.collection("recipes")
             .document(recipeId)
             .get()
             .addOnSuccessListener { document ->
                 recipe = document.toObject((Recipe::class.java))!!
                 setContent()
-
                 val bottomSheetPopupRating = BottomSheetPopupRating()
                 ratingButton.setOnClickListener{
                     bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
-
                     /*intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
                     intent.putExtra("recipe", recipe)
                     resultLauncher.launch(intent)*/
@@ -114,7 +113,6 @@ class S1RecipeViewActivity : AppCompatActivity() {
         val bottomSheetPopupDelete = BottomSheetPopupDelete()
         deleteButten.setOnClickListener{
             bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
-            deletePicture()
         }
     }
 
@@ -130,28 +128,9 @@ class S1RecipeViewActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteRecipe(){
-        Log.d("pathname", recipeId)
-        db.collection("recipes").document(recipeId).delete()
-            .addOnSuccessListener {
-                finish()
-            }.addOnFailureListener{
-                Log.e("deleteRecipe", "couldn't delete recipe")
-            }
-    }
-
-    private fun deletePicture(){
-        Log.d("deletePic", "Recipes/${recipe.uid.toString()}/${recipe.title}".drop(1))
-        FirebaseStorage.getInstance().getReference("Recipes/${recipe.uid.toString()}/${recipe.title}").delete()
-            .addOnSuccessListener{
-                deleteRecipe()
-            }
-    }
-
     private fun loadPictureInContainer (recipe: Recipe, view: ImageView) {
         //drop 1 to prevent a double "/"
         val storageRef = FirebaseStorage.getInstance().getReference(recipe.picturePath.toString().drop(1))
-        Log.d("SSSSSSSSSSSSSSSS", storageRef.toString())
         val localFile = File.createTempFile("tempFile", ".jpg")
         storageRef.getFile(localFile)
             .addOnSuccessListener {
@@ -160,5 +139,10 @@ class S1RecipeViewActivity : AppCompatActivity() {
             }.addOnFailureListener{
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }
+
+    }
+
+    fun getRecipe(): Recipe {
+        return recipe
     }
 }

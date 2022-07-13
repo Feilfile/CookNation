@@ -1,10 +1,13 @@
 package com.ema.cooknation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.FragmentController
+import androidx.fragment.app.FragmentManager
 import com.ema.cooknation.model.Rating
 import com.ema.cooknation.model.Recipe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,7 +24,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
     private lateinit var ratingStars: MaterialRatingBar
     private var alreadyRated: Boolean = false
     private var oldRating: Int = 5
-    private lateinit var documentId : String
+    private lateinit var documentId: String
     private lateinit var recipe: Recipe
 
     private lateinit var db: FirebaseFirestore
@@ -32,33 +35,36 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.bottomsheet_popup_rating, container, false)
+        val rootView = inflater.inflate(R.layout.bottomsheet_popup_rating, container, false)
+
+        return rootView
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*mAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
-        recipe = ().extras?.get("recipe") as Recipe
+        recipe = (activity as S1RecipeViewActivity).getRecipe()
         documentId = "${recipe.uid}.${recipe.title}"
         checkForExistingRating()
-        ratingStars = findViewById(R.id.mrbUserRating)
-        commitButton = findViewById(R.id.btnCommitRating)
-        /*if (!alreadyRated) {
+        ratingStars = view.findViewById(R.id.mrbUserRating)
+        commitButton = view.findViewById(R.id.btnCommitRating)
+        if (!alreadyRated) {
             ratingStars.rating = 5f
         } else {
             ratingStars.rating = oldRating.toFloat()
-        }*/
+        }
 
         commitButton.setOnClickListener {
-            if(alreadyRated) {
+            if (alreadyRated) {
                 editRating()
             } else {
                 addNewRating()
-            }*/
+            }
         }
 
     }
-/*
+
     private fun addNewRating() {
         val userRating = ratingStars.rating.toInt()
         recipe.addNewRating(userRating)
@@ -75,7 +81,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
 
     private fun checkForExistingRating() {
         db.collection("rating")
-            .document("${mAuth.uid}.${documentId}")
+            .document("${mAuth.uid}.${recipe.docId}")
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
@@ -86,20 +92,22 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
             }
     }
 
-    private fun updateRecipeInCollection(){
-        db.collection("recipes").document(documentId)
+    private fun updateRecipeInCollection() {
+        db.collection("recipes").document(recipe.docId.toString())
             .update(
                 "avgRating", recipe.avgRating,
                 "ratingCount", recipe.ratingCount
             )
-        finish()
+        (activity as S1RecipeViewActivity).loadData()
+        dismiss()
     }
 
     private fun editInRatingCollection(userRating: Int) {
         val rating = hashMapOf(
             "ratingStars" to userRating
         )
-        db.collection("rating").document("${mAuth.uid}.${documentId}")
+        db.collection("rating").document("${mAuth.uid}.${recipe.docId}")
             .set(rating)
-    }*/
+    }
+}
 
