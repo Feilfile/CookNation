@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,31 +21,36 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="Please enter a rating"
+        android:text="Do you really want to delete this recipe?"
         android:textColor="#000"
         android:textSize="25sp"/>
 
-    <me.zhanghai.android.materialratingbar.MaterialRatingBar
-        android:layout_gravity="center"
-        android:id="@+id/mrbUserRating"
-        android:stepSize="1"
-        android:max="5"
-        android:isIndicator="false"
-        style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:mrb_progressTint="#b7dd29"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <Button
-        android:layout_gravity="center"
-        android:id="@+id/btnCommitRating"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="30dp"
+        android:id="@+id/btnCancelDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="35dp"
-        android:textSize="22sp"
+        android:layout_marginBottom="35dp"
         android:backgroundTint="#C0C0C0"
+        android:text="Cancel"
         android:textColor="#000"
-        android:text="Commit"/>
+        android:textSize="22sp" />
+
+    <Button
+        android:layout_weight="1"
+        android:layout_marginHorizontal="30dp"
+        android:id="@+id/btnConfirmDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#ff5131"
+        android:text="Delete"
+        android:textColor="#000"
+        android:textSize="22sp" />
+</LinearLayout>
 
 </LinearLayout>

@@ -18,7 +18,7 @@ class LoadingScreenActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
 
-    }, 1)    // Shows Splash Screen for 3 seconds
+    }, 3000)    // Shows Splash Screen for 3 seconds
 
     }
 }
