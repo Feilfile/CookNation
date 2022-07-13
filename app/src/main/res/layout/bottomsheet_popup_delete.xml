@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center"
+        android:textStyle="bold
+"
         android:text="Do you really want to delete this recipe?"
         android:textColor="#000"
         android:textSize="25sp"/>

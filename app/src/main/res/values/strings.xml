@@ -49,7 +49,7 @@
         "All action takes place in a single environment. Objects are presented to the user without "
         "breaking the continuity of experience even as they transform and reorganize.\n"
         "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+        "Feedback is subtle yet clear. Transitions are efficient yet coherent.\n\n"
 
         "3D world.\n\n"
 
@@ -120,7 +120,6 @@
     <string name="icon_for_fav_button">Icon for fav-Button</string>
     <string name="edit_button">Edit-Button</string>
     <string name="delete_button">Delete-Button</string>
-    <string name="webview_impressum_button">Webview Impressum-Button</string>
     <string name="username">Username</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="cooknation">Cooknation™</string>
@@ -130,4 +129,7 @@
     <string name="icon_for_image_selection">Icon for image selection</string>
     <string name="edit">Edit</string>
     <string name="save">save</string>
+    <string name="web_view_button" />
+    <string name="upload_in_profile">+ Upload</string>
+    <string name="my_uploads">My Uploads</string>
 </resources>

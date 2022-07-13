@@ -42,7 +42,6 @@ class M4x1profile : Fragment() {
     private lateinit var cardAdapter: CardAdapter
     private lateinit var mAuth: FirebaseAuth
 
-    private lateinit var ibButtonImpressum: ImageButton
     private lateinit var btnSignOut: Button
     private lateinit var btnProfileUpload: Button
     private lateinit var tvProfileName: TextView
@@ -62,7 +61,6 @@ class M4x1profile : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_m4_profile, container, false)
         recyclerView = rootView.findViewById(R.id.rvProfileRecyclerView)
-        ibButtonImpressum = rootView.findViewById(R.id.ibButtonImpressum)
         btnSignOut = rootView.findViewById(R.id.btnSignOut)
         btnProfileUpload = rootView.findViewById(R.id.btnProfileUpload)
         tvProfileName = rootView.findViewById(R.id.tvProfileName)
@@ -110,10 +108,6 @@ class M4x1profile : Fragment() {
                     tvProfileName.text = user.username
                 }
             }
-        // Button to go to WebView
-        ibButtonImpressum.setOnClickListener {
-            (activity as MainActivity).openWebViewActivity()
-        }
 
         btnProfileUpload.setOnClickListener{
             (activity as MainActivity).openUploadFragment()

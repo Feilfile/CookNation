@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,8 @@ class M2Explore : Fragment() {
     private lateinit var recipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
 
+    private lateinit var ibButtonWebView: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,6 +58,11 @@ class M2Explore : Fragment() {
         recyclerView.adapter = cardAdapter
 
         eventChangeListener()
+
+        // Button to go to WebView
+        ibButtonWebView.setOnClickListener {
+            (activity as MainActivity).openWebViewActivity()
+        }
     }
 
     private fun eventChangeListener() {
@@ -87,7 +95,9 @@ class M2Explore : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_m2_explore, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_m2_explore, container, false)
+        ibButtonWebView = rootView.findViewById(R.id.ibButtonWebView)
+        return rootView
     }
 
     companion object {

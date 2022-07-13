@@ -11,19 +11,6 @@
         android:layout_height="wrap_content"
         tools:context=".M4x1profile">
 
-        <ImageButton
-            android:id="@+id/ibButtonImpressum"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:adjustViewBounds="true"
-            android:backgroundTint="@color/purple_500"
-            android:contentDescription="@string/webview_impressum_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_baseline_food_bank_24" />
-
         <Button
             android:id="@+id/btnSignOut"
             android:layout_width="wrap_content"
@@ -65,7 +52,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/lora_semi_bold"
-            android:text="My Uploads"
+            android:text="@string/my_uploads"
             android:textSize="23sp" />
 
         <Button
@@ -76,7 +63,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="24dp"
             android:layout_toEndOf="@id/tvMyUploads"
-            android:text="+ Upload" />
+            android:text="@string/upload_in_profile" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProfileRecyclerView"

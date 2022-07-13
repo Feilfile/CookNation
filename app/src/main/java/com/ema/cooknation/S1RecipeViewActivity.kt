@@ -37,7 +37,6 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s1_recipe_view)
@@ -75,10 +74,14 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 recipe = document.toObject((Recipe::class.java))!!
                 setContent()
+
+                val bottomSheetPopupRating = BottomSheetPopupRating()
                 ratingButton.setOnClickListener{
-                    intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
+                    bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
+
+                    /*intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
                     intent.putExtra("recipe", recipe)
-                    resultLauncher.launch(intent)
+                    resultLauncher.launch(intent)*/
                 }
             } .addOnFailureListener{
                 finish()
@@ -108,7 +111,9 @@ class S1RecipeViewActivity : AppCompatActivity() {
             startActivity(intent)
         }
         //opens delete confirmation
+        val bottomSheetPopupDelete = BottomSheetPopupDelete()
         deleteButten.setOnClickListener{
+            bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
             deletePicture()
         }
     }
