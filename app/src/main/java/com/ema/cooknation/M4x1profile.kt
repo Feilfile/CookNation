@@ -46,18 +46,14 @@ class M4x1profile : Fragment() {
     private lateinit var btnSignOut: Button
     private lateinit var btnProfileUpload: Button
     private lateinit var tvProfileName: TextView
-    override fun onCreate(savedInstanceState: Bundle?) {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,7 +106,9 @@ class M4x1profile : Fragment() {
             .get()
             .addOnSuccessListener { document ->
                 val user = document.toObject<User>()
-                tvProfileName?.text = user?.username
+                if (user != null) {
+                    tvProfileName.text = user.username
+                }
             }
         // Button to go to WebView
         ibButtonImpressum.setOnClickListener {

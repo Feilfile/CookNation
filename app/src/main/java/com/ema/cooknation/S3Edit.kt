@@ -7,12 +7,13 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.ema.cooknation.model.Recipe
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
@@ -64,17 +65,7 @@ class S3Edit : AppCompatActivity() {
             selectImage()
         }
         saveButton.setOnClickListener {
-            val author = oldRecipe.author.toString()
-            val avgRating = oldRecipe.avgRating
-            val date = getCurrentDate()
-            val ratingCount = oldRecipe.ratingCount
-            val picturePath = FirebaseStorage.getInstance().getReference("Recipes/${uid}/${editRecipeTitle.text}").path
-            if (editRecipeTitle.text.toString() == oldRecipeTitle) {
-                uploadPicture(author, avgRating, date, ratingCount, picturePath)
-            }
-            //val picturePath = FirebaseStorage.getInstance().getReference("Recipes/$editRecipeTitle").path
-            //deleteOldDocument()
-            //saveNewDocument(author, avgRating, date, ratingCount, picturePath)
+            uploadPicture()
         }
     }
 
@@ -86,7 +77,6 @@ class S3Edit : AppCompatActivity() {
             .addOnSuccessListener {
                 bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 view.setImageBitmap(bitmap)
-                filepath = storageRef.path.toUri()
             }.addOnFailureListener{
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }
@@ -113,41 +103,44 @@ class S3Edit : AppCompatActivity() {
         FirebaseStorage.getInstance().getReference("Recipes/$oldRecipeTitle").delete()
     }
 
-    private fun uploadPicture(author: String, avgRating: Float, date: Timestamp, ratingCount: Int, picturePath: String) {
-        val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${uid}/${editRecipeTitle.text}")
-        storageRef.putFile(filepath)
-            .addOnCompleteListener{
-                Log.d("Storage: ", "Picture successfully saved")
-                //nextOperation
-                saveNewDocument(author, avgRating, date, ratingCount, picturePath)
-        }.addOnFailureListener{
-            Log.e("Storage: ", "Error while saving Picture")
+    private fun uploadPicture() {
+        val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${uid}/${oldRecipe.docId}")
+        //checks if all text fields are filled
+        if(TextUtils.isEmpty(editRecipeTitle.text) || TextUtils.isEmpty(editDirections.text) || TextUtils.isEmpty(editIngredients.text)) {
+            Toast.makeText(
+                this,
+                "Empty fields are not allowed!",
+                Toast.LENGTH_SHORT
+            ).show()
+        //filepath is only initialized when the picture is changed so if the picture isn't changed the resource hungry saving operation can be skipped
+        } else if (this::filepath.isInitialized) {
+            storageRef.putFile(filepath)
+                .addOnCompleteListener {
+                    Log.d("Storage: ", "Picture successfully saved")
+                    editDocumentInfFirestore()
+                }.addOnFailureListener {
+                    Log.e("Storage: ", "Error while saving Picture")
+                }
+        } else {
+            editDocumentInfFirestore()
         }
     }
 
-    private fun deleteOldDocument() {
-        db.collection("Recipes").document("${oldRecipe.uid}.${oldRecipeTitle}").delete()
-    }
-
-    private fun saveNewDocument(author: String, avgRating: Float, date: Timestamp, ratingCount: Int, picturePath: String) {
-        val recipe = hashMapOf(
-            //TODO: add current date -> Date Format and ingredients -> Array Format
-            "uid" to uid,
-            "author" to author,
-            "title" to editRecipeTitle.text.toString(),
-            "date" to date,
-            "picturePath" to picturePath,
-            "directions" to editDirections.text.toString(),
-            "ingredients" to editIngredients.text.toString(),
-            "ratingCount" to ratingCount,
-            "avgRating" to avgRating
-        )
-        db.collection("recipes").document("${uid}.${editRecipeTitle.text.toString()}")
-            .set(recipe)
+    private fun editDocumentInfFirestore() {
+        db.collection("recipes").document(oldRecipe.docId.toString())
+            .update(
+                "title", editRecipeTitle.text.toString(),
+                "directions", editDirections.text.toString(),
+                "ingredients", editIngredients.text.toString()
+            )
             .addOnCompleteListener{
-                finish()
+                Toast.makeText(
+                    this,
+                    "Recipe successfully updated!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                completeActivity()
             }
-        Log.d("LLLLLLLLLLLLLLLL", "${uid}.${editRecipeTitle.text}")
         //db.collection("recipes").document("${uid}.${editRecipeTitle.text}").update("directions", editDirections.text)
             /*.addOnSuccessListener {
                 Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
@@ -164,6 +157,13 @@ class S3Edit : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }*/
+    }
+
+    private fun completeActivity() {
+        val intent = Intent()
+        intent.putExtra("filename", "${uid}.${editRecipeTitle}")
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     private fun getCurrentDate(): Timestamp {

@@ -1,4 +1,4 @@
-package com.ema.cooknation
+/*package com.ema.cooknation.legacyfiles
 
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -204,3 +204,6 @@ class S2Upload : Fragment() {
     }
 }
 
+
+
+ */

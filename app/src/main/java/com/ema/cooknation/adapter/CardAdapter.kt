@@ -17,7 +17,6 @@ import com.ema.cooknation.model.Recipe
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
-import java.io.Serializable
 
 class CardAdapter(private val recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<CardAdapter.ViewHolder>()
@@ -68,7 +67,7 @@ class CardAdapter(private val recipes: ArrayList<Recipe>)
             v!!.context as AppCompatActivity
             val intent = Intent(v.context, S1RecipeViewActivity::class.java)
             //parse recipe to the activity
-            intent.putExtra("recipeId", "${recipes[position].uid}.${recipes[position].title}")
+            intent.putExtra("recipeId", recipes[position].docId)
             v.context.startActivity(intent)
             //activity.supportFragmentManager.beginTransaction().replace(R.id.clScreenWindow, recipeView).commit()
         }

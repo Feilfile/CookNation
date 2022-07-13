@@ -19,7 +19,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -37,7 +36,7 @@ class M3Search : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipeArrayList: ArrayList<Recipe>
-    private lateinit var tempRecipeArrayList: ArrayList<Recipe>
+    private lateinit var temprecipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
 
     private lateinit var searchBarText: SearchView
@@ -51,81 +50,41 @@ class M3Search : Fragment() {
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_m3_search, container, false)
+        recyclerView = rootView.findViewById(R.id.rvSearchRecyclerView)
+        searchBarText = rootView.findViewById(R.id.etSearchBar)
+        sorter = rootView.findViewById(R.id.ibSearchPopUpButton)
+        db = Firebase.firestore
+        return rootView
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeElements(view)
+        setupButtons()
         setupRecyclerView()
         activateSearchBar()
         popupMenu()
     }
 
-    private fun popupMenu() {
-        val popupMenu = PopupMenu(activity as MainActivity,sorter)
-        popupMenu.inflate(R.menu.search_menu)
-        popupMenu.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.iNewRecipe -> {
-                    Toast.makeText(activity as MainActivity, "Sorting by newest recipes...", Toast.LENGTH_SHORT).show()
-                    sortElementsByNewest()
-                    true
-                }
-                R.id.iTopRated -> {
-                Toast.makeText(activity as MainActivity, "Sorting by top rated recipes...", Toast.LENGTH_SHORT).show()
-                    sortElementsByTitle()
-                true
-                }
-                R.id.iDifficulty -> {
-                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.iDifficulty1 -> {
-                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.iDifficulty2 -> {
-                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.iDifficulty3 -> {
-                    Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                else -> true
-            }
-        }
-
-        sorter.setOnClickListener {
-            try {
-            val popup = PopupMenu::class.java.getDeclaredField("mPopup")
-            popup.isAccessible = true
-            val menu = popup.get(popupMenu)
-            menu.javaClass
-                .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
-                .invoke(menu, true)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                popupMenu.show()
-            }
-        }
-    }
-
-    private fun initializeElements(view : View) {
-        db = Firebase.firestore
-        sorter = view.findViewById(R.id.ibSearchPopUpButton)
-        /*sorter.setOnClickListener{
+    private fun setupButtons() {
+        sorter.setOnClickListener{
+            temprecipeArrayList.clear()
             sortElementsByNewest()
-        }*/
+        }
     }
 
     private fun setupRecyclerView() {
-        // 2 cards per row
+        // Recyclerview gets sets set up with 2 recipe cards per row
         val layoutManager = GridLayoutManager(this.context, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recipeArrayList = arrayListOf()
-        tempRecipeArrayList = arrayListOf()
-        cardAdapter = CardAdapter(tempRecipeArrayList)
+        temprecipeArrayList = arrayListOf()
+        cardAdapter = CardAdapter(temprecipeArrayList)
         recyclerView.adapter = cardAdapter
         eventChangeListener()
     }
@@ -150,49 +109,33 @@ class M3Search : Fragment() {
                             recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
                         }
                     }
-                    tempRecipeArrayList.addAll(recipeArrayList)
-                    sortElementsByTitle()
+                    temprecipeArrayList.addAll(recipeArrayList)
+                    sortElementsByNewest()
                 }
             })
     }
-/*
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        activity.menuInflater(R.menu.search_menu,menu)
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search_menu, menu)
     }
-
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.iNewRecipe -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-            R.id.iTopRated -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-            R.id.iDifficulty -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-            R.id.iDifficulty1 -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-            R.id.iDifficulty2 -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-            R.id.iDifficulty3 -> Toast.makeText(activity as MainActivity, "Sorting by newest recipe...", Toast.LENGTH_SHORT).show()
-        }
-        return super.onContextItemSelected(item)
-    }
-*/
-
-
 
     private fun sortElementsByTitle(){
-        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
+        val sortedList = temprecipeArrayList.sortedWith(compareBy {
             it.title.toString().lowercase()
         })
         refreshAdapter(sortedList)
     }
 
     private fun sortElementsByNewest(){
-        val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
+        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
             it.date
         })
         refreshAdapter(sortedList)
     }
 
     private fun sortElementsByOldest(){
-        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
+        val sortedList = temprecipeArrayList.sortedWith(compareBy {
             it.date
         })
         refreshAdapter(sortedList)
@@ -201,8 +144,8 @@ class M3Search : Fragment() {
     //TODO: private fun SortByRating(){} and other sorting possibilities
 
     private fun refreshAdapter(sortedList: List<Recipe>){
-        tempRecipeArrayList.clear()
-        tempRecipeArrayList.addAll(sortedList)
+        temprecipeArrayList.clear()
+        temprecipeArrayList.addAll(sortedList)
         cardAdapter.notifyDataSetChanged()
     }
 
@@ -214,7 +157,7 @@ class M3Search : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                tempRecipeArrayList.clear()
+                temprecipeArrayList.clear()
                 //conversion to lowercase
                 var searchBarText = newText!!.lowercase(Locale.getDefault())
                 //deletion of whitespaces TODO: extract in separate Function
@@ -233,7 +176,7 @@ class M3Search : Fragment() {
                                 || it.ingredients?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word))
                             {
                                 if(word == lastItem) {
-                                    tempRecipeArrayList.add(it)
+                                    temprecipeArrayList.add(it)
                                 }
                                 continue
                             } else {
@@ -252,18 +195,83 @@ class M3Search : Fragment() {
         })
     }
 
-    fun removeDuplicates(array: Array<String>): Array<String>{
-        return array.distinct().toTypedArray()
+    private fun popupMenu() {
+        val popupMenu = PopupMenu(activity as MainActivity, sorter)
+        popupMenu.inflate(R.menu.search_menu)
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.iNewRecipe -> {
+                    Toast.makeText(
+                        activity as MainActivity,
+                        "Sorting by newest recipes...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    sortElementsByNewest()
+                    true
+                }
+                R.id.iTopRated -> {
+                    Toast.makeText(
+                        activity as MainActivity,
+                        "Sorting by top rated recipes...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    sortElementsByTitle()
+                    true
+                }
+                R.id.iDifficulty -> {
+                    Toast.makeText(
+                        activity as MainActivity,
+                        "Sorting by newest recipe...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                R.id.iDifficulty1 -> {
+                    Toast.makeText(
+                        activity as MainActivity,
+                        "Sorting by newest recipe...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                R.id.iDifficulty2 -> {
+                    Toast.makeText(
+                        activity as MainActivity,
+                        "Sorting by newest recipe...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                R.id.iDifficulty3 -> {
+                    Toast.makeText(
+                        activity as MainActivity,
+                        "Sorting by newest recipe...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                else -> true
+            }
+        }
+
+        sorter.setOnClickListener {
+            try {
+                val popup = PopupMenu::class.java.getDeclaredField("mPopup")
+                popup.isAccessible = true
+                val menu = popup.get(popupMenu)
+                menu.javaClass
+                    .getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                    .invoke(menu, true)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                popupMenu.show()
+            }
+        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_m3_search, container, false)
-        recyclerView = rootView.findViewById(R.id.rvSearchRecyclerView)
-        searchBarText = rootView.findViewById(R.id.etSearchBar)
-        return rootView
+    fun removeDuplicates(array: Array<String>): Array<String>{
+        return array.distinct().toTypedArray()
     }
 
     companion object {

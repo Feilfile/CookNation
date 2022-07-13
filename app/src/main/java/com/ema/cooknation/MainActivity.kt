@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
 
-    val model: AppViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CookNation)
@@ -26,9 +25,9 @@ class MainActivity : AppCompatActivity() {
         //val currentFragment = model.currentFragment.value
         //val username = model.username.value
         //val homeFragment = currentFragment.newInstance("e","f")
-        model.currentFragment.observe(this) { fragment ->
+        /*model.currentFragment.observe(this) { fragment ->
             openFragment(fragment)
-        }
+        }*/
     }
 
     private fun openFragment(fragment: Fragment) {

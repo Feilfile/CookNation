@@ -25,6 +25,11 @@ import com.google.firebase.storage.FirebaseStorage
 import java.sql.Timestamp
 
 class S2UploadNew : AppCompatActivity() {
+    private lateinit var inputTitle:TextInputEditText
+    private lateinit var inputDirections:TextInputEditText
+    private lateinit var inputIngredients:TextInputEditText
+    private lateinit var btnUpload: Button
+    private lateinit var btnSelect: ImageButton
     private lateinit var filepath : Uri
     private lateinit var bitmap : Bitmap
     private lateinit var db: FirebaseFirestore
@@ -33,11 +38,21 @@ class S2UploadNew : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s2_upload_new)
+        initializeVariables()
+        setContent()
+    }
+
+    private fun initializeVariables() {
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
-        val btnUpload = findViewById<Button>(R.id.btnUpload)
-        val btnSelect = findViewById<ImageButton>(R.id.ibPreview)
+        inputTitle = findViewById(R.id.etRecipeName)
+        inputDirections = findViewById(R.id.etDirections)
+        inputIngredients = findViewById(R.id.etIngredients)
+        btnUpload = findViewById(R.id.btnUpload)
+        btnSelect = findViewById(R.id.ibPreview)
+    }
 
+    private fun setContent() {
         btnSelect.setOnClickListener{
             selectImage()
         }
@@ -66,42 +81,64 @@ class S2UploadNew : AppCompatActivity() {
         }
     }
 
-    private fun addRecipe(inputTitle: String, inputDirections: String, inputIngredients: String) {
 
-        val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${mAuth.uid.toString()}/${inputTitle}")
-        storageRef.putFile(filepath).
-        addOnCompleteListener{
-            Log.d("Storage: ", "Picture successfully saved")
-        }.addOnFailureListener{
-            Log.e("Storage: ", "Error while saving Picture")
+    private fun uploadRecipe() {
+        //Checks if all fields are filled with content
+
+        if(TextUtils.isEmpty(inputTitle.text) || TextUtils.isEmpty(inputDirections.text) || TextUtils.isEmpty(inputIngredients.text) || !this::filepath.isInitialized) {
+            Toast.makeText(
+                this,
+                "Empty fields are not allowed!",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else  {
+            writeInFirestore()
         }
+    }
+
+    private fun uploadPicture(docId: String) {
+
+        //saves the selected picture inside the Firebase Storage
+        val storageRef = FirebaseStorage.getInstance()
+            .getReference("Recipes/${mAuth.uid.toString()}/${docId}")
+        storageRef.putFile(filepath)
+            .addOnCompleteListener {
+                Log.d(ContentValues.TAG, "DocumentSnapshot successfully updated!")
+                addUsernameAndIdToCollection(docId)
+            }.addOnFailureListener {
+                Log.e("Storage: ", "Error while saving Picture")
+                Toast.makeText(
+                    this,
+                    "Error: Recipe couldn't be added",
+                    Toast.LENGTH_SHORT
+                ).show()
+        }
+    }
+
+    private fun writeInFirestore() {
         val uid = mAuth.uid.toString()
-        val picturePath = FirebaseStorage.getInstance().getReference("Recipes/${uid}/$inputTitle").path
         val date = getCurrentDate()
         val recipe = hashMapOf(
             //TODO: add current date -> Date Format and ingredients -> Array Format
             "uid" to uid,
             "author" to null,
-            "title" to inputTitle,
+            "title" to inputTitle.text.toString(),
             "date" to date,
-            "picturePath" to picturePath,
-            "directions" to inputDirections,
-            "ingredients" to inputIngredients,
+            "picturePath" to null,
+            "directions" to inputDirections.text.toString(),
+            "ingredients" to inputIngredients.text.toString(),
             "ratingCount" to 0,
-            "avgRating" to 0.0
+            "avgRating" to 0.0,
+            "docId" to null
         )
-        db.collection("recipes").document("${mAuth.uid}.$inputTitle")
-            .set(recipe)
+        //creates the record inside the recipe collection in Firestore, username and ID will be added afterwards
+        db.collection("recipes").add(recipe)
             .addOnSuccessListener {
                 Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
-                Toast.makeText(
-                    this,
-                    "Recipe successfully added!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                addUserNameToCollection(inputTitle)
+                uploadPicture(it.id)
             }
-            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e)
+            .addOnFailureListener { e ->
+                Log.e(ContentValues.TAG, "Error writing document", e)
                 Toast.makeText(
                     this,
                     "Error: Recipe couldn't be added",
@@ -110,23 +147,7 @@ class S2UploadNew : AppCompatActivity() {
             }
     }
 
-    private fun uploadRecipe() {
-        val title = findViewById<TextInputEditText>(R.id.etRecipeName)?.text.toString()
-        val directions = findViewById<TextInputEditText>(R.id.etDirections)?.text.toString()
-        val ingredients = findViewById<TextInputEditText>(R.id.etIngredients)?.text.toString()
-        if(TextUtils.isEmpty(title) || TextUtils.isEmpty(directions) || TextUtils.isEmpty(ingredients) || TextUtils.isEmpty(filepath.toString())) {
-            Toast.makeText(
-                this,
-                "Empty field not allowed!",
-                Toast.LENGTH_SHORT
-            ).show()
-        } else  {
-            addRecipe(title, directions, ingredients)
-            //activity?.supportFragmentManager?.popBackStack()
-        }
-    }
-
-    private fun addUserNameToCollection(inputTitle: String) {
+    private fun addUsernameAndIdToCollection(docId: String) {
         db.collection("user")
             .document(mAuth.uid.toString())
             .get()
@@ -135,15 +156,26 @@ class S2UploadNew : AppCompatActivity() {
                 val user = document.toObject<User>()
                 val author = user?.username.toString()
                 db.collection("recipes")
-                    .document("${mAuth.uid}.$inputTitle")
-                    .update("author", author)
+                    .document(docId)
+                    .update("author", author,
+                    "docId", docId,
+                    "picturePath", "/Recipes/${mAuth.uid.toString()}/${docId}")
                     .addOnSuccessListener {
-                        Log.d(ContentValues.TAG, "DocumentSnapshot successfully updated!")
+                        Toast.makeText(
+                            this,
+                            "Recipe successfully added!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         finish()
                     }
                     .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error updating document", e) }
-            } .addOnFailureListener{ e ->
-                Log.w(ContentValues.TAG, "Document not found", e)
+            } .addOnFailureListener{
+                Log.e(ContentValues.TAG, "Username and DocId couldn't be added")
+                Toast.makeText(
+                    this,
+                    "Error: Recipe couldn't be added",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
     }

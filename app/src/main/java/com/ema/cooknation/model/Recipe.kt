@@ -3,7 +3,9 @@ package com.ema.cooknation.model
 import java.io.Serializable
 import java.util.*
 
-/*var recipeList = mutableListOf<Recipe>()
+/*
+
+OLD RECIPE CLASS
 
 class Recipe {
 
@@ -87,6 +89,7 @@ class Recipe {
 }*/
 
 data class Recipe(
+    var docId: String? = null,
     var uid: String? = null,
     var title: String? = null,
     var author: String? = null,
