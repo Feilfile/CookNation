@@ -22,12 +22,12 @@
             tools:ignore="RelativeOverlap" />
 
         <ImageView
-            android:contentDescription="@string/profile_picture"
             android:id="@+id/ivProfilePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="60dp"
+            android:contentDescription="@string/profile_picture"
             android:src="@drawable/ic_baseline_account_circle_24" />
 
         <TextView
