@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
+    private lateinit var currentFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,19 @@ class MainActivity : AppCompatActivity() {
         /*model.currentFragment.observe(this) { fragment ->
             openFragment(fragment)
         }*/
+    }
+    //Resets Container when reloading RecipeView
+    override fun onRestart() {
+        super.onRestart()
+        try {
+            (currentFragment as M4x1profile).resetAdapter()
+        } catch (e: Exception) {
+        }
+
+        try {
+            (currentFragment as M3Search).resetAdapter()
+        } catch (e: Exception) {
+        }
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -62,31 +76,31 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.m1_home -> {
-                val homeFragment = M1Home.newInstance("a","b")
-                openFragment(homeFragment)
+                currentFragment = M1Home.newInstance("a","b")
+                openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m2_explore -> {
-                val exploreFragment = M2Explore.newInstance("c","d")
-                openFragment(exploreFragment)
+                currentFragment = M2Explore.newInstance("c","d")
+                openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m3_search -> {
-                val searchFragment = M3Search.newInstance("e","f")
-                openFragment(searchFragment)
+                currentFragment = M3Search.newInstance("e","f")
+                openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m4_profile -> {
                 // check if uer i logged in
                 val user = mAuth!!.currentUser
                 if (user == null) {
-                    val loginRegisterFragment = M4x2RegisterLogin.newInstance("a","b")
-                    openFragment(loginRegisterFragment)
+                    currentFragment = M4x2RegisterLogin.newInstance("a","b")
+                    openFragment(currentFragment)
                     return@OnNavigationItemSelectedListener true
                 }
 
-                val profileFragment = M4x1profile.newInstance("", "")
-                openFragment(profileFragment)
+                currentFragment = M4x1profile.newInstance("", "")
+                openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }

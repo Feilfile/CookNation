@@ -16,6 +16,7 @@ import com.ema.cooknation.model.Recipe
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
@@ -88,6 +89,16 @@ class M3Search : Fragment() {
         recyclerView.adapter = cardAdapter
         eventChangeListener()
     }
+
+    /*private fun eventChangeListener() {
+        db.collection("recipes")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    recipeArrayList.add(document.toObject<>())
+                }
+            }
+    }*/
 
     //Loads all Elements into the adapter and sorts it before they load
     private fun eventChangeListener() {
@@ -272,6 +283,11 @@ class M3Search : Fragment() {
 
     fun removeDuplicates(array: Array<String>): Array<String>{
         return array.distinct().toTypedArray()
+    }
+
+    fun resetAdapter(){
+        temprecipeArrayList.clear()
+        eventChangeListener()
     }
 
     companion object {

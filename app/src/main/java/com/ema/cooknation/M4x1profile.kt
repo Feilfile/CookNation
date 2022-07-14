@@ -170,4 +170,9 @@ class M4x1profile : Fragment() {
             })
     }
 
+    fun resetAdapter(){
+        temprecipeArrayList.clear()
+        eventChangeListener()
+    }
+
 }
