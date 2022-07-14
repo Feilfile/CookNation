@@ -10,10 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import com.ema.cooknation.model.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -30,16 +27,21 @@ class S2UploadNew : AppCompatActivity() {
     private lateinit var inputIngredients:TextInputEditText
     private lateinit var btnUpload: Button
     private lateinit var btnSelect: ImageButton
+    private lateinit var mAuth: FirebaseAuth
+
+    private lateinit var db: FirebaseFirestore
     private lateinit var filepath : Uri
     private lateinit var bitmap : Bitmap
-    private lateinit var db: FirebaseFirestore
-    private lateinit var mAuth: FirebaseAuth
+
+    private lateinit var difficultyDropdownMenu: AutoCompleteTextView
+    private lateinit var prepTimeDropdownMenu: AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_s2_upload_new)
+        setContentView(R.layout.activity_s2_upload)
         initializeVariables()
         setContent()
+        setUpDropdownTextBoxes()
     }
 
     private fun initializeVariables() {
@@ -50,6 +52,19 @@ class S2UploadNew : AppCompatActivity() {
         inputIngredients = findViewById(R.id.etIngredients)
         btnUpload = findViewById(R.id.btnUpload)
         btnSelect = findViewById(R.id.ibPreview)
+        difficultyDropdownMenu = findViewById(R.id.difficultyDropdownMenuUpload)
+        prepTimeDropdownMenu = findViewById(R.id.prepTimeDropdownMenuUpload)
+    }
+
+    // Populates Dropdown Text Box with options to chose from
+    private fun setUpDropdownTextBoxes() {
+        val difficulties = resources.getStringArray(R.array.difficulties)
+        val arrayAdapterDifficulties = ArrayAdapter(this, R.layout.dropdown_item, difficulties)
+        difficultyDropdownMenu.setAdapter(arrayAdapterDifficulties)
+
+        val prepTimes = resources.getStringArray(R.array.prepTimes)
+        val arrayAdapterPrepTime = ArrayAdapter(this, R.layout.dropdown_item, prepTimes)
+        prepTimeDropdownMenu.setAdapter(arrayAdapterPrepTime)
     }
 
     private fun setContent() {
@@ -127,6 +142,8 @@ class S2UploadNew : AppCompatActivity() {
             "picturePath" to null,
             "directions" to inputDirections.text.toString(),
             "ingredients" to inputIngredients.text.toString(),
+            "prepTime" to prepTimeDropdownMenu.text.toString(),
+            "difficulty" to difficultyDropdownMenu.text.toString(),
             "ratingCount" to 0,
             "avgRating" to 0.0,
             "docId" to null

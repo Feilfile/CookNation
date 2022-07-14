@@ -9,10 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.ema.cooknation.model.Recipe
 import com.google.android.material.textfield.TextInputEditText
@@ -37,11 +34,15 @@ class S3Edit : AppCompatActivity() {
     private lateinit var filepath : Uri
     private lateinit var bitmap : Bitmap
 
+    private lateinit var difficultyDropdownMenu: AutoCompleteTextView
+    private lateinit var prepTimeDropdownMenu: AutoCompleteTextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s3_edit)
         initializeVariable()
         setValues()
+        setUpDropdownTextBoxes()
     }
 
     private fun initializeVariable() {
@@ -54,6 +55,20 @@ class S3Edit : AppCompatActivity() {
         saveButton = findViewById(R.id.btnSaveEdit)
         oldRecipeTitle = oldRecipe.title.toString()
         uid = oldRecipe.uid.toString()
+
+        difficultyDropdownMenu = findViewById(R.id.difficultyDropdownMenuEdit)
+        prepTimeDropdownMenu = findViewById(R.id.prepTimeDropdownMenuEdit)
+    }
+
+    // Populates Dropdown Text Box with options to chose from
+    private fun setUpDropdownTextBoxes() {
+        val difficulties = resources.getStringArray(R.array.difficulties)
+        val arrayAdapterDifficulties = ArrayAdapter(this, R.layout.dropdown_item, difficulties)
+        difficultyDropdownMenu.setAdapter(arrayAdapterDifficulties)
+
+        val prepTimes = resources.getStringArray(R.array.prepTimes)
+        val arrayAdapterPrepTime = ArrayAdapter(this, R.layout.dropdown_item, prepTimes)
+        prepTimeDropdownMenu.setAdapter(arrayAdapterPrepTime)
     }
 
     private fun setValues() {
@@ -61,6 +76,11 @@ class S3Edit : AppCompatActivity() {
         editIngredients.setText(oldRecipe.ingredients)
         editDirections.setText(oldRecipe.directions)
         loadPictureInContainer(oldRecipe, editPicture)
+
+        // leon
+        difficultyDropdownMenu.setText(oldRecipe.difficulty)
+        prepTimeDropdownMenu.setText(oldRecipe.prepTime)
+
         editPicture.setOnClickListener{
             selectImage()
         }
@@ -131,7 +151,9 @@ class S3Edit : AppCompatActivity() {
             .update(
                 "title", editRecipeTitle.text.toString(),
                 "directions", editDirections.text.toString(),
-                "ingredients", editIngredients.text.toString()
+                "ingredients", editIngredients.text.toString(),
+                "prepTime", prepTimeDropdownMenu.text.toString(),
+                "difficulty", difficultyDropdownMenu.text.toString()
             )
             .addOnCompleteListener{
                 Toast.makeText(

@@ -97,6 +97,8 @@ data class Recipe(
     var picturePath: String? = null,
     var directions: String? = null,
     var ingredients: String? = null,
+    var prepTime: String? = "-",
+    var difficulty: String? = "-",
     var ratingCount: Int = 0,
     var avgRating: Float = 0.0f) : Serializable {
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.adapter.CardAdapter
+import com.ema.cooknation.adapter.WideCardAdapter
 import com.ema.cooknation.model.Recipe
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -32,7 +33,8 @@ class M2Explore : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipeArrayList: ArrayList<Recipe>
-    private lateinit var cardAdapter: CardAdapter
+
+    private lateinit var cardAdapter: WideCardAdapter
 
     private lateinit var ibButtonWebView: ImageButton
 
@@ -48,12 +50,12 @@ class M2Explore : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         db = Firebase.firestore
         recyclerView = requireActivity().findViewById(R.id.exploreRecyclerView)
-        recyclerView.layoutManager = GridLayoutManager(this.context, 2)
+        recyclerView.layoutManager = GridLayoutManager(this.context, 1)
         recyclerView.setHasFixedSize(true)
 
         recipeArrayList = arrayListOf()
 
-        cardAdapter = CardAdapter(recipeArrayList)
+        cardAdapter = WideCardAdapter(recipeArrayList)
 
         recyclerView.adapter = cardAdapter
 

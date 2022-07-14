@@ -132,4 +132,17 @@
     <string name="web_view_button" />
     <string name="upload_in_profile">+ Upload</string>
     <string name="my_uploads">My Uploads</string>
+    <string name="popup_slider">☰</string>
+    <string name="difficulty">Difficulty</string>
+    <string-array name="difficulties">
+        <item>Easy</item>
+        <item>Normal</item>
+        <item>Hard</item>
+    </string-array>
+    <string-array name="prepTimes">
+        <item>ca. 15 min</item>
+        <item>ca. 30 min</item>
+        <item>ca. 60 min</item>
+        <item>60+ min</item>
+    </string-array>
 </resources>

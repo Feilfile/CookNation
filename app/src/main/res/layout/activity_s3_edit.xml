@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#eeeeee">
 
     <LinearLayout
@@ -59,20 +60,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tiLayoutEditDirections"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:padding="9dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiEditDirections"
-                android:layout_width="match_parent"
-                android:layout_height="151dp"
-                android:hint="@string/directions" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiLayoutEditIngredients"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
@@ -86,13 +73,66 @@
                 android:hint="@string/ingredients"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiLayoutEditDirections"
+            android:layout_width="409dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:padding="9dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiEditDirections"
+                android:layout_width="match_parent"
+                android:layout_height="151dp"
+                android:hint="@string/directions" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:startIconDrawable="@drawable/ic_baseline_difficulty_24"
+                android:hint="Difficulty"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_marginBottom="10dp"
+                android:padding="9dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/difficultyDropdownMenuEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:startIconDrawable="@drawable/ic_baseline_prep_time_24"
+                android:hint="Prep Time"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_marginBottom="10dp"
+                android:padding="9dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/prepTimeDropdownMenuEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnSaveEdit"
             android:layout_gravity="center"
             android:layout_width="230dp"
             android:layout_height="52dp"
             android:layout_marginBottom="10dp"
-            android:backgroundTint="#ff15"
             android:text="@string/save"
             android:textSize="18sp" />
     </LinearLayout>
