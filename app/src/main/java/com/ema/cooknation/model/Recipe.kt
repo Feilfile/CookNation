@@ -100,7 +100,8 @@ data class Recipe(
     var prepTime: String? = "-",
     var difficulty: String? = "-",
     var ratingCount: Int = 0,
-    var avgRating: Float = 0.0f) : Serializable {
+    var avgRating: Float = 0.0f,
+) : Serializable {
 
         fun addNewRating(userRating: Int) {
             val tempValue = avgRating * ratingCount + userRating

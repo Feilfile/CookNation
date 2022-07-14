@@ -10,7 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.ema.cooknation.data.LocalRecipe
 import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.viewmodel.LocalRecipeViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -18,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
+import java.sql.Timestamp
 
 class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeId: String
@@ -33,9 +38,12 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var ratingButton: View
     private lateinit var editButton: ImageButton
     private lateinit var deleteButten: ImageButton
+    private lateinit var favButton: FloatingActionButton
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+
+    private lateinit var localRecipeViewModel: LocalRecipeViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +61,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     private fun initializeVariables() {
         recipeId = intent.extras?.get("recipeId") as String
+        localRecipeViewModel =  ViewModelProvider(this).get(LocalRecipeViewModel::class.java)
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
         recipeTitle = findViewById(R.id.tvRecipeName)
@@ -66,6 +75,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         ratingButton = findViewById(R.id.vRatingButton)
         editButton = findViewById(R.id.ibEdit)
         deleteButten = findViewById(R.id.ibDelete)
+        favButton = findViewById(R.id.fabFavButton)
     }
 
     fun loadData() {
@@ -89,10 +99,10 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     private fun setContent() {
         loadPictureInContainer(recipe, recipeImage)
-        recipeTitle.text = recipe.title.toString()
-        recipeAuthor.text = recipe.author.toString()
-        recipeIngredients.text = recipe.ingredients.toString()
-        recipeDirections.text = recipe.directions.toString()
+        recipeTitle.text = recipe.title
+        recipeAuthor.text = recipe.author
+        recipeIngredients.text = recipe.ingredients
+        recipeDirections.text = recipe.directions
         recipeDate.text = recipe.date.toString()
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
@@ -113,6 +123,13 @@ class S1RecipeViewActivity : AppCompatActivity() {
         val bottomSheetPopupDelete = BottomSheetPopupDelete()
         deleteButten.setOnClickListener{
             bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
+        }
+
+        favButton.setOnClickListener{
+            val localRecipe = LocalRecipe(0, recipe.uid.toString(), recipe.title.toString(), recipe.author.toString(),
+                recipe.date!!.time, recipe.picturePath.toString(), recipe.directions.toString(), recipe.ingredients.toString(), recipe.ratingCount, recipe.avgRating  )
+            Log.d("Test", Timestamp(localRecipe.date) .toString())
+            localRecipeViewModel.addLocalRecipe(localRecipe)
         }
     }
 

@@ -142,7 +142,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:contentDescription="@string/icon_for_fav_button"
-            android:id="@+id/favButton"
+            android:id="@+id/fabFavButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/rlImgSection"
