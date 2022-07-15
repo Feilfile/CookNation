@@ -1,11 +1,18 @@
 package com.ema.cooknation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.adapter.LocalAdapter
+import com.ema.cooknation.adapter.WideCardAdapter
+import com.ema.cooknation.data.LocalRecipe
+import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +28,12 @@ class M1Home : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recipeArrayList: ArrayList<LocalRecipe>
+
+    private lateinit var cardAdapter: LocalAdapter
+    private lateinit var localRecipeViewModel: LocalRecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +54,20 @@ class M1Home : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView = requireActivity().findViewById(R.id.homeRecyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this.context, 1)
+        recyclerView.setHasFixedSize(true)
+
+        recipeArrayList = arrayListOf()
+
+        cardAdapter = LocalAdapter()
+
+        recyclerView.adapter = cardAdapter
+
+        localRecipeViewModel = ViewModelProvider(this).get(LocalRecipeViewModel::class.java)
+        localRecipeViewModel.readAllData.observe(viewLifecycleOwner, Observer { localRecipe ->
+            cardAdapter.setData(localRecipe)
+        })
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package com.ema.cooknation
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -21,8 +22,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.sql.Timestamp
+
 
 class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeId: String
@@ -41,6 +43,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var editButton: ImageButton
     private lateinit var deleteButten: ImageButton
     private lateinit var favButton: FloatingActionButton
+    private lateinit var bitmap: Bitmap
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -117,23 +120,45 @@ class S1RecipeViewActivity : AppCompatActivity() {
             deleteButten.isClickable = true
         }
         //opens editing Menu
-        editButton.setOnClickListener{
+        editButton.setOnClickListener {
             intent = Intent(this@S1RecipeViewActivity, S3Edit::class.java)
             intent.putExtra("recipe", recipe)
             startActivity(intent)
         }
         //opens delete confirmation
         val bottomSheetPopupDelete = BottomSheetPopupDelete()
-        deleteButten.setOnClickListener{
+        deleteButten.setOnClickListener {
             bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
         }
 
-        favButton.setOnClickListener{
-            val localRecipe = LocalRecipe(0, recipe.uid.toString(), recipe.title.toString(), recipe.author.toString(),
-                recipe.date!!.time, recipe.picturePath.toString(), recipe.directions.toString(), recipe.ingredients.toString(), recipe.ratingCount, recipe.avgRating  )
-            Log.d("Test", Timestamp(localRecipe.date) .toString())
-            localRecipeViewModel.addLocalRecipe(localRecipe)
+        favButton.setOnClickListener {
+            addToLocalDataBase()
+            savePictureOnPhone()
         }
+    }
+
+    private fun savePictureOnPhone() {
+    }
+
+    private fun addToLocalDataBase() {
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+
+        val localRecipe = LocalRecipe(
+            recipe.docId.toString(),
+            recipe.uid.toString(),
+            recipe.title.toString(),
+            recipe.author.toString(),
+            recipe.date!!.time,
+            bos.toByteArray(),
+            recipe.directions.toString(),
+            recipe.ingredients.toString(),
+            recipe.ratingCount,
+            recipe.avgRating,
+            recipe.prepTime.toString(),
+            recipe.difficulty.toString()
+        )
+        localRecipeViewModel.addLocalRecipe(localRecipe)
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -154,7 +179,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         val localFile = File.createTempFile("tempFile", ".jpg")
         storageRef.getFile(localFile)
             .addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 view.setImageBitmap(bitmap)
             }.addOnFailureListener{
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")

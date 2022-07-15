@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class LocalRecipeViewModel(application: Application): AndroidViewModel(application) {
 
-    private val readAllData: LiveData<List<LocalRecipe>>
+    val readAllData: LiveData<List<LocalRecipe>>
     private val repository: LocalRecipeRepository
 
     init {
