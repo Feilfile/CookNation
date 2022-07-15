@@ -111,47 +111,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 tools:ignore="TextContrastCheck" />
-
-            <ImageButton
-                android:id="@+id/ibDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_toStartOf="@id/ibEdit"
-                android:background="@null"
-                android:contentDescription="@string/delete_button"
-                android:padding="14dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_baseline_delete_24" />
-
-            <ImageButton
-                android:id="@+id/ibEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:background="@null"
-                android:contentDescription="@string/edit_button"
-                android:padding="14dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_baseline_edit_24" />
-
         </RelativeLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:contentDescription="@string/icon_for_fav_button"
-            android:id="@+id/fabFavButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/rlImgSection"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="-28dp"
-            app:srcCompat="@drawable/ic_baseline_bookmark_empty_24"
-            app:tint="@color/white"
-            tools:ignore="RelativeOverlap" />
 
         <LinearLayout
             android:id="@+id/llEmptyRecipe"
@@ -175,8 +135,8 @@
                     android:id="@+id/tvDifficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text=""
                     android:layout_marginStart="4dp"
-                    android:text="@string/difficulty"
                     android:textColor="#000"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -196,8 +156,8 @@
                     android:id="@+id/tvPrepTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text=""
                     android:layout_marginStart="4dp"
-                    android:text="Prep time"
                     android:textColor="#000"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -217,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@string/lorem_ipsum_list"
+                android:text=""
                 android:textSize="17sp" />
 
             <TextView
@@ -235,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/lorem_ipsum"
+                android:text=""
                 android:textSize="17sp" />
 
         </LinearLayout>

@@ -1,13 +1,10 @@
 package com.ema.cooknation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.FragmentController
-import androidx.fragment.app.FragmentManager
 import com.ema.cooknation.model.Rating
 import com.ema.cooknation.model.Recipe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -35,9 +32,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.bottomsheet_popup_rating, container, false)
-
-        return rootView
+        return inflater.inflate(R.layout.bottomsheet_popup_rating, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

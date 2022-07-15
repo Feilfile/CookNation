@@ -52,9 +52,6 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
     fun setData(localRecipe: List<LocalRecipe>){
         this.localRecipeList = localRecipe
         notifyDataSetChanged()
-
-
-
     }
 
 }

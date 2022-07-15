@@ -130,10 +130,21 @@ class S1RecipeViewActivity : AppCompatActivity() {
         deleteButten.setOnClickListener {
             bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
         }
+        // TODO: remove placeholder Flag, implement real Flag
+        var flag = false
 
         favButton.setOnClickListener {
             addToLocalDataBase()
             savePictureOnPhone()
+
+        // fav button shows if recipe is already bookmarked or not
+        if (flag) {
+            favButton.setImageResource(R.drawable.ic_baseline_bookmark_empty_24)
+            flag = false
+            } else {
+            favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
+            flag = true
+            }
         }
     }
 
