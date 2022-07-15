@@ -35,6 +35,8 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeIngredients: TextView
     private lateinit var recipeDirections: TextView
     private lateinit var recipeDate: TextView
+    private lateinit var recipeDifficulty: TextView
+    private lateinit var recipePrepTime: TextView
     private lateinit var ratingButton: View
     private lateinit var editButton: ImageButton
     private lateinit var deleteButten: ImageButton
@@ -70,6 +72,8 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipeIngredients = findViewById(R.id.tvIngredients)
         recipeDirections = findViewById(R.id.tvDirections)
         recipeDate = findViewById(R.id.tvDate)
+        recipeDifficulty = findViewById(R.id.tvDifficulty)
+        recipePrepTime = findViewById(R.id.tvPrepTime)
         avgRating = findViewById(R.id.mrbAvgRating)
         numRating = findViewById(R.id.tvNumRatings)
         ratingButton = findViewById(R.id.vRatingButton)
@@ -88,9 +92,6 @@ class S1RecipeViewActivity : AppCompatActivity() {
                 val bottomSheetPopupRating = BottomSheetPopupRating()
                 ratingButton.setOnClickListener{
                     bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
-                    /*intent = Intent(this@S1RecipeViewActivity, PopupRating::class.java)
-                    intent.putExtra("recipe", recipe)
-                    resultLauncher.launch(intent)*/
                 }
             } .addOnFailureListener{
                 finish()
@@ -104,6 +105,8 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipeIngredients.text = recipe.ingredients
         recipeDirections.text = recipe.directions
         recipeDate.text = recipe.date.toString()
+        recipeDifficulty.text = recipe.difficulty
+        recipePrepTime.text = recipe.prepTime
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
         //enable editing and deleting when the User opens his own recipes
@@ -156,7 +159,6 @@ class S1RecipeViewActivity : AppCompatActivity() {
             }.addOnFailureListener{
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }
-
     }
 
     fun getRecipe(): Recipe {

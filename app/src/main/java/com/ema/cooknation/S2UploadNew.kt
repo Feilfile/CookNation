@@ -52,6 +52,7 @@ class S2UploadNew : AppCompatActivity() {
         inputIngredients = findViewById(R.id.etIngredients)
         btnUpload = findViewById(R.id.btnUpload)
         btnSelect = findViewById(R.id.ibPreview)
+
         difficultyDropdownMenu = findViewById(R.id.difficultyDropdownMenuUpload)
         prepTimeDropdownMenu = findViewById(R.id.prepTimeDropdownMenuUpload)
     }
