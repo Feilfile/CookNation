@@ -9,4 +9,16 @@ class LocalRecipeRepository(private val localRecipeDao: LocalRecipeDao) {
     suspend fun addLocalRecipe(localRecipe: LocalRecipe){
         localRecipeDao.addRecipe(localRecipe)
     }
+
+    suspend fun deleteRecipe(localRecipe: LocalRecipe){
+        localRecipeDao.deleteRecipe(localRecipe)
+    }
+
+    suspend fun deleteLocalRecipe(docId: String){
+        localRecipeDao.deleteLocalRecipe(docId)
+    }
+
+    fun selectDocumentByDocID(docId: String): LiveData<LocalRecipe>{
+        return localRecipeDao.selectDocumentByDocID(docId)
+    }
 }

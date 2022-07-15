@@ -5,9 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.ema.cooknation.data.LocalRecipe
+import com.ema.cooknation.data.LocalRecipeDao
 import com.ema.cooknation.data.LocalRecipeDatabase
 import com.ema.cooknation.data.LocalRecipeRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class LocalRecipeViewModel(application: Application): AndroidViewModel(application) {
@@ -25,5 +27,21 @@ class LocalRecipeViewModel(application: Application): AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             repository.addLocalRecipe(localRecipe)
         }
+    }
+
+    /*fun deleteLocalRecipe(localRecipe: LocalRecipe) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRecipe(localRecipe)
+        }
+    }*/
+
+    fun deleteLocalRecipe(docId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteLocalRecipe(docId)
+        }
+    }
+
+    fun selecteLocalRecipe(docId: String): LiveData<LocalRecipe> {
+        return repository.selectDocumentByDocID(docId)
     }
 }

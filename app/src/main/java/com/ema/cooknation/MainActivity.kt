@@ -5,19 +5,23 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.ema.cooknation.viewmodel.AppViewModel
+import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     private lateinit var currentFragment: Fragment
+    private lateinit var localRecipeViewModel: LocalRecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CookNation)
         setContentView(R.layout.main_activity)
         mAuth = FirebaseAuth.getInstance()
+        localRecipeViewModel =  ViewModelProvider(this).get(LocalRecipeViewModel::class.java)
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)

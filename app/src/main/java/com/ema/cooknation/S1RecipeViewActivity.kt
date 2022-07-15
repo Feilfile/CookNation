@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ema.cooknation.data.LocalRecipe
+import com.ema.cooknation.data.LocalRecipeRepository
 import com.ema.cooknation.model.Recipe
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,6 +45,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var deleteButten: ImageButton
     private lateinit var favButton: FloatingActionButton
     private lateinit var bitmap: Bitmap
+    private var isFavorite: Boolean = false
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -61,6 +63,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         Log.d("S1RecipeViewActivity", "Reload")
+        isFavorite = false
         loadData()
     }
 
@@ -112,6 +115,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipePrepTime.text = recipe.prepTime
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
+        //checkifFavorite()
         //enable editing and deleting when the User opens his own recipes
         if (recipe.uid == mAuth.uid) {
             editButton.visibility = View.VISIBLE
@@ -135,25 +139,58 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
         favButton.setOnClickListener {
             addToLocalDataBase()
-            savePictureOnPhone()
+            toggleFavoriteButton()
+        }
+    }
+
+    private fun checkifFavorite() {
+        val docRef = db.collection("favorites")
+            .document(mAuth.uid.toString())
+            .collection("docId")
+            .document(recipe.docId.toString())
+        docRef.get().addOnSuccessListener {
+            if(it.exists()) {
+                toggleFavoriteButton()
+            }
 
         // fav button shows if recipe is already bookmarked or not
-        if (flag) {
+        /*if (flag) {
             favButton.setImageResource(R.drawable.ic_baseline_bookmark_empty_24)
             flag = false
             } else {
             favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
             flag = true
-            }
+            }*/
+        }
+
+    }
+
+    private fun toggleFavoriteButton() {
+        if (isFavorite) {
+            isFavorite = false
+            Log.d("FAVORITE", "NOW FALSE")
+            deleteFavorite()
+            localRecipeViewModel.deleteLocalRecipe(recipe.docId.toString())
+        } else {
+            isFavorite = true
+            Log.d("FAVORITE", "NOW TRUE")
+            //change pic
+            addToLocalDataBase()
+            addToFavorite()
         }
     }
 
-    private fun savePictureOnPhone() {
+    private fun deleteFavorite() {
+        db.collection("favorites")
+            .document(mAuth.uid.toString())
+            .collection("docId")
+            .document(recipe.docId.toString())
+            .delete()
     }
 
     private fun addToLocalDataBase() {
         val bos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        val compress = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
 
         val localRecipe = LocalRecipe(
             recipe.docId.toString(),
@@ -170,6 +207,15 @@ class S1RecipeViewActivity : AppCompatActivity() {
             recipe.difficulty.toString()
         )
         localRecipeViewModel.addLocalRecipe(localRecipe)
+    }
+
+    private fun addToFavorite() {
+        val data = hashMapOf("docId" to recipe.docId.toString())
+        db.collection("favorites")
+            .document(mAuth.uid.toString())
+            .collection("docId")
+            .document(recipe.docId.toString())
+            .set(data)
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -192,6 +238,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 view.setImageBitmap(bitmap)
+                checkifFavorite()
             }.addOnFailureListener{
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }

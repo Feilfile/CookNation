@@ -40,12 +40,12 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
         val currentItem = localRecipeList[position]
         holder.title.text = currentItem.title
         holder.author.text = currentItem.author
-        holder.date.text = Timestamp(currentItem.date).toString()
+        holder.date.text = currentItem.date?.let { Timestamp(it).toString() }
         holder.difficulty.text = currentItem.difficulty
         holder.prepTime.text = currentItem.prepTime
-        holder.rating.rating = currentItem.avgRating
+        holder.rating.rating = currentItem.avgRating!!
         holder.numRating.text = currentItem.ratingCount.toString()
-        holder.picture.setImageBitmap(BitmapFactory.decodeByteArray(currentItem.picture, 0 , currentItem.picture.size))
+        holder.picture.setImageBitmap(BitmapFactory.decodeByteArray(currentItem.picture, 0 , currentItem.picture!!.size))
         //setupOnClickListener(holder, position)
     }
 
