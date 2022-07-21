@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.ema.cooknation.model.Recipe
@@ -29,6 +30,7 @@ class S3Edit : AppCompatActivity() {
     private lateinit var saveButton : Button
     private lateinit var oldRecipeTitle : String
     private lateinit var uid: String
+    private lateinit var progressBar: ProgressBar
 
     private lateinit var db : FirebaseFirestore
     private lateinit var filepath : Uri
@@ -53,6 +55,7 @@ class S3Edit : AppCompatActivity() {
         editDirections = findViewById(R.id.tiEditDirections)
         editIngredients = findViewById(R.id.tiEditIngredients)
         saveButton = findViewById(R.id.btnSaveEdit)
+        progressBar = findViewById(R.id.pbEdit)
         oldRecipeTitle = oldRecipe.title.toString()
         uid = oldRecipe.uid.toString()
 
@@ -85,6 +88,7 @@ class S3Edit : AppCompatActivity() {
             selectImage()
         }
         saveButton.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
             uploadPicture()
         }
     }

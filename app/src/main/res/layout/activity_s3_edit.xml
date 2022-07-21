@@ -5,135 +5,147 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#eeeeee">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvEditTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:textSize="40sp"
-            android:textColor="#000"
-            android:fontFamily="@font/lora_semi_bold"
-            android:gravity="center"
-            android:text="@string/edit"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
-
-            <ImageButton
-                android:contentDescription="@string/preview_for_image_selection"
-                android:id="@+id/ibEditPreview"
-                android:layout_width="250dp"
-                android:layout_height="180dp"
-                android:scaleType="centerCrop"
-                android:layout_centerHorizontal="true"
-                android:background="#E0E0E0" />
-
-            <ImageView
-                android:contentDescription="@string/icon_for_image_selection"
-                android:id="@+id/ivEditPhotoIcon"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_add_a_photo_24" />
-        </RelativeLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tiLayoutEditRecipeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:padding="9dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/itEditRecipeName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/recipe_name" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tiLayoutEditIngredients"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:padding="9dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiEditIngredients"
-                android:layout_width="match_parent"
-                android:layout_height="151dp"
-                android:hint="@string/ingredients"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tiLayoutEditDirections"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:padding="9dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiEditDirections"
-                android:layout_width="match_parent"
-                android:layout_height="151dp"
-                android:hint="@string/directions" />
-        </com.google.android.material.textfield.TextInputLayout>
-
+        <ProgressBar
+            android:id="@+id/pbEdit"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:translationZ="90dp"
+            android:visibility="invisible"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvEditTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:textSize="40sp"
+                android:textColor="#000"
+                android:fontFamily="@font/lora_semi_bold"
+                android:gravity="center"
+                android:text="@string/edit"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp">
+
+                <ImageButton
+                    android:contentDescription="@string/preview_for_image_selection"
+                    android:id="@+id/ibEditPreview"
+                    android:layout_width="250dp"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:background="#E0E0E0" />
+
+                <ImageView
+                    android:contentDescription="@string/icon_for_image_selection"
+                    android:id="@+id/ivEditPhotoIcon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_a_photo_24" />
+            </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/tiLayoutEditRecipeName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/ic_baseline_difficulty_24"
-                android:hint="Difficulty"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_marginBottom="10dp"
                 android:padding="9dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/difficultyDropdownMenuEdit"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/itEditRecipeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:hint="@string/recipe_name" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/tiLayoutEditIngredients"
+                android:layout_width="409dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/ic_baseline_prep_time_24"
-                android:hint="Prep Time"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_marginBottom="10dp"
                 android:padding="9dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/prepTimeDropdownMenuEdit"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiEditIngredients"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"/>
+                    android:layout_height="151dp"
+                    android:hint="@string/ingredients"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiLayoutEditDirections"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="9dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiEditDirections"
+                    android:layout_width="match_parent"
+                    android:layout_height="151dp"
+                    android:hint="@string/directions" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:startIconDrawable="@drawable/ic_baseline_difficulty_24"
+                    android:hint="Difficulty"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_marginBottom="10dp"
+                    android:padding="9dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/difficultyDropdownMenuEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:startIconDrawable="@drawable/ic_baseline_prep_time_24"
+                    android:hint="Prep Time"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_marginBottom="10dp"
+                    android:padding="9dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/prepTimeDropdownMenuEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSaveEdit"
+                android:layout_gravity="center"
+                android:layout_width="230dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/save"
+                android:textSize="18sp" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSaveEdit"
-            android:layout_gravity="center"
-            android:layout_width="230dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/save"
-            android:textSize="18sp" />
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

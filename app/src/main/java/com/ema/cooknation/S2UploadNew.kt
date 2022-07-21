@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.*
 import com.ema.cooknation.model.User
 import com.google.android.material.textfield.TextInputEditText
@@ -27,8 +28,9 @@ class S2UploadNew : AppCompatActivity() {
     private lateinit var inputIngredients:TextInputEditText
     private lateinit var btnUpload: Button
     private lateinit var btnSelect: ImageButton
-    private lateinit var mAuth: FirebaseAuth
+    private lateinit var progressBar: ProgressBar
 
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var filepath : Uri
     private lateinit var bitmap : Bitmap
@@ -52,6 +54,7 @@ class S2UploadNew : AppCompatActivity() {
         inputIngredients = findViewById(R.id.etIngredients)
         btnUpload = findViewById(R.id.btnUpload)
         btnSelect = findViewById(R.id.ibPreview)
+        progressBar = findViewById(R.id.pbUpload)
 
         difficultyDropdownMenu = findViewById(R.id.difficultyDropdownMenuUpload)
         prepTimeDropdownMenu = findViewById(R.id.prepTimeDropdownMenuUpload)
@@ -74,6 +77,7 @@ class S2UploadNew : AppCompatActivity() {
         }
 
         btnUpload.setOnClickListener{
+            progressBar.visibility = View.VISIBLE
             uploadRecipe()
         }
     }
@@ -195,7 +199,6 @@ class S2UploadNew : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
     }
 
     private fun getCurrentDate(): Timestamp {

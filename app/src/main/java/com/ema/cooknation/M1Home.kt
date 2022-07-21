@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.adapter.LocalAdapter
-import com.ema.cooknation.adapter.WideCardAdapter
 import com.ema.cooknation.data.LocalRecipe
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 
@@ -48,8 +47,7 @@ class M1Home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootView = inflater.inflate(R.layout.fragment_m1_home, container, false)
-        return rootView
+        return inflater.inflate(R.layout.fragment_m1_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
