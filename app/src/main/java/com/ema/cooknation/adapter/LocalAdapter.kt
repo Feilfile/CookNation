@@ -54,4 +54,5 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 
+    // TODO: Implement onClickListener
 }

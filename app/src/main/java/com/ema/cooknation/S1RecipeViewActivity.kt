@@ -134,9 +134,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         deleteButten.setOnClickListener {
             bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
         }
-        // TODO: remove placeholder Flag, implement real Flag
-        var flag = false
-
+        //adds or deletes recipe locally
         favButton.setOnClickListener {
             addToLocalDataBase()
             toggleFavoriteButton()
@@ -152,17 +150,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
             if(it.exists()) {
                 toggleFavoriteButton()
             }
-
-        // fav button shows if recipe is already bookmarked or not
-        /*if (flag) {
-            favButton.setImageResource(R.drawable.ic_baseline_bookmark_empty_24)
-            flag = false
-            } else {
-            favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
-            flag = true
-            }*/
         }
-
     }
 
     private fun toggleFavoriteButton() {
@@ -170,11 +158,12 @@ class S1RecipeViewActivity : AppCompatActivity() {
             isFavorite = false
             Log.d("FAVORITE", "NOW FALSE")
             deleteFavorite()
+            favButton.setImageResource(R.drawable.ic_baseline_bookmark_empty_24)
             localRecipeViewModel.deleteLocalRecipe(recipe.docId.toString())
         } else {
             isFavorite = true
             Log.d("FAVORITE", "NOW TRUE")
-            //change pic
+            favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
             addToLocalDataBase()
             addToFavorite()
         }
@@ -190,6 +179,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     private fun addToLocalDataBase() {
         val bos = ByteArrayOutputStream()
+        // TODO: delete compress line if not used
         val compress = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
 
         val localRecipe = LocalRecipe(
