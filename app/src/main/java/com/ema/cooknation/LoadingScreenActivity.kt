@@ -12,13 +12,12 @@ class LoadingScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_screen)
 
-    Handler(Looper.getMainLooper()).postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
 
-    }, 3000)    // Shows Splash Screen for 3 seconds
-
+        }, 3000)    // Shows Splash Screen for 3 seconds
     }
 }

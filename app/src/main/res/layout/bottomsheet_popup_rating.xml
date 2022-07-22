@@ -36,7 +36,7 @@
         style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mrb_progressTint="#b7dd29"/>
+        app:mrb_progressTint="#b7dd29" />
 
     <Button
         android:layout_gravity="center"

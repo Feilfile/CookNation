@@ -13,7 +13,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/lora_semi_bold"
-        android:text="Explore"
+        android:text="@string/explore"
         android:textColor="#000"
         android:textSize="28sp"
         android:layout_alignParentStart="true"/>

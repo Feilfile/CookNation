@@ -20,16 +20,9 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [M3Search.newInstance] factory method to
- * create an instance of this fragment.
- */
 class M3Search : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -131,17 +124,34 @@ class M3Search : Fragment() {
         inflater.inflate(R.menu.search_menu, menu)
     }
 
-    private fun sortElementsByTitle(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy {
-            it.title.toString().lowercase()
-        })
-        refreshAdapter(sortedList)
-    }
 
+    // sorting functions for popup menu
     private fun sortElementsByNewest(){
         val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
             it.date
         })
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsByRating(){
+        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
+            it.avgRating
+        })
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsDifficultyEasy(){
+        val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Easy"}, {it.difficulty}))
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsDifficultyNormal(){
+        val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Normal"}, {it.difficulty}))
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsDifficultyHard(){
+        val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Hard"}, {it.difficulty}))
         refreshAdapter(sortedList)
     }
 
@@ -152,8 +162,14 @@ class M3Search : Fragment() {
         refreshAdapter(sortedList)
     }
 
-    //TODO: private fun SortByRating(){} and other sorting possibilities
+    private fun sortElementsByTitle(){
+        val sortedList = temprecipeArrayList.sortedWith(compareBy {
+            it.title.toString().lowercase()
+        })
+        refreshAdapter(sortedList)
+    }
 
+    // TODO: muss noch kommentiert werden, kann nicht genau sagen was das ist - Leon
     private fun refreshAdapter(sortedList: List<Recipe>){
         temprecipeArrayList.clear()
         temprecipeArrayList.addAll(sortedList)
@@ -206,6 +222,7 @@ class M3Search : Fragment() {
         })
     }
 
+    // sets up popupmenu-options for various ways to sort recipes
     private fun popupMenu() {
         val popupMenu = PopupMenu(activity as MainActivity, sorter)
         popupMenu.inflate(R.menu.search_menu)
@@ -226,39 +243,37 @@ class M3Search : Fragment() {
                         "Sorting by top rated recipes...",
                         Toast.LENGTH_SHORT
                     ).show()
-                    sortElementsByTitle()
+                    sortElementsByRating()
                     true
                 }
                 R.id.iDifficulty -> {
-                    Toast.makeText(
-                        activity as MainActivity,
-                        "Sorting by newest recipe...",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     true
                 }
                 R.id.iDifficulty1 -> {
                     Toast.makeText(
                         activity as MainActivity,
-                        "Sorting by newest recipe...",
+                        "Sorting by easy difficulty recipes...",
                         Toast.LENGTH_SHORT
                     ).show()
+                    sortElementsDifficultyEasy()
                     true
                 }
                 R.id.iDifficulty2 -> {
                     Toast.makeText(
                         activity as MainActivity,
-                        "Sorting by newest recipe...",
+                        "Sorting by normal difficulty recipes...",
                         Toast.LENGTH_SHORT
                     ).show()
+                    sortElementsDifficultyNormal()
                     true
                 }
                 R.id.iDifficulty3 -> {
                     Toast.makeText(
                         activity as MainActivity,
-                        "Sorting by newest recipe...",
+                        "Sorting by hard difficulty recipes...",
                         Toast.LENGTH_SHORT
                     ).show()
+                    sortElementsDifficultyHard()
                     true
                 }
                 else -> true
@@ -291,16 +306,6 @@ class M3Search : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment m2_explore.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
         fun newInstance(param1: String, param2: String) =
             M3Search().apply {
                 arguments = Bundle().apply {

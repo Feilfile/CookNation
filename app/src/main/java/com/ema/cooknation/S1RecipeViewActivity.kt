@@ -115,13 +115,14 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipePrepTime.text = recipe.prepTime
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
-        //checkifFavorite()
+        //checkIfFavorite()
         //enable editing and deleting when the User opens his own recipes
         if (recipe.uid == mAuth.uid) {
             editButton.visibility = View.VISIBLE
             editButton.isClickable = true
             deleteButten.visibility = View.VISIBLE
             deleteButten.isClickable = true
+            ratingButton.visibility = View.INVISIBLE
         }
         //opens editing Menu
         editButton.setOnClickListener {

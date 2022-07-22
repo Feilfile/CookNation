@@ -44,8 +44,10 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         checkForExistingRating()
         ratingStars = view.findViewById(R.id.mrbUserRating)
         commitButton = view.findViewById(R.id.btnCommitRating)
+
+        // if user has not rated recipe, show 0 stars; else show old rating
         if (!alreadyRated) {
-            ratingStars.rating = 5f
+            ratingStars.rating = 0f
         } else {
             ratingStars.rating = oldRating.toFloat()
         }
@@ -74,6 +76,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         updateRecipeInCollection()
     }
 
+    // check if existing rating is in database and change alreadyRated variable accordingly
     private fun checkForExistingRating() {
         db.collection("rating")
             .document("${mAuth.uid}.${recipe.docId}")
@@ -87,6 +90,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
             }
     }
 
+    // update rating and dismiss fragment
     private fun updateRecipeInCollection() {
         db.collection("recipes").document(recipe.docId.toString())
             .update(
@@ -97,6 +101,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         dismiss()
     }
 
+    // TODO: nicht sicher was genau hier passiert - Leon
     private fun editInRatingCollection(userRating: Int) {
         val rating = hashMapOf(
             "ratingStars" to userRating

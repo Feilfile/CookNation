@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // check if login was successful and if so, change activity
     private fun loginUser() {
         val email = etLoginEmail!!.text.toString()
         val password = etLoginPassword!!.text.toString()
