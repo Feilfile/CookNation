@@ -26,7 +26,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="14dp"
         android:adjustViewBounds="true"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/light_blue_900"
         android:contentDescription="@string/web_view_button"
         android:scaleType="centerInside"
         android:src="@drawable/ic_baseline_food_bank_24" />

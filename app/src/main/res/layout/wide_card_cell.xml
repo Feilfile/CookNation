@@ -32,7 +32,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/recipe_img"
             android:scaleType="centerCrop"
-            android:src="@drawable/buffer" />
+            android:src="@drawable/buffer2" />
 
         </LinearLayout>
 

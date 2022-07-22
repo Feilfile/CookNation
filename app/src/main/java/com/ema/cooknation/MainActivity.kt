@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
         //load initial fragment -> here m1_home
-        openFragment(M1Home.newInstance("a","b"))
+        openFragment(M1Home.newInstance("",""))
         //val currentFragment = model.currentFragment.value
         //val username = model.username.value
         //val homeFragment = currentFragment.newInstance("e","f")
@@ -80,17 +80,17 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.m1_home -> {
-                currentFragment = M1Home.newInstance("a","b")
+                currentFragment = M1Home.newInstance("","")
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m2_explore -> {
-                currentFragment = M2Explore.newInstance("c","d")
+                currentFragment = M2Explore.newInstance("","")
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m3_search -> {
-                currentFragment = M3Search.newInstance("e","f")
+                currentFragment = M3Search.newInstance("","")
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                 // check if uer i logged in
                 val user = mAuth!!.currentUser
                 if (user == null) {
-                    currentFragment = M4x2RegisterLogin.newInstance("a","b")
+                    currentFragment = M4x2RegisterLogin.newInstance("","")
                     openFragment(currentFragment)
                     return@OnNavigationItemSelectedListener true
                 }
