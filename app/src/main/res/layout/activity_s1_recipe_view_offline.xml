@@ -11,13 +11,13 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/rlImgSection"
+            android:id="@+id/rlImgSectionOffline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="4dp">
 
             <ImageView
-                android:id="@+id/ivRecipeImg"
+                android:id="@+id/ivRecipeImgOffline"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:alpha="1.0"
@@ -31,10 +31,10 @@
                 android:background="@drawable/gradient_up" />
 
             <TextView
-                android:id="@+id/tvRecipeName"
+                android:id="@+id/tvRecipeNameOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/mrbAvgRating"
+                android:layout_above="@+id/mrbAvgRatingOffline"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/recipe_name"
@@ -44,33 +44,33 @@
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:isIndicator="false"
-                android:id="@+id/mrbAvgRating"
+                android:id="@+id/mrbAvgRatingOffline"
                 android:stepSize="0.1"
                 android:numStars="5"
                 style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/tvAuthor"
-                android:layout_alignStart="@+id/tvRecipeName"
+                android:layout_above="@+id/tvAuthorOffline"
+                android:layout_alignStart="@+id/tvRecipeNameOffline"
                 app:mrb_fillBackgroundStars="false"
                 app:mrb_progressTint="@android:color/white"
                 app:mrb_secondaryProgressTint="@android:color/white" />
 
             <View
-                android:id="@+id/vRatingButton"
+                android:id="@+id/vRatingButtonOffline"
                 android:layout_width="180dp"
                 android:layout_height="38dp"
-                android:layout_below="@+id/tvRecipeName"
+                android:layout_below="@+id/tvRecipeNameOffline"
                 android:layout_marginStart="8dp" />
 
             <TextView
-                android:id="@+id/tvNumRatings"
+                android:id="@+id/tvNumRatingsOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/mrbAvgRating"
-                android:layout_alignBottom="@+id/mrbAvgRating"
+                android:layout_alignTop="@+id/mrbAvgRatingOffline"
+                android:layout_alignBottom="@+id/mrbAvgRatingOffline"
                 android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/mrbAvgRating"
+                android:layout_toEndOf="@id/mrbAvgRatingOffline"
                 android:gravity="center"
                 android:text="@string/no_reviews"
                 android:textColor="@android:color/white"
@@ -78,11 +78,11 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/tvAuthor"
+                android:id="@+id/tvAuthorOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/tvRecipeName"
-                android:layout_alignBottom="@+id/ivRecipeImg"
+                android:layout_alignStart="@+id/tvRecipeNameOffline"
+                android:layout_alignBottom="@+id/ivRecipeImgOffline"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:textColor="@android:color/white"
@@ -90,23 +90,23 @@
                 android:textSize="20sp"/>
 
             <TextView
-                android:id="@+id/text_divider"
+                android:id="@+id/text_dividerOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/tvAuthor"
-                android:layout_toEndOf="@+id/tvAuthor"
+                android:layout_alignTop="@+id/tvAuthorOffline"
+                android:layout_toEndOf="@+id/tvAuthorOffline"
                 android:text="  •  "
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvDateOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvAuthor"
-                android:layout_alignTop="@+id/tvAuthor"
-                android:layout_toEndOf="@+id/text_divider"
+                android:layout_below="@+id/tvAuthorOffline"
+                android:layout_alignTop="@+id/tvAuthorOffline"
+                android:layout_toEndOf="@+id/text_dividerOffline"
                 android:text="@string/date"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
@@ -114,10 +114,10 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/llEmptyRecipe"
+            android:id="@+id/llEmptyRecipeOffline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rlImgSection"
+            android:layout_below="@id/rlImgSectionOffline"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical">
 
@@ -132,7 +132,7 @@
                     android:src="@drawable/ic_baseline_difficulty_24" />
 
                 <TextView
-                    android:id="@+id/tvDifficulty"
+                    android:id="@+id/tvDifficultyOffline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -153,7 +153,7 @@
                     android:src="@drawable/ic_baseline_prep_time_24" />
 
                 <TextView
-                    android:id="@+id/tvPrepTime"
+                    android:id="@+id/tvPrepTimeOffline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -173,7 +173,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvIngredients"
+                android:id="@+id/tvIngredientsOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -190,7 +190,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvDirections"
+                android:id="@+id/tvDirectionsOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"

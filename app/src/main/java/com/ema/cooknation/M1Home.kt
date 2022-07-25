@@ -25,6 +25,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"

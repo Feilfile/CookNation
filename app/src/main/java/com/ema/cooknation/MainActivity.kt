@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m4_profile -> {
-                // check if uer i logged in
+                // check if user is logged in
                 val user = mAuth!!.currentUser
                 if (user == null) {
                     currentFragment = M4x2RegisterLogin.newInstance("","")
@@ -114,12 +114,6 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
-
-
-
-
-
-
 
     /*override fun onStart() {
         super.onStart()
