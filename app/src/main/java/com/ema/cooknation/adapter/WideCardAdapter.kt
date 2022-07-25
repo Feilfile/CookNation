@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.MainActivity
 import com.ema.cooknation.R
 import com.ema.cooknation.S1RecipeViewActivity
 import com.ema.cooknation.model.Recipe
@@ -76,6 +77,7 @@ class WideCardAdapter(private val recipes: ArrayList<Recipe>)
             //parse recipe to the activity
             intent.putExtra("recipeId", recipes[position].docId)
             v.context.startActivity(intent)
+            (v.context as MainActivity).overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
             //activity.supportFragmentManager.beginTransaction().replace(R.id.clScreenWindow, recipeView).commit()
         }
     }

@@ -24,23 +24,10 @@ class WebViewActivity : AppCompatActivity() {
             settings.safeBrowsingEnabled = true
             settings.domStorageEnabled = true
         }
-        //https://www.facebook.com/Cooknation-107542382025670
-    }
-/*
-    @SuppressLint("SetJavaScriptEnabled")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun webViewSetup() {
-        webView.webViewClient = WebViewClient()
-
-        webView.apply {
-            loadUrl("https://www.google.com/")
-            settings.javaScriptEnabled = true
-            settings.safeBrowsingEnabled = true
-            settings.domStorageEnabled = true
-        }
     }
 
     override fun onBackPressed() {
-        if (webView.canGoBack()) webView.goBack() else super.onBackPressed()
-    }*/
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+    }
 }

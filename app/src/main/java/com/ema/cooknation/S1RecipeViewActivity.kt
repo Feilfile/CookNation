@@ -4,11 +4,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -116,7 +119,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
         //checkIfFavorite()
-        //enable editing and deleting when the User opens his own recipes
+        //enable editing and deleting when the user opens his own recipes, disable rating on own recipe
         if (recipe.uid == mAuth.uid) {
             editButton.visibility = View.VISIBLE
             editButton.isClickable = true
@@ -149,7 +152,9 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .document(recipe.docId.toString())
         docRef.get().addOnSuccessListener {
             if(it.exists()) {
-                toggleFavoriteButton()
+                isFavorite = true
+                Log.d("FAVORITE", "NOW TRUE")
+                favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
             }
         }
     }
@@ -158,15 +163,36 @@ class S1RecipeViewActivity : AppCompatActivity() {
         if (isFavorite) {
             isFavorite = false
             Log.d("FAVORITE", "NOW FALSE")
+            Toast.makeText(
+                this,
+                "Recipe is now deleted from bookmarks",
+                Toast.LENGTH_SHORT).show()
             deleteFavorite()
             favButton.setImageResource(R.drawable.ic_baseline_bookmark_empty_24)
             localRecipeViewModel.deleteLocalRecipe(recipe.docId.toString())
+            //disable button for 1 sec to minimize errors in database
+            favButton.setClickable(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                favButton.setClickable(true)
+
+            }, 1000)
         } else {
             isFavorite = true
             Log.d("FAVORITE", "NOW TRUE")
             favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
+            Toast.makeText(
+                this,
+                "Recipe is now bookmarked",
+                Toast.LENGTH_SHORT).show()
             addToLocalDataBase()
             addToFavorite()
+
+            //disable button for 1 sec to minimize errors in database
+            favButton.setClickable(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                favButton.setClickable(true)
+
+            }, 1000)
         }
     }
 
@@ -237,5 +263,11 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     fun getRecipe(): Recipe {
         return recipe
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //overridePendingTransition(R.anim.static_animation, R.anim.zoom_out)
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 }

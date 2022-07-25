@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     fun openUploadFragment() {
         startActivity(Intent(this@MainActivity, S2UploadNew::class.java))
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     fun performLogout() {
@@ -65,14 +66,17 @@ class MainActivity : AppCompatActivity() {
 
     fun openWebViewActivity() {
         startActivity(Intent(this@MainActivity, WebViewActivity::class.java))
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     fun openLoginActivity() {
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     fun openRegisterActivity() {
         startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     //TODO: remove/change parsed fragment parameters

@@ -67,6 +67,8 @@
                     android:id="@+id/itEditRecipeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
                     android:hint="@string/recipe_name" />
             </com.google.android.material.textfield.TextInputLayout>
 

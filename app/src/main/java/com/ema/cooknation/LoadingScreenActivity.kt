@@ -16,6 +16,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
             finish()
 
         }, 3000)    // Shows Splash Screen for 3 seconds
