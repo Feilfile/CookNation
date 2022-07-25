@@ -52,6 +52,7 @@ class M2Explore : Fragment() {
         recyclerView = requireActivity().findViewById(R.id.exploreRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(this.context, 1)
         recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(15)
 
         recipeArrayList = arrayListOf()
 

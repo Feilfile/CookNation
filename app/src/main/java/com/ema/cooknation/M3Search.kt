@@ -76,6 +76,7 @@ class M3Search : Fragment() {
         val layoutManager = GridLayoutManager(this.context, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(15)
         recipeArrayList = arrayListOf()
         temprecipeArrayList = arrayListOf()
         cardAdapter = CardAdapter(temprecipeArrayList)

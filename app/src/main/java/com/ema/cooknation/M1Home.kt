@@ -39,6 +39,7 @@ class M1Home : Fragment() {
         recyclerView = requireActivity().findViewById(R.id.homeRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(this.context, 1)
         recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(15)
 
         recipeArrayList = arrayListOf()
 

@@ -16,7 +16,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ema.cooknation.data.LocalRecipe
-import com.ema.cooknation.data.LocalRecipeRepository
 import com.ema.cooknation.model.Recipe
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -145,7 +144,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkifFavorite() {
+    private fun checkFavorite() {
         val docRef = db.collection("favorites")
             .document(mAuth.uid.toString())
             .collection("docId")
@@ -206,8 +205,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     private fun addToLocalDataBase() {
         val bos = ByteArrayOutputStream()
-        // TODO: delete compress line if not used
-        val compress = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
 
         val localRecipe = LocalRecipe(
             recipe.docId.toString(),
@@ -255,7 +253,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 view.setImageBitmap(bitmap)
-                checkifFavorite()
+                checkFavorite()
             }.addOnFailureListener{
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }
