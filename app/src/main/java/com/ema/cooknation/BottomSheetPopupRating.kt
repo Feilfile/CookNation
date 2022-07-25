@@ -53,6 +53,8 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         }
 
         commitButton.setOnClickListener {
+            commitButton.isEnabled = false
+            commitButton.isClickable = false
             if (alreadyRated) {
                 editRating()
             } else {

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ema.cooknation.data.LocalRecipe
@@ -28,7 +30,6 @@ class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_screen)
-
         initializeVariables()
         updateLocalDatabase()
         /*Handler(Looper.getMainLooper()).postDelayed({
@@ -114,7 +115,11 @@ class LoadingScreenActivity : AppCompatActivity() {
                 }
             }
             updatingJob.join()
+            Handler(Looper.getMainLooper()).postDelayed({
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+            finish()
+            }, 2000)
         }
     }
 }

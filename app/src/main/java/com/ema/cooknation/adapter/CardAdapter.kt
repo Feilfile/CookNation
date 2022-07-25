@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.MainActivity
 import com.ema.cooknation.R
 import com.ema.cooknation.S1RecipeViewActivity
+import com.ema.cooknation.data.LocalRecipe
 import com.ema.cooknation.model.Recipe
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
 
-class CardAdapter(private val recipes: ArrayList<Recipe>)
+class CardAdapter(private var recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<CardAdapter.ViewHolder>()
 {
 
