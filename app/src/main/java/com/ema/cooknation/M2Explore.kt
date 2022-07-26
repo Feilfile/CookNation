@@ -20,9 +20,7 @@ class M2Explore : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipeArrayList: ArrayList<Recipe>
-
     private lateinit var cardAdapter: WideCardAdapter
-
     private lateinit var ibButtonWebView: ImageButton
 
     override fun onCreateView(
@@ -38,22 +36,23 @@ class M2Explore : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.layoutManager = GridLayoutManager(this.context, 1)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.setItemViewCacheSize(15)
 
-        recipeArrayList = arrayListOf()
-
-        cardAdapter = WideCardAdapter(recipeArrayList)
-
-        recyclerView.adapter = cardAdapter
-
+        setupRecycler()
         eventChangeListener()
 
         // Button to go to WebView
         ibButtonWebView.setOnClickListener {
             (activity as MainActivity).openWebViewActivity()
         }
+    }
+
+    private fun setupRecycler() {
+        recyclerView.layoutManager = GridLayoutManager(this.context, 1)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(15)
+        recipeArrayList = arrayListOf()
+        cardAdapter = WideCardAdapter(recipeArrayList)
+        recyclerView.adapter = cardAdapter
     }
 
     private fun eventChangeListener() {
@@ -78,9 +77,6 @@ class M2Explore : Fragment() {
                 }
             })
     }
-
-    /*private var _binding : FragmentM2ExploreBinding? = null
-    private val binding get() = _binding!!*/
 
     companion object {
         fun newInstance() = M2Explore().apply {}

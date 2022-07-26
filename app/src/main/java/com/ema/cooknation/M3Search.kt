@@ -2,7 +2,6 @@ package com.ema.cooknation
 
 //import androidx.appcompat.widget.SearchView
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -14,17 +13,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.adapter.CardAdapter
 import com.ema.cooknation.model.Recipe
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.util.*
 
 class M3Search : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
+    //recipeArrayList has all Elements in the database
+    //tempRecipeArrayList has all Elements that are loaded inside the recycler view and gets changed after searching/sorting
     private lateinit var recipeArrayList: ArrayList<Recipe>
-    private lateinit var temprecipeArrayList: ArrayList<Recipe>
+    private lateinit var tempRecipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
 
     private lateinit var searchBarText: SearchView
@@ -52,7 +54,7 @@ class M3Search : Fragment() {
 
     private fun setupButtons() {
         sorter.setOnClickListener{
-            temprecipeArrayList.clear()
+            tempRecipeArrayList.clear()
             sortElementsByNewest()
         }
     }
@@ -64,12 +66,28 @@ class M3Search : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(15)
         recipeArrayList = arrayListOf()
-        temprecipeArrayList = arrayListOf()
-        cardAdapter = CardAdapter(temprecipeArrayList)
+        tempRecipeArrayList = arrayListOf()
+        cardAdapter = CardAdapter(tempRecipeArrayList)
         recyclerView.adapter = cardAdapter
-        eventChangeListener()
+        loadAdapter()
     }
 
+    private fun loadAdapter() {
+        recipeArrayList.clear()
+        runBlocking (Dispatchers.IO){
+            //generate all objects to the list and load it into the CardAdapter
+            val recipes = db.collection("recipes")
+                .get()
+                .await()
+            for (foundRecipe in recipes.documents) {
+                recipeArrayList.add(foundRecipe.toObject(Recipe::class.java)!!)
+            }
+            tempRecipeArrayList.addAll(recipeArrayList)
+            sortElementsByNewest()
+        }
+    }
+
+/*  LEGACY ADAPTER
     //Loads all Elements into the adapter and sorts it before they load
     private fun eventChangeListener() {
         db.collection("recipes")
@@ -90,68 +108,11 @@ class M3Search : Fragment() {
                             recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
                         }
                     }
-                    temprecipeArrayList.addAll(recipeArrayList)
+                    tempRecipeArrayList.addAll(recipeArrayList)
                     sortElementsByNewest()
                 }
             })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.search_menu, menu)
-    }
-
-
-    /* sorting functions for popup menu */
-
-    private fun sortElementsByNewest(){
-        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
-            it.date
-        })
-        refreshAdapter(sortedList)
-    }
-
-    private fun sortElementsByRating(){
-        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
-            it.avgRating
-        })
-        refreshAdapter(sortedList)
-    }
-
-    private fun sortElementsDifficultyEasy(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Easy"}, {it.difficulty}))
-        refreshAdapter(sortedList)
-    }
-
-    private fun sortElementsDifficultyNormal(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Normal"}, {it.difficulty}))
-        refreshAdapter(sortedList)
-    }
-
-    private fun sortElementsDifficultyHard(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Hard"}, {it.difficulty}))
-        refreshAdapter(sortedList)
-    }
-/*
-    private fun sortElementsByOldest(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy {
-            it.date
-        })
-        refreshAdapter(sortedList)
-    }
-    private fun sortElementsByTitle(){
-        val sortedList = temprecipeArrayList.sortedWith(compareBy {
-            it.title.toString().lowercase()
-        })
-        refreshAdapter(sortedList)
-    }
-*/
-    // TODO: muss noch kommentiert werden, kann nicht genau sagen was das ist - Leon
-    private fun refreshAdapter(sortedList: List<Recipe>){
-        temprecipeArrayList.clear()
-        temprecipeArrayList.addAll(sortedList)
-        cardAdapter.notifyDataSetChanged()
-    }
+    }*/
 
     private fun activateSearchBar() {
 
@@ -161,26 +122,27 @@ class M3Search : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                temprecipeArrayList.clear()
+                tempRecipeArrayList.clear()
                 //conversion to lowercase
                 var searchBarText = newText!!.lowercase(Locale.getDefault())
                 //deletion of whitespaces TODO: extract in separate Function
                 searchBarText = searchBarText.replace("\\s".toRegex(), "")
                 if (searchBarText.isNotEmpty()) {
                     //all tags get split after a ',' and separated in a new array called words
-                    var words = searchBarText.split(",").toTypedArray()
-                    words = removeDuplicates(words)
-                    val lastItem = words.last()
+                    var arguments = searchBarText.split(",").toTypedArray()
+                    arguments = removeDuplicates(arguments)
+                    val lastItem = arguments.last()
 
                     recipeArrayList.forEach{
                         //checks if all tags are found inside the Recipe and so it adds it into the bew list
-                        for(word in words) {
-                            if (it.title?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word)
-                                || it.author?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word)
-                                || it.ingredients?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(word))
+                        for(argument in arguments) {
+                            if (it.title?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(argument)
+                                || it.author?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(argument)
+                                || it.ingredients?.replace("\\s".toRegex(), "")?.lowercase(Locale.getDefault())!!.contains(argument))
                             {
-                                if(word == lastItem) {
-                                    temprecipeArrayList.add(it)
+                                //when the last element fulfills the if condition the recipe is valid and gets added to the new list
+                                if(argument == lastItem) {
+                                    tempRecipeArrayList.add(it)
                                 }
                                 continue
                             } else {
@@ -273,13 +235,65 @@ class M3Search : Fragment() {
         }
     }
 
-    fun removeDuplicates(array: Array<String>): Array<String>{
-        return array.distinct().toTypedArray()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search_menu, menu)
     }
 
-    fun resetAdapter(){
-        temprecipeArrayList.clear()
-        eventChangeListener()
+    /* sorting functions for popup menu */
+
+    private fun sortElementsByNewest(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
+            it.date
+        })
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsByRating(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
+            it.avgRating
+        })
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsDifficultyEasy(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy( {it.difficulty != "Easy"}, {it.difficulty}))
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsDifficultyNormal(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy( {it.difficulty != "Normal"}, {it.difficulty}))
+        refreshAdapter(sortedList)
+    }
+
+    private fun sortElementsDifficultyHard(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy( {it.difficulty != "Hard"}, {it.difficulty}))
+        refreshAdapter(sortedList)
+    }
+
+/*  USELESS Queries
+    private fun sortElementsByOldest(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
+            it.date
+        })
+        refreshAdapter(sortedList)
+    }
+    private fun sortElementsByTitle(){
+        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
+            it.title.toString().lowercase()
+        })
+        refreshAdapter(sortedList)
+    }
+*/
+    // current output list gets cleared and refilled with the sorted one
+    private fun refreshAdapter(sortedList: List<Recipe>){
+        tempRecipeArrayList.clear()
+        tempRecipeArrayList.addAll(sortedList)
+        cardAdapter.notifyDataSetChanged()
+    }
+
+    private fun removeDuplicates(array: Array<String>): Array<String>{
+        return array.distinct().toTypedArray()
     }
 
     companion object {

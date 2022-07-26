@@ -1,12 +1,10 @@
 package com.ema.cooknation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,13 +17,16 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class M4x1profile : Fragment() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipeArrayList: ArrayList<Recipe>
-    private lateinit var temprecipeArrayList: ArrayList<Recipe>
+    private lateinit var tempRecipeArrayList: ArrayList<Recipe>
     private lateinit var cardAdapter: CardAdapter
     private lateinit var mAuth: FirebaseAuth
 
@@ -89,25 +90,43 @@ class M4x1profile : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(15)
         recipeArrayList = arrayListOf()
-        temprecipeArrayList = arrayListOf()
-        cardAdapter = CardAdapter(temprecipeArrayList)
+        tempRecipeArrayList = arrayListOf()
+        cardAdapter = CardAdapter(tempRecipeArrayList)
         recyclerView.adapter = cardAdapter
-        eventChangeListener()
+        loadAdapter()
     }
 
     private fun sortElementsByNewest(){
-        val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
+        val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
             it.date
         })
         refreshAdapter(sortedList)
     }
 
     private fun refreshAdapter(sortedList: List<Recipe>){
-        temprecipeArrayList.clear()
-        temprecipeArrayList.addAll(sortedList)
+        tempRecipeArrayList.clear()
+        tempRecipeArrayList.addAll(sortedList)
         cardAdapter.notifyDataSetChanged()
     }
 
+    //TODO: ADVANCED: Refresh specific item after returning from recipeview with notifyItemChanged(updateIndex)
+    private fun loadAdapter() {
+        recipeArrayList.clear()
+        runBlocking (Dispatchers.IO){
+            //generate all objects where uid == mAuth.uid of the list and load it into the CardAdapter
+            val recipes = db.collection("recipes")
+                .whereEqualTo("uid", mAuth.uid)
+                .get()
+                .await()
+            for (foundRecipe in recipes.documents) {
+                recipeArrayList.add(foundRecipe.toObject(Recipe::class.java)!!)
+            }
+            tempRecipeArrayList.addAll(recipeArrayList)
+            sortElementsByNewest()
+        }
+    }
+
+    /* LEGACY ADAPTER
     private fun eventChangeListener() {
         db.collection("recipes")
             .whereEqualTo("uid", mAuth.uid)
@@ -132,11 +151,6 @@ class M4x1profile : Fragment() {
                     sortElementsByNewest()
                 }
             })
-    }
-
-    fun resetAdapter(){
-        temprecipeArrayList.clear()
-        eventChangeListener()
-    }
+    }*/
 
 }
