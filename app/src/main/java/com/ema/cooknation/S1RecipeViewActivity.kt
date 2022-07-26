@@ -28,7 +28,6 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-
 class S1RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeId: String
     private lateinit var recipe: Recipe
@@ -90,6 +89,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         favButton = findViewById(R.id.fabFavButton)
     }
 
+    // gets recipe collection and calls setContent()
     fun loadData() {
         db.collection("recipes")
             .document(recipeId)
@@ -97,10 +97,6 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 recipe = document.toObject((Recipe::class.java))!!
                 setContent()
-                val bottomSheetPopupRating = BottomSheetPopupRating()
-                ratingButton.setOnClickListener{
-                    bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
-                }
             } .addOnFailureListener{
                 finish()
             }
@@ -117,33 +113,44 @@ class S1RecipeViewActivity : AppCompatActivity() {
         recipePrepTime.text = recipe.prepTime
         numRating.text = recipe.ratingCount.toString()
         avgRating.rating = recipe.avgRating
-        //checkIfFavorite()
-        //enable editing and deleting when the user opens his own recipes, disable rating on own recipe
+
+        // enable editing and deleting when the user opens his own recipes, disable rating on own recipe
         if (recipe.uid == mAuth.uid) {
             editButton.visibility = View.VISIBLE
             editButton.isClickable = true
             deleteButten.visibility = View.VISIBLE
             deleteButten.isClickable = true
             ratingButton.visibility = View.INVISIBLE
+
+            // opens edit acticity
+            editButton.setOnClickListener {
+                intent = Intent(this@S1RecipeViewActivity, S3Edit::class.java)
+                intent.putExtra("recipe", recipe)
+                startActivity(intent)
+            }
+
+            // opens delete confirmation
+            val bottomSheetPopupDelete = BottomSheetPopupDelete()
+            deleteButten.setOnClickListener {
+                bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
+            }
         }
-        //opens editing Menu
-        editButton.setOnClickListener {
-            intent = Intent(this@S1RecipeViewActivity, S3Edit::class.java)
-            intent.putExtra("recipe", recipe)
-            startActivity(intent)
+
+        // opens rating dialogue
+        val bottomSheetPopupRating = BottomSheetPopupRating()
+        ratingButton.setOnClickListener{
+            bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
         }
-        //opens delete confirmation
-        val bottomSheetPopupDelete = BottomSheetPopupDelete()
-        deleteButten.setOnClickListener {
-            bottomSheetPopupDelete.show(supportFragmentManager, "BottomSheetDialog")
-        }
-        //adds or deletes recipe locally
+
+        // adds or deletes recipe locally and toggles favorite button
         favButton.setOnClickListener {
             addToLocalDataBase()
             toggleFavoriteButton()
         }
     }
 
+    // checks if currently viewed document is in favorites collection
+    // of user and if so, sets flag to true and sets image resource
     private fun checkFavorite() {
         val docRef = db.collection("favorites")
             .document(mAuth.uid.toString())
@@ -158,14 +165,12 @@ class S1RecipeViewActivity : AppCompatActivity() {
         }
     }
 
+    // checks flag, toggles the drawable and either deletes or adds them to favorites ( + locally )
     private fun toggleFavoriteButton() {
         if (isFavorite) {
             isFavorite = false
             Log.d("FAVORITE", "NOW FALSE")
-            Toast.makeText(
-                this,
-                "Recipe is now deleted from bookmarks",
-                Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Recipe is now deleted from bookmarks", Toast.LENGTH_SHORT).show()
             deleteFavorite()
             favButton.setImageResource(R.drawable.ic_baseline_bookmark_empty_24)
             localRecipeViewModel.deleteLocalRecipe(recipe.docId.toString())
@@ -179,10 +184,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
             isFavorite = true
             Log.d("FAVORITE", "NOW TRUE")
             favButton.setImageResource(R.drawable.ic_baseline_bookmark_filled_24)
-            Toast.makeText(
-                this,
-                "Recipe is now bookmarked",
-                Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Recipe is now bookmarked", Toast.LENGTH_SHORT).show()
             addToLocalDataBase()
             addToFavorite()
 
@@ -203,6 +205,8 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .delete()
     }
 
+
+    // TODO: Matthias comment pls
     private fun addToLocalDataBase() {
         val bos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
@@ -233,6 +237,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
             .set(data)
     }
 
+    // TODO: Matthias comment pls
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             // There are no request codes
@@ -245,6 +250,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
         }
     }
 
+    // TODO: Matthias comment pls
     private fun loadPictureInContainer (recipe: Recipe, view: ImageView) {
         //drop 1 to prevent a double "/"
         val storageRef = FirebaseStorage.getInstance().getReference(recipe.picturePath.toString().drop(1))
@@ -265,7 +271,6 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        //overridePendingTransition(R.anim.static_animation, R.anim.zoom_out)
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 }

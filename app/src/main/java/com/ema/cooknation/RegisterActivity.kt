@@ -19,6 +19,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etRegPassword: TextInputEditText
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.s5_register)

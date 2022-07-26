@@ -58,7 +58,7 @@ class M3Search : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        // Recyclerview gets sets set up with 2 recipe cards per row
+        // Recyclerview gets set up with 2 recipe cards per row
         val layoutManager = GridLayoutManager(this.context, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
@@ -69,16 +69,6 @@ class M3Search : Fragment() {
         recyclerView.adapter = cardAdapter
         eventChangeListener()
     }
-
-    /*private fun eventChangeListener() {
-        db.collection("recipes")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    recipeArrayList.add(document.toObject<>())
-                }
-            }
-    }*/
 
     //Loads all Elements into the adapter and sorts it before they load
     private fun eventChangeListener() {
@@ -112,7 +102,8 @@ class M3Search : Fragment() {
     }
 
 
-    // sorting functions for popup menu
+    /* sorting functions for popup menu */
+
     private fun sortElementsByNewest(){
         val sortedList = temprecipeArrayList.sortedWith(compareByDescending {
             it.date
@@ -141,21 +132,20 @@ class M3Search : Fragment() {
         val sortedList = temprecipeArrayList.sortedWith(compareBy( {it.difficulty != "Hard"}, {it.difficulty}))
         refreshAdapter(sortedList)
     }
-
+/*
     private fun sortElementsByOldest(){
         val sortedList = temprecipeArrayList.sortedWith(compareBy {
             it.date
         })
         refreshAdapter(sortedList)
     }
-
     private fun sortElementsByTitle(){
         val sortedList = temprecipeArrayList.sortedWith(compareBy {
             it.title.toString().lowercase()
         })
         refreshAdapter(sortedList)
     }
-
+*/
     // TODO: muss noch kommentiert werden, kann nicht genau sagen was das ist - Leon
     private fun refreshAdapter(sortedList: List<Recipe>){
         temprecipeArrayList.clear()
