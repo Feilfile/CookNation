@@ -49,6 +49,7 @@ class S1RecipeViewActivityOffline: AppCompatActivity() {
 
     private fun setContent() {
         localRecipeViewModel.selecteLocalRecipe(recipeId).observe(this) {
+            //converting bytearray into bitmap
             val bitmap = BitmapFactory.decodeByteArray(it.picture, 0, it.picture.size)
             recipeImage.setImageBitmap(bitmap)
             recipeTitle.text = it.title

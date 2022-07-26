@@ -21,28 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
-        //load initial fragment -> here m1_home
         openFragment(M1Home.newInstance())
-        //val currentFragment = model.currentFragment.value
-        //val username = model.username.value
-        //val homeFragment = currentFragment.newInstance("e","f")
-        /*model.currentFragment.observe(this) { fragment ->
-            openFragment(fragment)
-        }*/
     }
-    //Resets Container when reloading RecipeView
-    /*override fun onRestart() {
-        super.onRestart()
-        try {
-            (currentFragment as M4x1profile).resetAdapter()
-        } catch (e: Exception) {
-        }
-
-        try {
-            (currentFragment as M3Search).resetAdapter()
-        } catch (e: Exception) {
-        }
-    }*/
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
@@ -96,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.m4_profile -> {
                 // check if user is logged in
-                val user = FirebaseAuth.getInstance()!!.currentUser
+                val user = FirebaseAuth.getInstance().currentUser
                 if (user == null) {
                     currentFragment = M4x2RegisterLogin.newInstance()
                     openFragment(currentFragment)
@@ -110,12 +90,4 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
-
-    /*override fun onStart() {
-        super.onStart()
-        val user = mAuth!!.currentUser
-        if (user == null) {
-            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-        }
-    }*/
 }

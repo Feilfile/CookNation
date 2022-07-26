@@ -51,6 +51,7 @@ class M1Home : Fragment() {
         }
     }
 
+
     private fun loadOnlineCards() {
         //initialize elements for online CardAdapter
         val db = Firebase.firestore

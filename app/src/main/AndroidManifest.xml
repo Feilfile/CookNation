@@ -16,6 +16,7 @@
         android:theme="@style/Theme.CookNation">
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".S1RecipeViewActivityOffline"
@@ -36,7 +37,6 @@
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".LoadingScreenActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
