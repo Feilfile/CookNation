@@ -2,17 +2,14 @@ package com.ema.cooknation
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.ema.cooknation.viewmodel.AppViewModel
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    private var mAuth: FirebaseAuth? = null
     private lateinit var currentFragment: Fragment
     private lateinit var localRecipeViewModel: LocalRecipeViewModel
 
@@ -20,13 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CookNation)
         setContentView(R.layout.main_activity)
-        mAuth = FirebaseAuth.getInstance()
-        localRecipeViewModel =  ViewModelProvider(this).get(LocalRecipeViewModel::class.java)
+        localRecipeViewModel = ViewModelProvider(this)[LocalRecipeViewModel::class.java]
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
         //load initial fragment -> here m1_home
-        openFragment(M1Home.newInstance("",""))
+        openFragment(M1Home.newInstance())
         //val currentFragment = model.currentFragment.value
         //val username = model.username.value
         //val homeFragment = currentFragment.newInstance("e","f")
@@ -35,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         }*/
     }
     //Resets Container when reloading RecipeView
-    override fun onRestart() {
+    /*override fun onRestart() {
         super.onRestart()
         try {
             (currentFragment as M4x1profile).resetAdapter()
@@ -46,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             (currentFragment as M3Search).resetAdapter()
         } catch (e: Exception) {
         }
-    }
+    }*/
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
@@ -60,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun performLogout() {
-        val registerLogin = M4x2RegisterLogin.newInstance("", "")
+        val registerLogin = M4x2RegisterLogin.newInstance()
         openFragment(registerLogin)
     }
 
@@ -84,30 +80,30 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.m1_home -> {
-                currentFragment = M1Home.newInstance("","")
+                currentFragment = M1Home.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m2_explore -> {
-                currentFragment = M2Explore.newInstance("","")
+                currentFragment = M2Explore.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m3_search -> {
-                currentFragment = M3Search.newInstance("","")
+                currentFragment = M3Search.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m4_profile -> {
                 // check if user is logged in
-                val user = mAuth!!.currentUser
+                val user = FirebaseAuth.getInstance()!!.currentUser
                 if (user == null) {
-                    currentFragment = M4x2RegisterLogin.newInstance("","")
+                    currentFragment = M4x2RegisterLogin.newInstance()
                     openFragment(currentFragment)
                     return@OnNavigationItemSelectedListener true
                 }
 
-                currentFragment = M4x1profile.newInstance("", "")
+                currentFragment = M4x1profile.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }

@@ -1,8 +1,11 @@
 package com.ema.cooknation
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -30,9 +36,11 @@ class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_screen)
-        initializeVariables()
-        updateLocalDatabase()
-        /*Handler(Looper.getMainLooper()).postDelayed({
+        if (isInternetAvailable(applicationContext)) {
+            initializeVariables()
+            updateLocalDatabase()
+        } else {
+            Handler(Looper.getMainLooper()).postDelayed({
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -40,6 +48,7 @@ class LoadingScreenActivity : AppCompatActivity() {
             finish()
 
         }, 3000)    // Shows Splash Screen for 3 seconds*/
+        }
     }
     private fun initializeVariables(){
         mAuth = FirebaseAuth.getInstance()
@@ -121,5 +130,26 @@ class LoadingScreenActivity : AppCompatActivity() {
             finish()
             }, 2000)
         }
+    }
+
+
+
+
+
+    private fun isInternetAvailable(context: Context): Boolean {
+        val result: Boolean
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        result = when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+
+        return result
     }
 }
