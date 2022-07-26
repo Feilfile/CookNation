@@ -28,6 +28,7 @@ class BottomSheetPopupDelete : BottomSheetDialogFragment() {
         return rootView
     }
 
+    // TODO: implement coroutines
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recipe = (activity as S1RecipeViewActivity).getRecipe()

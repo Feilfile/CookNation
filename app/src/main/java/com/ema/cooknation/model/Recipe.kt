@@ -18,11 +18,13 @@ data class Recipe(
     var avgRating: Float = 0.0f,
 ) : Serializable {
 
+        // increments ratingCount and update avgRating with user input
         fun addNewRating(userRating: Int) {
             val tempValue = avgRating * ratingCount + userRating
             ratingCount++
             avgRating = tempValue/ratingCount
         }
+
         fun updateExistingRating(oldUserRating: Int, newUserRating: Int) {
             val tempValue: Float = avgRating * ratingCount - oldUserRating + newUserRating
             avgRating = tempValue/ratingCount

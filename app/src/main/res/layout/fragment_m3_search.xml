@@ -16,7 +16,8 @@ android:background="#eeeeee">
         android:layout_marginTop="28dp"
         android:background="@drawable/search_background"
         android:iconifiedByDefault="false"
-        android:queryBackground="@color/fui_transparent" />
+        android:queryBackground="@color/fui_transparent"
+        android:queryHint="title, author, ingredients, ..."/>
 
     <ImageButton
         android:id="@+id/ibSearchPopUpButton"

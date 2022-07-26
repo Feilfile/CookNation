@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class WebViewActivity : AppCompatActivity() {
 
-
     @SuppressLint("SetJavaScriptEnabled")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {

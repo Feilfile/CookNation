@@ -135,6 +135,7 @@
     <string name="popup_slider">☰</string>
     <string name="difficulty">Difficulty</string>
     <string name="your_bookmarked_recipes">Your bookmarked recipes</string>
+    <string name="our_favorite_recipes_this_week">Our favorite recipes this week</string>
     <string-array name="difficulties">
         <item>Easy</item>
         <item>Normal</item>

@@ -271,20 +271,21 @@ class M3Search : Fragment() {
         refreshAdapter(sortedList)
     }
 
-/*  USELESS Queries
-    private fun sortElementsByOldest(){
-        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
-            it.date
-        })
-        refreshAdapter(sortedList)
-    }
-    private fun sortElementsByTitle(){
-        val sortedList = tempRecipeArrayList.sortedWith(compareBy {
-            it.title.toString().lowercase()
-        })
-        refreshAdapter(sortedList)
-    }
-*/
+    /*  USELESS Queries
+        private fun sortElementsByOldest(){
+            val sortedList = tempRecipeArrayList.sortedWith(compareBy {
+                it.date
+            })
+            refreshAdapter(sortedList)
+        }
+        private fun sortElementsByTitle(){
+            val sortedList = tempRecipeArrayList.sortedWith(compareBy {
+                it.title.toString().lowercase()
+            })
+            refreshAdapter(sortedList)
+        }
+    */
+
     // current output list gets cleared and refilled with the sorted one
     private fun refreshAdapter(sortedList: List<Recipe>){
         tempRecipeArrayList.clear()

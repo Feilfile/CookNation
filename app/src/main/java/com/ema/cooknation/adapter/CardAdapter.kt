@@ -44,9 +44,7 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
     //references the elements inside the card_cell
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val title : TextView = itemView.findViewById(R.id.tvRecipeName)
-        //val author : TextView = itemView.findViewById(R.id.tvAuthor)
         var picture : ImageView = itemView.findViewById(R.id.ivRecipeImg)
-
         val rating : MaterialRatingBar = itemView.findViewById(R.id.mrbCardAvgRating)
     }
 
