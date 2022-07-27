@@ -139,7 +139,9 @@ class S1RecipeViewActivity : AppCompatActivity() {
         // opens rating dialogue
         val bottomSheetPopupRating = BottomSheetPopupRating()
         ratingButton.setOnClickListener{
-            bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
+            if (mAuth.uid != null) {
+                bottomSheetPopupRating.show(supportFragmentManager, "BottomSheetDialog")
+            }
         }
 
         // adds or deletes recipe locally and toggles favorite button

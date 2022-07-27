@@ -23,7 +23,11 @@ class LoginActivity : AppCompatActivity() {
         val tvRegisterHere = findViewById<TextView>(R.id.tvRegisterHere)
         val btnLogin = findViewById<TextView>(R.id.btnLogin)
         mAuth = FirebaseAuth.getInstance()
-        btnLogin.setOnClickListener { loginUser() }
+        btnLogin.setOnClickListener {
+            val email = etLoginEmail!!.text.toString()
+            val password = etLoginPassword!!.text.toString()
+            loginUser(email, password)
+        }
         tvRegisterHere.setOnClickListener {
             startActivity(
                 Intent(
@@ -35,9 +39,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // check if login was successful and if so, change activity
-    private fun loginUser() {
-        val email = etLoginEmail!!.text.toString()
-        val password = etLoginPassword!!.text.toString()
+    private fun loginUser(email: String, password: String) {
         when {
             TextUtils.isEmpty(email) -> {
                 etLoginEmail!!.error = "Email cannot be empty"

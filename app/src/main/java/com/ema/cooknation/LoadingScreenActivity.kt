@@ -33,7 +33,7 @@ class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_screen)
-        if (isInternetAvailable(applicationContext)) {
+        if (isInternetAvailable(applicationContext) && FirebaseAuth.getInstance().uid != null) {
             initializeVariables()
             updateLocalDatabase()
         } else {

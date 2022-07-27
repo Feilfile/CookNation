@@ -56,6 +56,10 @@ class M1Home : Fragment() {
         //initialize elements for online CardAdapter
         val db = Firebase.firestore
         val mAuth = FirebaseAuth.getInstance()
+        if (mAuth.uid == null) {
+            loadOfflineCards()
+            return
+        }
         val recipeArrayList = arrayListOf<Recipe>()
         val cardAdapter = WideCardAdapter(recipeArrayList)
         recyclerView.adapter = cardAdapter
