@@ -56,7 +56,7 @@ class LoadingScreenActivity : AppCompatActivity() {
         val favoritesList: MutableList<String> = arrayListOf()
         val oldFavoritesList: MutableList<String> = arrayListOf()
         val intent = Intent(this, MainActivity::class.java)
-        runBlocking (Dispatchers.IO) {
+        runBlocking {
         val resultFavourites = db.collection("favorites")
             .document(mAuth.uid.toString())
             .collection("docId")
@@ -69,12 +69,14 @@ class LoadingScreenActivity : AppCompatActivity() {
             for (document in resultFavourites) {
                 favoritesList.add(document.id)
             }
+            Log.d("OPERATION 1", "COMPLETE")
                 //OPERATION 2
-            localRecipeViewModel.readAllData.observe(this@LoadingScreenActivity) { localRecipes ->
-                for (recipe in localRecipes) {
-                    oldFavoritesList.add(recipe.docId)
+                localRecipeViewModel.readAllData.observe(this@LoadingScreenActivity) { localRecipes ->
+                    for (recipe in localRecipes) {
+                        oldFavoritesList.add(recipe.docId)
+                    }
                 }
-            }
+            Log.d("OPERATION 2", "COMPLETE")
                 //OPERATION 3
             val removeRecipes = oldFavoritesList.plus(favoritesList.toSet())
             val updatingRecipes = favoritesList.minus(oldFavoritesList.toSet())
