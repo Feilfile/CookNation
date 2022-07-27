@@ -9,6 +9,7 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ema.cooknation.data.LocalRecipe
@@ -37,14 +38,8 @@ class LoadingScreenActivity : AppCompatActivity() {
             initializeVariables()
             updateLocalDatabase()
         } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-            finish()
-
-        }, 3000)    // Shows Splash Screen for 3 seconds*/
+            loadIntoMainActivity(intent)
         }
     }
     private fun initializeVariables(){
@@ -67,6 +62,10 @@ class LoadingScreenActivity : AppCompatActivity() {
             .collection("docId")
             .get()
             .await()
+            if (resultFavourites.isEmpty) {
+                loadIntoMainActivity(intent)
+                return@runBlocking
+            }
             for (document in resultFavourites) {
                 favoritesList.add(document.id)
             }
@@ -121,11 +120,7 @@ class LoadingScreenActivity : AppCompatActivity() {
                 }
             }
             updatingJob.join()
-            Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-            finish()
-            }, 2000)
+            loadIntoMainActivity(intent)
         }
     }
 
@@ -148,5 +143,13 @@ class LoadingScreenActivity : AppCompatActivity() {
         }
 
         return result
+    }
+
+    private fun loadIntoMainActivity(intent: Intent) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+            finish()
+        }, 2000) // Load into main activity after 2 seconds
     }
 }
