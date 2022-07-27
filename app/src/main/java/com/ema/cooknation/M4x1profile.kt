@@ -54,13 +54,12 @@ class M4x1profile : Fragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
         setupRecyclerView()
     }
-
+    // TODO: Rebuild nach upload
     private fun setUpElements() {
         //dc.document.toObject((Recipe::class.java))
         db.collection("user")

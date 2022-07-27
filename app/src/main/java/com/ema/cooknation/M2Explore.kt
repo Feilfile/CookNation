@@ -1,7 +1,6 @@
 package com.ema.cooknation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +8,23 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ema.cooknation.adapter.CardAdapter
 import com.ema.cooknation.adapter.WideCardAdapter
 import com.ema.cooknation.model.Recipe
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class M2Explore : Fragment() {
     private lateinit var db: FirebaseFirestore
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var recipeArrayList: ArrayList<Recipe>
-    private lateinit var cardAdapter: WideCardAdapter
+    private lateinit var recyclerViewWeekly: RecyclerView
+    private lateinit var recyclerViewDaily: RecyclerView
+    private lateinit var recipeArrayListDaily: ArrayList<Recipe>
+    private lateinit var recipeArrayListWeekly: ArrayList<Recipe>
+    private lateinit var cardAdapterDaily: WideCardAdapter
+    private lateinit var cardAdapterWeekly: WideCardAdapter
     private lateinit var ibButtonWebView: ImageButton
 
     override fun onCreateView(
@@ -29,7 +33,8 @@ class M2Explore : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_m2_explore, container, false)
         ibButtonWebView = rootView.findViewById(R.id.ibButtonWebView)
-        recyclerView = rootView.findViewById(R.id.exploreRecyclerView)
+        recyclerViewDaily = rootView.findViewById(R.id.exploreRecyclerViewDaily)
+        recyclerViewWeekly = rootView.findViewById(R.id.exploreRecyclerViewWeekly)
         db = Firebase.firestore
         return rootView
     }
@@ -38,7 +43,6 @@ class M2Explore : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecycler()
-        eventChangeListener()
 
         // Button to go to WebView
         ibButtonWebView.setOnClickListener {
@@ -47,35 +51,53 @@ class M2Explore : Fragment() {
     }
 
     private fun setupRecycler() {
-        recyclerView.layoutManager = GridLayoutManager(this.context, 1)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.setItemViewCacheSize(15)
-        recipeArrayList = arrayListOf()
-        cardAdapter = WideCardAdapter(recipeArrayList)
-        recyclerView.adapter = cardAdapter
+        recyclerViewWeekly.layoutManager = GridLayoutManager(this.context, 1)
+        recyclerViewWeekly.setHasFixedSize(true)
+        recyclerViewWeekly.setItemViewCacheSize(15)
+        recipeArrayListWeekly = arrayListOf()
+        cardAdapterWeekly = WideCardAdapter(recipeArrayListWeekly)
+        recyclerViewWeekly.adapter = cardAdapterWeekly
+
+        recyclerViewDaily.layoutManager = GridLayoutManager(this.context, 1)
+        recyclerViewDaily.setHasFixedSize(true)
+        recipeArrayListDaily = arrayListOf()
+        cardAdapterDaily = WideCardAdapter(recipeArrayListDaily)
+        recyclerViewDaily.adapter = cardAdapterDaily
+        loadAdapter()
     }
 
-    private fun eventChangeListener() {
-        db.collection("recipes")
-            .addSnapshotListener(object : EventListener<QuerySnapshot> {
-                override fun onEvent(
-                    value: QuerySnapshot?,
-                    error: FirebaseFirestoreException?
-                ) {
-                    if (error != null) {
-                        Log.e("Firestore Error", error.message.toString())
-                        return
-                    }
+    private fun loadAdapter() {
+        recipeArrayListDaily.clear()
+        runBlocking (Dispatchers.IO) {
+            val recipes = db.collection("recipes")
+                .whereEqualTo("docId", "6rXhMcMKqkimsh1S9E7Y")
+                .get()
+                .await()
+            for (foundDailyRecipe in recipes.documents) {
+                recipeArrayListDaily.add(foundDailyRecipe.toObject(Recipe::class.java)!!)
+            }
+        }
+        recipeArrayListWeekly.clear()
+        runBlocking (Dispatchers.IO){
+            //generate all objects where uid == admin account
+            val recipes = db.collection("recipes")
+                .whereEqualTo("uid", "5ugEQTCc2qd9gIAAfBQeQyL34aq2")
+                .get()
+                .await()
+            for (foundRecipe in recipes.documents) {
+                recipeArrayListWeekly.add(foundRecipe.toObject(Recipe::class.java)!!)
+            }
+            sortListByNewest()
+        }
+    }
 
-                    for (dc: DocumentChange in value?.documentChanges!!) {
-                        if (dc.type == DocumentChange.Type.ADDED) {
-                            recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
-                        }
-                    }
-
-                    cardAdapter.notifyDataSetChanged()
-                }
-            })
+    private fun sortListByNewest() {
+        val sortedList = recipeArrayListWeekly.sortedWith(compareByDescending {
+            it.date
+        })
+        recipeArrayListWeekly.clear()
+        recipeArrayListWeekly.addAll(sortedList)
+        cardAdapterWeekly.notifyDataSetChanged()
     }
 
     companion object {

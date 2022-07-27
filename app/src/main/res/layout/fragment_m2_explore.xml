@@ -33,23 +33,44 @@
         android:src="@drawable/ic_baseline_food_bank_24" />
 
     <TextView
-        android:id="@+id/twFavRecipes"
+        android:id="@+id/twRecipeOfTheDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/twExplore"
         android:layout_marginStart="14dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/lora_semi_bold"
-        android:text="@string/our_favorite_recipes_this_week"
-        android:textSize="20sp"
         android:drawablePadding="5dp"
+        android:fontFamily="@font/lora_semi_bold"
+        android:text="Recipe of the day"
+        android:textSize="20sp"
         app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exploreRecyclerView"
+        android:id="@+id/exploreRecyclerViewDaily"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/twFavRecipes"
+        android:layout_below="@+id/twRecipeOfTheDay"
         android:layout_marginTop="22dp" />
+
+    <TextView
+        android:id="@+id/twRecipesOfTheWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exploreRecyclerViewDaily"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/lora_semi_bold"
+        android:text="@string/our_favorite_recipes_this_week"
+        android:textSize="20sp"
+        app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exploreRecyclerViewWeekly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/twRecipesOfTheWeek"
+        android:layout_marginTop="22dp" />
+
 
 </RelativeLayout>
