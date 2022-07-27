@@ -130,12 +130,9 @@ class S3Edit : AppCompatActivity() {
     private fun uploadPicture() {
         val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${uid}/${oldRecipe.docId}")
         //checks if all text fields are filled
-        if(TextUtils.isEmpty(editRecipeTitle.text) || TextUtils.isEmpty(editDirections.text) || TextUtils.isEmpty(editIngredients.text)) {
-            Toast.makeText(
-                this,
-                "Empty fields are not allowed!",
-                Toast.LENGTH_SHORT
-            ).show()
+        val validation = RecipeInputValidator.validateInputs(applicationContext, editRecipeTitle.text.toString(), editDirections.text.toString(), editIngredients.text.toString(), true)
+        if (!validation) {
+
         //filepath is only initialized when the picture is changed so if the picture isn't changed the resource hungry saving operation can be skipped
         } else if (this::filepath.isInitialized) {
             storageRef.putFile(filepath)

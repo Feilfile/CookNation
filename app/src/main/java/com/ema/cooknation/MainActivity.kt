@@ -58,8 +58,6 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
-    //TODO: remove/change parsed fragment parameters
-
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val connectedToInternet = isInternetAvailable(this)
         if (!connectedToInternet && item.itemId != R.id.m1_home) {

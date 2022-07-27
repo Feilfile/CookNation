@@ -81,7 +81,6 @@ class S2Upload : AppCompatActivity() {
         }
 
         btnUpload.setOnClickListener{
-            progressBar.visibility = View.VISIBLE
             uploadRecipe()
         }
     }
@@ -107,14 +106,12 @@ class S2Upload : AppCompatActivity() {
 
 
     private fun uploadRecipe() {
+        val validation = RecipeInputValidator.validateInputs(applicationContext, inputTitle.text.toString(), inputDirections.text.toString(), inputIngredients.text.toString(), this::filepath.isInitialized)
         //Checks if all fields are filled with content
-        if(TextUtils.isEmpty(inputTitle.text) || TextUtils.isEmpty(inputDirections.text) || TextUtils.isEmpty(inputIngredients.text) || !this::filepath.isInitialized) {
-            Toast.makeText(
-                this,
-                "Empty fields are not allowed!",
-                Toast.LENGTH_SHORT
-            ).show()
+        if(!validation) {
+            return
         } else {
+            progressBar.visibility = View.VISIBLE
             writeInFirestore()
         }
     }
