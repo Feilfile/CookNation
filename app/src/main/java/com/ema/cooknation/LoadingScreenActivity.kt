@@ -19,10 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -64,7 +61,7 @@ class LoadingScreenActivity : AppCompatActivity() {
         val favoritesList: MutableList<String> = arrayListOf()
         val oldFavoritesList: MutableList<String> = arrayListOf()
         val intent = Intent(this, MainActivity::class.java)
-        runBlocking {
+        runBlocking (Dispatchers.IO) {
         val resultFavourites = db.collection("favorites")
             .document(mAuth.uid.toString())
             .collection("docId")

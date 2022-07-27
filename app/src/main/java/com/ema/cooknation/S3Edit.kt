@@ -166,6 +166,12 @@ class S3Edit : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
                 completeActivity()
+            }.addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    "Error while uploading in Firestore!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         //db.collection("recipes").document("${uid}.${editRecipeTitle.text}").update("directions", editDirections.text)
             /*.addOnSuccessListener {

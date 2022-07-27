@@ -20,9 +20,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.sql.Timestamp
 
-class S2UploadNew : AppCompatActivity() {
+class S2Upload : AppCompatActivity() {
     private lateinit var inputTitle:TextInputEditText
     private lateinit var inputDirections:TextInputEditText
     private lateinit var inputIngredients:TextInputEditText
@@ -104,14 +108,13 @@ class S2UploadNew : AppCompatActivity() {
 
     private fun uploadRecipe() {
         //Checks if all fields are filled with content
-
         if(TextUtils.isEmpty(inputTitle.text) || TextUtils.isEmpty(inputDirections.text) || TextUtils.isEmpty(inputIngredients.text) || !this::filepath.isInitialized) {
             Toast.makeText(
                 this,
                 "Empty fields are not allowed!",
                 Toast.LENGTH_SHORT
             ).show()
-        } else  {
+        } else {
             writeInFirestore()
         }
     }

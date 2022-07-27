@@ -1,6 +1,9 @@
 package com.ema.cooknation
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openUploadFragment() {
-        startActivity(Intent(this@MainActivity, S2UploadNew::class.java))
+        startActivity(Intent(this@MainActivity, S2Upload::class.java))
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
@@ -58,6 +61,12 @@ class MainActivity : AppCompatActivity() {
     //TODO: remove/change parsed fragment parameters
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        val connectedToInternet = isInternetAvailable(this)
+        if (!connectedToInternet && item.itemId != R.id.m1_home) {
+            currentFragment = OfflineScreen.newInstance()
+            openFragment(currentFragment)
+            return@OnNavigationItemSelectedListener true
+        }
         when (item.itemId) {
             R.id.m1_home -> {
                 currentFragment = M1Home.newInstance()
@@ -89,5 +98,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
         false
+    }
+
+    //Checks if user is online -> reused code
+    //Source: https://stackoverflow.com/questions/53532406/activenetworkinfo-type-is-deprecated-in-api-level-28
+    private fun isInternetAvailable(context: Context): Boolean {
+        val result: Boolean
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        result = when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+
+        return result
     }
 }

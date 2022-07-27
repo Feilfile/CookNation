@@ -22,7 +22,7 @@
             android:name=".S1RecipeViewActivityOffline"
             android:exported="false" />
         <activity
-            android:name=".S2UploadNew"
+            android:name=".S2Upload"
             android:exported="false" />
         <activity
             android:name=".S3Edit"
