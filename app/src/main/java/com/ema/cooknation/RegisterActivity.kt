@@ -30,7 +30,11 @@ class RegisterActivity : AppCompatActivity() {
         val btnRegister = findViewById<TextView>(R.id.btnRegister)
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
-        btnRegister.setOnClickListener { createUser() }
+        btnRegister.setOnClickListener {
+            val email = etRegEmail.text.toString()
+            val username = etRegUsername.text.toString()
+            val password = etRegPassword.text.toString()
+            createUser(email, username, password) }
         tvLoginHere.setOnClickListener {
             startActivity(
                 Intent(
@@ -41,10 +45,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createUser() {
-        val email = etRegEmail.text.toString()
-        val username = etRegUsername.text.toString()
-        val password = etRegPassword.text.toString()
+    private fun createUser(email : String, username : String, password : String) {
         when {
             //Checks if all required fields are filled
             TextUtils.isEmpty(email) -> {

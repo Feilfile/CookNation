@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".M4x2RegisterLogin"
-    android:background="#eeeeee">
-
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/ivCookNationLogo"
-        android:layout_width="wrap_content"
+    tools:context=".M4x2RegisterLogin">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:src="@drawable/cooknation_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="#eeeeee">
 
-    <TextView
-        android:layout_gravity="center"
-        android:id="@+id/tvWelcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lora_semi_bold"
-        android:textColor="#000"
-        android:textSize="25sp"
-        android:text="@string/welcome_message" />
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/ivCookNationLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="96dp"
+            android:src="@drawable/cooknation_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnLoginWelcomeScreen"
-        android:layout_width="320dp"
-        android:layout_height="68dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:text="@string/login" />
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tvWelcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lora_semi_bold"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:text="@string/welcome_message" />
 
-    <Button
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center"
-        android:id="@+id/btnRegisterWelcomeScreen"
-        android:layout_width="320dp"
-        android:layout_height="68dp"
-        android:text="@string/register"/>
+        <Button
+            android:id="@+id/btnLoginWelcomeScreen"
+            android:layout_width="320dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="@string/login" />
 
-</LinearLayout>
+        <Button
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnRegisterWelcomeScreen"
+            android:layout_width="320dp"
+            android:layout_height="68dp"
+            android:text="@string/register"/>
+
+    </LinearLayout>
+</ScrollView>

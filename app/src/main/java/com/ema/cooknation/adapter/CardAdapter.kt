@@ -25,7 +25,7 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<CardAdapter.ViewHolder>()
 {
 
-    //loads card_cell
+    // loads card_cell
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_cell, parent, false)
         return ViewHolder(itemView)
@@ -51,7 +51,7 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
     override fun getItemCount(): Int = recipes.size
 
     private fun loadPictureInContainer (recipe: Recipe, holder: ViewHolder) {
-        //drop 1 to prevent a double "/"
+        // drop 1 to prevent a double "/"
         val storageRef = FirebaseStorage.getInstance().getReference(recipe.picturePath.toString().drop(1))
         val localFile = File.createTempFile("tempFile", ".jpg")
         storageRef.getFile(localFile)
@@ -67,12 +67,12 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
         holder.itemView.findViewById<LinearLayout>(R.id.llCardCell).setOnClickListener { v ->
             v!!.context as AppCompatActivity
             val intent = Intent(v.context, S1RecipeViewActivity::class.java)
-            //parse recipe to the activity
+            // parse recipe to the activity
             intent.putExtra("recipeId", recipes[position].docId)
             v.context.startActivity(intent)
-            //(v.context as MainActivity).overridePendingTransition(R.anim.zoom_in, R.anim.static_animation)
+            // (v.context as MainActivity).overridePendingTransition(R.anim.zoom_in, R.anim.static_animation)
             (v.context as MainActivity).overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-            //activity.supportFragmentManager.beginTransaction().replace(R.id.clScreenWindow, recipeView).commit()
+            // activity.supportFragmentManager.beginTransaction().replace(R.id.clScreenWindow, recipeView).commit()
         }
     }
 }

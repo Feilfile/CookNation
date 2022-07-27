@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,7 +24,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 class M1Home : Fragment() {
-
+    private lateinit var twNoBookmarks: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var localRecipeViewModel: LocalRecipeViewModel
 
@@ -33,6 +34,7 @@ class M1Home : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_m1_home, container, false)
+        twNoBookmarks = rootView.findViewById(R.id.twNoBookmarks)
         recyclerView = rootView.findViewById(R.id.homeRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(this.context, 1)
         recyclerView.setHasFixedSize(true)
@@ -74,6 +76,11 @@ class M1Home : Fragment() {
                 .await()
             for (document in resultFavourites) {
                 favoritesList.add(document.id)
+            }
+            // hides RecyclerView and shows TextView if favoritesList is empty
+            if( favoritesList.size == 0 ) {
+                recyclerView.visibility = RecyclerView.INVISIBLE
+                twNoBookmarks.visibility = TextView.VISIBLE
             }
             //generate all objects of the list and load it into the CardAdapter
             for (favorite in favoritesList) {

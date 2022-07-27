@@ -42,8 +42,8 @@
         android:fontFamily="@font/lora_semi_bold"
         android:text="@string/our_favorite_recipes_this_week"
         android:textSize="20sp"
-        app:drawableLeftCompat="@drawable/ic_baseline_star_24"
-        />
+        android:drawablePadding="5dp"
+        app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exploreRecyclerView"

@@ -7,6 +7,21 @@
     android:background="#eeeeee">
 
     <TextView
+        android:id="@+id/twOfflineMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/lora_semi_bold"
+        android:text="Offline"
+        android:textColor="#000"
+        android:textSize="28sp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -14,7 +29,6 @@
         android:fontFamily="@font/lora_semi_bold"
         android:text="You are currently offline. Please connect to the internet to use this page."
         android:textSize="20sp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

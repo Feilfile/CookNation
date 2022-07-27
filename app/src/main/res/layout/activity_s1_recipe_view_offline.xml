@@ -43,7 +43,7 @@
                 android:textStyle="bold" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:isIndicator="false"
+                android:isIndicator="true"
                 android:id="@+id/mrbAvgRatingOffline"
                 android:stepSize="0.1"
                 android:numStars="5"

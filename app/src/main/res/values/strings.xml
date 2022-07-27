@@ -136,6 +136,7 @@
     <string name="difficulty">Difficulty</string>
     <string name="your_bookmarked_recipes">Your bookmarked recipes</string>
     <string name="our_favorite_recipes_this_week">Our favorite recipes this week</string>
+    <string name="no_bookmarks">You have no bookmarked recipes yet. ☹\n\n Bookmark a recipe to view it even when you\'re offline!</string>
     <string-array name="difficulties">
         <item>Easy</item>
         <item>Normal</item>
