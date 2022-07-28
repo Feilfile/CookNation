@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -7,12 +7,13 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.R
+import com.ema.cooknation.RecipeInputValidator
+import com.ema.cooknation.data.Recipe
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -130,7 +131,13 @@ class S3Edit : AppCompatActivity() {
     private fun uploadPicture() {
         val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${uid}/${oldRecipe.docId}")
         //checks if all text fields are filled
-        val validation = RecipeInputValidator.validateInputs(applicationContext, editRecipeTitle.text.toString(), editDirections.text.toString(), editIngredients.text.toString(), true)
+        val validation = RecipeInputValidator.validateInputs(
+            applicationContext,
+            editRecipeTitle.text.toString(),
+            editDirections.text.toString(),
+            editIngredients.text.toString(),
+            true
+        )
         if (!validation) {
 
         //filepath is only initialized when the picture is changed so if the picture isn't changed the resource hungry saving operation can be skipped

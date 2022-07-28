@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.webkit.WebView
 

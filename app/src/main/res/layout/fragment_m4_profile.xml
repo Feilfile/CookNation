@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".M4x1profile">
+        tools:context=".ui.M4x1profile">
 
         <Button
             android:id="@+id/btnSignOut"

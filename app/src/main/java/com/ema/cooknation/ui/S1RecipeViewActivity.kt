@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -15,8 +15,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.ema.cooknation.R
 import com.ema.cooknation.data.LocalRecipe
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.data.Recipe
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -218,7 +219,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
             recipe.uid.toString(),
             recipe.title.toString(),
             recipe.author.toString(),
-            recipe.date!!.time,
+            recipe.date.toString(),
             bos.toByteArray(),
             recipe.directions.toString(),
             recipe.ingredients.toString(),

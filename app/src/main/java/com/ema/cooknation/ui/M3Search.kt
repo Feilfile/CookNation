@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 //import androidx.appcompat.widget.SearchView
 import android.os.Bundle
@@ -10,8 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.R
 import com.ema.cooknation.adapter.CardAdapter
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.data.Recipe
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

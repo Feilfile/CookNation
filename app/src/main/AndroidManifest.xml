@@ -15,28 +15,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookNation">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
-            android:name=".S1RecipeViewActivityOffline"
+            android:name=".ui.S1RecipeViewActivityOffline"
             android:exported="false" />
         <activity
-            android:name=".S2Upload"
+            android:name=".ui.S2Upload"
             android:exported="false" />
         <activity
-            android:name=".S3Edit"
+            android:name=".ui.S3Edit"
             android:exported="false" />
         <activity
-            android:name=".WebViewActivity"
+            android:name=".ui.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".S1RecipeViewActivity"
+            android:name=".ui.S1RecipeViewActivity"
             android:exported="false" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.RegisterActivity" />
         <activity
-            android:name=".LoadingScreenActivity"
+            android:name=".ui.LoadingScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

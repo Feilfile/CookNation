@@ -10,7 +10,7 @@ data class LocalRecipe(
     var uid: String,
     var title: String,
     var author: String,
-    var date: Long,
+    var date: String,
     var picture: ByteArray,
     var directions: String,
     var ingredients: String,

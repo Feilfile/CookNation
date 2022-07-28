@@ -1,9 +1,5 @@
 package com.ema.cooknation.legacyfiles
 
-import androidx.recyclerview.widget.RecyclerView
-import com.ema.cooknation.databinding.CardCellBinding
-import com.ema.cooknation.model.Recipe
-
 // LEGACY
 
 /*class CardViewHolder(

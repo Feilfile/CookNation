@@ -11,10 +11,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.ema.cooknation.MainActivity
+import com.ema.cooknation.ui.MainActivity
 import com.ema.cooknation.R
-import com.ema.cooknation.S1RecipeViewActivity
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.ui.S1RecipeViewActivity
+import com.ema.cooknation.data.Recipe
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
@@ -32,11 +32,12 @@ class WideCardAdapter(private val recipes: ArrayList<Recipe>)
     // current card gets loaded / updated on the right position
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : Recipe = recipes[position]
+
         holder.title.text = recipe.title
         holder.author.text = recipe.author
-        holder.date.text = recipe.date.toString()
-        holder.difficulty.text = recipe.difficulty.toString()
-        holder.prepTime.text = recipe.prepTime.toString()
+        holder.date.text = recipe.date
+        holder.difficulty.text = recipe.difficulty
+        holder.prepTime.text = recipe.prepTime
         holder.rating.rating = recipe.avgRating
         holder.numRating.text = recipe.ratingCount.toString()
         loadPictureInContainer(recipe, holder)

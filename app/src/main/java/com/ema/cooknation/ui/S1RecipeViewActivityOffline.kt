@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.ema.cooknation.R
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 

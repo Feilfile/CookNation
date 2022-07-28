@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.R
 import com.ema.cooknation.adapter.WideCardAdapter
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.data.Recipe
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -51,6 +53,13 @@ class M2Explore : Fragment() {
     }
 
     private fun setupRecycler() {
+        recyclerViewDaily.layoutManager = GridLayoutManager(this.context, 1)
+        recyclerViewDaily.setHasFixedSize(true)
+        recyclerViewDaily.isNestedScrollingEnabled = false
+        recipeArrayListDaily = arrayListOf()
+        cardAdapterDaily = WideCardAdapter(recipeArrayListDaily)
+        recyclerViewDaily.adapter = cardAdapterDaily
+
         recyclerViewWeekly.layoutManager = GridLayoutManager(this.context, 1)
         recyclerViewWeekly.setHasFixedSize(true)
         recyclerViewWeekly.setItemViewCacheSize(15)
@@ -58,11 +67,6 @@ class M2Explore : Fragment() {
         cardAdapterWeekly = WideCardAdapter(recipeArrayListWeekly)
         recyclerViewWeekly.adapter = cardAdapterWeekly
 
-        recyclerViewDaily.layoutManager = GridLayoutManager(this.context, 1)
-        recyclerViewDaily.setHasFixedSize(true)
-        recipeArrayListDaily = arrayListOf()
-        cardAdapterDaily = WideCardAdapter(recipeArrayListDaily)
-        recyclerViewDaily.adapter = cardAdapterDaily
         loadAdapter()
     }
 

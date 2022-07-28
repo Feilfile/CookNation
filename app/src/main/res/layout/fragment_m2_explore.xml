@@ -1,76 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".M2Explore"
-    android:background="#eeeeee">
-
-    <TextView
-        android:id="@+id/twExplore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/lora_semi_bold"
-        android:text="@string/explore"
-        android:textColor="#000"
-        android:textSize="28sp" />
-
-    <ImageButton
-        android:id="@+id/ibButtonWebView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="14dp"
-        android:adjustViewBounds="true"
-        android:backgroundTint="@color/light_blue_900"
-        android:contentDescription="@string/web_view_button"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_food_bank_24" />
-
-    <TextView
-        android:id="@+id/twRecipeOfTheDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/twExplore"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/lora_semi_bold"
-        android:text="Recipe of the day"
-        android:textSize="20sp"
-        app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exploreRecyclerViewDaily"
+    tools:context=".ui.M2Explore">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/twRecipeOfTheDay"
-        android:layout_marginTop="22dp" />
+        android:background="#eeeeee">
 
-    <TextView
-        android:id="@+id/twRecipesOfTheWeek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/exploreRecyclerViewDaily"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/lora_semi_bold"
-        android:text="@string/our_favorite_recipes_this_week"
-        android:textSize="20sp"
-        app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
+        <TextView
+            android:id="@+id/twExplore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/lora_semi_bold"
+            android:text="@string/explore"
+            android:textColor="#000"
+            android:textSize="28sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exploreRecyclerViewWeekly"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/twRecipesOfTheWeek"
-        android:layout_marginTop="22dp" />
+        <ImageButton
+            android:id="@+id/ibButtonWebView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="14dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@color/light_blue_900"
+            android:contentDescription="@string/web_view_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_baseline_food_bank_24" />
+
+        <TextView
+            android:id="@+id/twRecipeOfTheDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/twExplore"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/lora_semi_bold"
+            android:text="Recipe of the day"
+            android:textSize="20sp"
+            app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exploreRecyclerViewDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/twRecipeOfTheDay"
+            android:layout_marginTop="22dp" />
+
+        <TextView
+            android:id="@+id/twRecipesOfTheWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exploreRecyclerViewDaily"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/lora_semi_bold"
+            android:text="@string/our_favorite_recipes_this_week"
+            android:textSize="20sp"
+            app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exploreRecyclerViewWeekly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/twRecipesOfTheWeek"
+            android:layout_marginTop="22dp" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.content.Context
 import android.content.Intent
@@ -12,8 +12,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.ema.cooknation.R
 import com.ema.cooknation.data.LocalRecipe
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.data.Recipe
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -108,7 +109,7 @@ class LoadingScreenActivity : AppCompatActivity() {
                                 recipe.uid.toString(),
                                 recipe.title.toString(),
                                 recipe.author.toString(),
-                                recipe.date!!.time,
+                                recipe.date.toString(),
                                 bos.toByteArray(),
                                 recipe.directions.toString(),
                                 recipe.ingredients.toString(),

@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.R
 import com.ema.cooknation.adapter.LocalAdapter
 import com.ema.cooknation.adapter.WideCardAdapter
-import com.ema.cooknation.model.Recipe
+import com.ema.cooknation.data.Recipe
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore

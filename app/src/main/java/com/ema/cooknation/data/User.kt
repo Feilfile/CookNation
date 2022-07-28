@@ -1,4 +1,4 @@
-package com.ema.cooknation.model
+package com.ema.cooknation.data
 
 data class User(
     var email: String? = null,

@@ -10,9 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.ema.cooknation.MainActivity
+import com.ema.cooknation.ui.MainActivity
 import com.ema.cooknation.R
-import com.ema.cooknation.S1RecipeViewActivityOffline
+import com.ema.cooknation.ui.S1RecipeViewActivityOffline
 import com.ema.cooknation.data.LocalRecipe
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.sql.Timestamp
@@ -45,7 +45,7 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
         val currentItem = localRecipeList[position]
         holder.title.text = currentItem.title
         holder.author.text = currentItem.author
-        holder.date.text = currentItem.date.let { Timestamp(it).toString() }
+        holder.date.text = currentItem.date
         holder.difficulty.text = currentItem.difficulty
         holder.prepTime.text = currentItem.prepTime
         holder.rating.rating = currentItem.avgRating

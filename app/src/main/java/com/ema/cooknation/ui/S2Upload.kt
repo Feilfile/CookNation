@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.app.Activity
 import android.content.ContentValues
@@ -8,11 +8,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
-import com.ema.cooknation.model.User
+import com.ema.cooknation.R
+import com.ema.cooknation.RecipeInputValidator
+import com.ema.cooknation.data.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,11 +21,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.sql.Timestamp
+import java.text.DateFormat
 
 class S2Upload : AppCompatActivity() {
     private lateinit var inputTitle:TextInputEditText
@@ -106,7 +104,13 @@ class S2Upload : AppCompatActivity() {
 
 
     private fun uploadRecipe() {
-        val validation = RecipeInputValidator.validateInputs(applicationContext, inputTitle.text.toString(), inputDirections.text.toString(), inputIngredients.text.toString(), this::filepath.isInitialized)
+        val validation = RecipeInputValidator.validateInputs(
+            applicationContext,
+            inputTitle.text.toString(),
+            inputDirections.text.toString(),
+            inputIngredients.text.toString(),
+            this::filepath.isInitialized
+        )
         //Checks if all fields are filled with content
         if(!validation) {
             return
@@ -137,7 +141,7 @@ class S2Upload : AppCompatActivity() {
 
     private fun writeInFirestore() {
         val uid = mAuth.uid.toString()
-        val date = getCurrentDate()
+        val date = DateFormat.getDateInstance().format(getCurrentDate())
         val recipe = hashMapOf(
             //TODO: add current date -> Date Format and ingredients -> Array Format
             "uid" to uid,

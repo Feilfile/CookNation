@@ -11,12 +11,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.ema.cooknation.MainActivity
+import com.ema.cooknation.ui.MainActivity
 import com.ema.cooknation.R
-import com.ema.cooknation.S1RecipeViewActivity
-import com.ema.cooknation.data.LocalRecipe
-import com.ema.cooknation.model.Recipe
-import com.google.android.material.internal.ContextUtils.getActivity
+import com.ema.cooknation.ui.S1RecipeViewActivity
+import com.ema.cooknation.data.Recipe
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File

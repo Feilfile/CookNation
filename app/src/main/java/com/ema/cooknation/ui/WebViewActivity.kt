@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.ema.cooknation.R
 
 class WebViewActivity : AppCompatActivity() {
 
