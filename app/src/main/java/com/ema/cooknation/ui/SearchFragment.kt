@@ -54,14 +54,14 @@ class SearchFragment : Fragment() {
         popupMenu()
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         loadAdapter()
         val x = searchBarText.query
         searchBarText.setQuery("", false)
-        searchBarText.setQuery(x, false)
+        searchBarText.setQuery(x, true)
         //cardAdapter.notifyItemChanged(0)
-    }
+    }*/
 
     private fun setupButtons() {
         sorter.setOnClickListener{

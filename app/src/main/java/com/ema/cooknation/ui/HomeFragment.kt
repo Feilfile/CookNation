@@ -81,6 +81,7 @@ class HomeFragment : Fragment() {
                 recyclerView.visibility = RecyclerView.INVISIBLE
                 twNoBookmarks.visibility = TextView.VISIBLE
             }
+            //loadAdapter()
             //generate all objects of the list and load it into the CardAdapter
             for (favorite in favoritesList) {
                 val favoriteRecipe = db.collection("recipes")

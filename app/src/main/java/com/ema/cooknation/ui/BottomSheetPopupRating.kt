@@ -1,6 +1,7 @@
 package com.ema.cooknation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
@@ -65,16 +68,16 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
      * if rating is < 1 return false
      * */
     private fun minRating(): Boolean {
-        if(ratingStars.rating == 0f) {
+        return if(ratingStars.rating == 0f) {
             Toast.makeText(
                 (activity as RecipeViewActivity),
                 "Rating needs to be at least 1 Star",
                 Toast.LENGTH_SHORT
             ).show()
             toggleCommitButton(true)
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 
@@ -93,20 +96,34 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         if (minRating()) return
         val userRating = ratingStars.rating.toInt()
         recipe.addNewRating(userRating)
-        runBlocking {
-            editInRatingCollection(userRating)
-            updateRecipeInCollection()
-        }
+        updateRating(userRating)
     }
 
     private fun editRating() {
         if (minRating()) return
         val userRating = ratingStars.rating.toInt()
         recipe.updateExistingRating(oldRating, userRating)
+        updateRating(userRating)
+    }
+
+    private fun updateRating(userRating: Int) {
         runBlocking {
-            editInRatingCollection(userRating)
-            updateRecipeInCollection()
+            if (checkIfRecipeStillExists()) {
+                editInRatingCollection(userRating)
+                updateRecipeInCollection()
+            } else {
+                (activity as RecipeViewActivity).finish()
+            }
         }
+    }
+
+    private suspend fun checkIfRecipeStillExists(): Boolean{
+        val document = db.collection("recipes")
+            .document(recipe.docId.toString())
+            .get()
+            .await()
+            Log.e("TESTsfe", document.exists().toString())
+        return document.exists()
     }
 
     /**
