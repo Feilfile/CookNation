@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.ema.cooknation.InternetValidator
 import com.ema.cooknation.R
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        val connectedToInternet = isInternetAvailable(this)
+        val connectedToInternet = InternetValidator.isInternetAvailable(this)
         if (!connectedToInternet && item.itemId != R.id.m1_home) {
             currentFragment = OfflineScreen.newInstance()
             openFragment(currentFragment)
@@ -97,24 +98,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
         false
-    }
-
-    //Checks if user is online -> reused code
-    //Source: https://stackoverflow.com/questions/53532406/activenetworkinfo-type-is-deprecated-in-api-level-28
-    private fun isInternetAvailable(context: Context): Boolean {
-        val result: Boolean
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkCapabilities = connectivityManager.activeNetwork ?: return false
-        val actNw =
-            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-        result = when {
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
-
-        return result
     }
 }

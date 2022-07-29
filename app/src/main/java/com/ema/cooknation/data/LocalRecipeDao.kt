@@ -13,6 +13,9 @@ interface LocalRecipeDao {
     @Delete
     suspend fun deleteRecipe(localRecipe: LocalRecipe)
 
+    @Query("SELECT * FROM recipe_table ORDER BY date ASC")
+    suspend fun getAllRecipesAtOnce(): List<LocalRecipe>
+
     @Query("DELETE FROM recipe_table WHERE docId= :docId")
     fun deleteLocalRecipe(docId: String)
 

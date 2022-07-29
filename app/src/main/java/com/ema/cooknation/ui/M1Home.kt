@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ema.cooknation.InternetValidator
 import com.ema.cooknation.R
 import com.ema.cooknation.adapter.LocalAdapter
 import com.ema.cooknation.adapter.WideCardAdapter
@@ -47,7 +48,7 @@ class M1Home : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (isInternetAvailable(requireContext())){
+        if (InternetValidator.isInternetAvailable(requireContext())){
             loadOnlineCards()
         } else {
             loadOfflineCards()
@@ -89,7 +90,15 @@ class M1Home : Fragment() {
                     .document(favorite)
                     .get()
                     .await()
-                recipeArrayList.add(favoriteRecipe.toObject(Recipe::class.java)!!)
+                if (!favoriteRecipe.exists()) {
+                    db.collection("favorites")
+                        .document(mAuth.uid.toString())
+                        .collection("docId")
+                        .document(favorite)
+                        .delete()
+                } else {
+                    recipeArrayList.add(favoriteRecipe.toObject(Recipe::class.java)!!)
+                }
             }
         cardAdapter.notifyDataSetChanged()
         }
@@ -102,25 +111,6 @@ class M1Home : Fragment() {
         localRecipeViewModel.readAllData.observe(viewLifecycleOwner) { localRecipe ->
             cardAdapter.setData(localRecipe)
         }
-    }
-
-    //Checks if user is online -> reused code
-    //Source: https://stackoverflow.com/questions/53532406/activenetworkinfo-type-is-deprecated-in-api-level-28
-    private fun isInternetAvailable(context: Context): Boolean {
-        val result: Boolean
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkCapabilities = connectivityManager.activeNetwork ?: return false
-        val actNw =
-            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-        result = when {
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
-
-        return result
     }
 
     companion object {

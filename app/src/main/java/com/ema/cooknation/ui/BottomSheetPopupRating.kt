@@ -14,6 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class BottomSheetPopupRating : BottomSheetDialogFragment() {
@@ -33,29 +35,22 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.bottomsheet_popup_rating, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val rootView = inflater.inflate(R.layout.bottomsheet_popup_rating, container, false)
+        ratingStars = rootView.findViewById(R.id.mrbUserRating)
+        commitButton = rootView.findViewById(R.id.btnCommitRating)
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
         recipe = (activity as S1RecipeViewActivity).getRecipe()
         documentId = "${recipe.uid}.${recipe.title}"
         checkForExistingRating()
-        ratingStars = view.findViewById(R.id.mrbUserRating)
-        commitButton = view.findViewById(R.id.btnCommitRating)
+        return rootView
+    }
 
-        // if user has not rated recipe, show 0 stars; else show old rating
-        if (!alreadyRated) {
-            ratingStars.rating = 0f
-        } else {
-            ratingStars.rating = oldRating.toFloat()
-        }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeRatingState()
         commitButton.setOnClickListener {
-            commitButton.isEnabled = false
-            commitButton.isClickable = false
+            toggleCommitButton(false)
             if (alreadyRated) {
                 editRating()
             } else {
@@ -65,21 +60,38 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
 
     }
 
+    /**
+     * if the user has not rated the recipe yet, show 0 stars, otherwise show the existing rating
+     * */
+    private fun initializeRatingState() {
+        if (!alreadyRated) {
+            ratingStars.rating = 5f
+        } else {
+            ratingStars.rating = oldRating.toFloat()
+        }
+    }
+
     private fun addNewRating() {
         val userRating = ratingStars.rating.toInt()
         recipe.addNewRating(userRating)
-        editInRatingCollection(userRating)
-        updateRecipeInCollection()
+        runBlocking {
+            editInRatingCollection(userRating)
+            updateRecipeInCollection()
+        }
     }
 
     private fun editRating() {
         val userRating = ratingStars.rating.toInt()
         recipe.updateExistingRating(oldRating, userRating)
-        editInRatingCollection(userRating)
-        updateRecipeInCollection()
+        runBlocking {
+            editInRatingCollection(userRating)
+            updateRecipeInCollection()
+        }
     }
 
-    // check if existing rating is in database and change alreadyRated variable accordingly
+    /**
+     * check if existing rating is in database and change alreadyRated variable accordingly
+     * */
     private fun checkForExistingRating() {
         db.collection("rating")
             .document("${mAuth.uid}.${recipe.docId}")
@@ -93,24 +105,37 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
             }
     }
 
-    // update rating and dismiss fragment
-    private fun updateRecipeInCollection() {
-        db.collection("recipes").document(recipe.docId.toString())
+    /**
+     * update rating and dismiss fragment
+     * */
+    private suspend fun updateRecipeInCollection() {
+        db.collection("recipes")
+            .document(recipe.docId.toString())
             .update(
                 "avgRating", recipe.avgRating,
                 "ratingCount", recipe.ratingCount
             )
+            .await()
         (activity as S1RecipeViewActivity).loadData()
         dismiss()
     }
 
-    // TODO: nicht sicher was genau hier passiert - Leon
-    private fun editInRatingCollection(userRating: Int) {
+    /**
+     * rating document gets added/updated inside the Firestore collection
+     * */
+    private suspend fun editInRatingCollection(userRating: Int) {
         val rating = hashMapOf(
             "ratingStars" to userRating
         )
-        db.collection("rating").document("${mAuth.uid}.${recipe.docId}")
+        db.collection("rating")
+            .document("${mAuth.uid}.${recipe.docId}")
             .set(rating)
+            .await()
+    }
+
+    private fun toggleCommitButton(state: Boolean) {
+        commitButton.isEnabled = state
+        commitButton.isClickable = state
     }
 }
 

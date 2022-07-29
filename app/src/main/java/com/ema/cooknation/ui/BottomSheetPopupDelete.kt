@@ -13,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class BottomSheetPopupDelete : BottomSheetDialogFragment() {
 
@@ -33,7 +35,6 @@ class BottomSheetPopupDelete : BottomSheetDialogFragment() {
         return rootView
     }
 
-    // TODO: implement coroutines
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recipe = (activity as S1RecipeViewActivity).getRecipe()
@@ -42,42 +43,43 @@ class BottomSheetPopupDelete : BottomSheetDialogFragment() {
         }
 
         confirmButton.setOnClickListener {
-            deletePicture()
+            runBlocking {
+                deletePicture()
+                deleteRecipe()
+                (activity as S1RecipeViewActivity).finish()
+            }
         }
     }
 
-    private fun deletePicture(){
-        Log.d("deletePic", "Recipes/${recipe.uid.toString()}/${recipe.docId}".drop(1))
+    private suspend fun deletePicture(){
         FirebaseStorage.getInstance().getReference("Recipes/${recipe.uid.toString()}/${recipe.docId}").delete()
-            .addOnSuccessListener{
-                deleteFromAllFavorites()
-            }
+            .await()
     }
 
-    private fun deleteRecipe(){
-
+    private suspend fun deleteRecipe() {
         db.collection("recipes").document(recipe.docId.toString()).delete()
             .addOnSuccessListener {
-                (activity as S1RecipeViewActivity).finish()
             }.addOnFailureListener{
                 Log.e("deleteRecipe", "couldn't delete recipe")
-            }
+            }.await()
     }
 
-    private fun deleteFromAllFavorites() {
-        db.collection("favorites")
+    /* CONSTRUCTION DOESN'T WORK AND WOULD BE SLOW
+    private suspend fun deleteFromAllFavorites() {
+
+        val usersIdList = db.collectionGroup("user")
             .get()
-            .addOnSuccessListener { usersIdList ->
-                for (userId in usersIdList) {
-                    db.collection("favorites")
-                        .document(userId.id)
-                        .collection("docId")
-                        .document(recipe.docId.toString())
-                        .delete()
-                        .addOnSuccessListener {
-                            deleteRecipe()
-                        }
-                }
-            }
-    }
+            .await()
+        for (userid in usersIdList.documents) {
+            Log.e("Test", userid.id)
+        }
+        /*for (userId in usersIdList) {
+            db.collection("favorites")
+                .document(userId.id)
+                .collection("docId")
+                .document(recipe.docId.toString())
+                .delete()
+                .await()
+            }*/
+    }*/
 }

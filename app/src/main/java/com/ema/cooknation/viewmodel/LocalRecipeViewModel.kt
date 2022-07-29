@@ -35,6 +35,10 @@ class LocalRecipeViewModel(application: Application): AndroidViewModel(applicati
         }
     }*/
 
+    suspend fun getAllRecipesAtOnce(): List<LocalRecipe> {
+        return repository.getAllRecipesAtOnce()
+    }
+
     fun deleteLocalRecipe(docId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteLocalRecipe(docId)

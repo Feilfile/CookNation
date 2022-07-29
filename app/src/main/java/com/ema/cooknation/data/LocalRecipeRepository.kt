@@ -18,6 +18,10 @@ class LocalRecipeRepository(private val localRecipeDao: LocalRecipeDao) {
         localRecipeDao.deleteLocalRecipe(docId)
     }
 
+    suspend fun getAllRecipesAtOnce(): List<LocalRecipe>{
+        return localRecipeDao.getAllRecipesAtOnce()
+    }
+
     fun selectDocumentByDocID(docId: String): LiveData<LocalRecipe>{
         return localRecipeDao.selectDocumentByDocID(docId)
     }
