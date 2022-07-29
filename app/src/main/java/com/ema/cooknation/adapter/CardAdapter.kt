@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.ui.MainActivity
 import com.ema.cooknation.R
-import com.ema.cooknation.ui.S1RecipeViewActivity
+import com.ema.cooknation.ui.RecipeViewActivity
 import com.ema.cooknation.data.Recipe
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
@@ -64,7 +64,7 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
     private fun setupOnClickListener(holder: ViewHolder, position: Int){
         holder.itemView.findViewById<LinearLayout>(R.id.llCardCell).setOnClickListener { v ->
             v!!.context as AppCompatActivity
-            val intent = Intent(v.context, S1RecipeViewActivity::class.java)
+            val intent = Intent(v.context, RecipeViewActivity::class.java)
             // parse recipe to the activity
             intent.putExtra("recipeId", recipes[position].docId)
             v.context.startActivity(intent)

@@ -29,7 +29,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-class S1RecipeViewActivity : AppCompatActivity() {
+class RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeId: String
     private lateinit var recipe: Recipe
     private lateinit var avgRating: MaterialRatingBar
@@ -57,7 +57,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_s1_recipe_view)
+        setContentView(R.layout.activity_recipe_view)
         initializeVariables()
         loadData()
     }
@@ -125,7 +125,7 @@ class S1RecipeViewActivity : AppCompatActivity() {
 
             // opens edit acticity
             editButton.setOnClickListener {
-                intent = Intent(this@S1RecipeViewActivity, S3Edit::class.java)
+                intent = Intent(this@RecipeViewActivity, EditActivity::class.java)
                 intent.putExtra("recipe", recipe)
                 startActivity(intent)
             }

@@ -10,7 +10,7 @@ import com.ema.cooknation.R
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
-class S1RecipeViewActivityOffline: AppCompatActivity() {
+class RecipeViewActivityOffline: AppCompatActivity() {
 
     private lateinit var recipeId: String
     private lateinit var avgRating: MaterialRatingBar
@@ -28,7 +28,7 @@ class S1RecipeViewActivityOffline: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_s1_recipe_view_offline)
+        setContentView(R.layout.activity_recipe_view_offline)
         initializeVariables()
         setContent()
     }

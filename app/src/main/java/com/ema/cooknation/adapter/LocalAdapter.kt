@@ -12,10 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.ui.MainActivity
 import com.ema.cooknation.R
-import com.ema.cooknation.ui.S1RecipeViewActivityOffline
+import com.ema.cooknation.ui.RecipeViewActivityOffline
 import com.ema.cooknation.data.LocalRecipe
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
-import java.sql.Timestamp
 
 class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
 
@@ -63,7 +62,7 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
     private fun setupOnClickListener(holder: MyViewHolder, position: Int){
         holder.itemView.findViewById<LinearLayout>(R.id.llWideCardCell).setOnClickListener { v ->
             v!!.context as AppCompatActivity
-            val intent = Intent(v.context, S1RecipeViewActivityOffline::class.java)
+            val intent = Intent(v.context, RecipeViewActivityOffline::class.java)
             //parse recipe to the activity
             intent.putExtra("recipeId", localRecipeList[position].docId)
             v.context.startActivity(intent)

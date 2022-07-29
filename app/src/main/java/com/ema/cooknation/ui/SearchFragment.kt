@@ -21,7 +21,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
-class M3Search : Fragment() {
+class SearchFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     //recipeArrayList has all Elements in the database
@@ -37,7 +37,7 @@ class M3Search : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_m3_search, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_search, container, false)
         recyclerView = rootView.findViewById(R.id.rvSearchRecyclerView)
         searchBarText = rootView.findViewById(R.id.etSearchBar)
         sorter = rootView.findViewById(R.id.ibSearchPopUpButton)
@@ -299,6 +299,6 @@ class M3Search : Fragment() {
     }
 
     companion object {
-        fun newInstance() = M3Search().apply {}
+        fun newInstance() = SearchFragment().apply {}
     }
 }

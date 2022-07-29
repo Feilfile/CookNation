@@ -1,8 +1,5 @@
 package com.ema.cooknation.ui
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
-class M1Home : Fragment() {
+class HomeFragment : Fragment() {
     private lateinit var twNoBookmarks: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var localRecipeViewModel: LocalRecipeViewModel
@@ -35,7 +32,7 @@ class M1Home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootView = inflater.inflate(R.layout.fragment_m1_home, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_home, container, false)
         twNoBookmarks = rootView.findViewById(R.id.twNoBookmarks)
         recyclerView = rootView.findViewById(R.id.homeRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(this.context, 1)
@@ -114,6 +111,6 @@ class M1Home : Fragment() {
     }
 
     companion object {
-        fun newInstance() = M1Home().apply {}
+        fun newInstance() = HomeFragment().apply {}
     }
 }

@@ -37,7 +37,7 @@ class BottomSheetPopupDelete : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recipe = (activity as S1RecipeViewActivity).getRecipe()
+        recipe = (activity as RecipeViewActivity).getRecipe()
         cancelButton.setOnClickListener {
             dismiss()
         }
@@ -46,7 +46,7 @@ class BottomSheetPopupDelete : BottomSheetDialogFragment() {
             runBlocking {
                 deletePicture()
                 deleteRecipe()
-                (activity as S1RecipeViewActivity).finish()
+                (activity as RecipeViewActivity).finish()
             }
         }
     }

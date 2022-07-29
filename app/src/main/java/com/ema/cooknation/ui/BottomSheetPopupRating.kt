@@ -40,7 +40,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
         commitButton = rootView.findViewById(R.id.btnCommitRating)
         mAuth = FirebaseAuth.getInstance()
         db = Firebase.firestore
-        recipe = (activity as S1RecipeViewActivity).getRecipe()
+        recipe = (activity as RecipeViewActivity).getRecipe()
         documentId = "${recipe.uid}.${recipe.title}"
         checkForExistingRating()
         return rootView
@@ -116,7 +116,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
                 "ratingCount", recipe.ratingCount
             )
             .await()
-        (activity as S1RecipeViewActivity).loadData()
+        (activity as RecipeViewActivity).loadData()
         dismiss()
     }
 

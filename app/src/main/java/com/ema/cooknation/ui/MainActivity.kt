@@ -1,9 +1,6 @@
 package com.ema.cooknation.ui
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
-        openFragment(M1Home.newInstance())
+        openFragment(HomeFragment.newInstance())
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -36,12 +33,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openUploadFragment() {
-        startActivity(Intent(this@MainActivity, S2Upload::class.java))
+        startActivity(Intent(this@MainActivity, UploadActivity::class.java))
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     fun performLogout() {
-        val registerLogin = M4x2RegisterLogin.newInstance()
+        val registerLogin = RegisterLoginFragment.newInstance()
         openFragment(registerLogin)
     }
 
@@ -69,17 +66,17 @@ class MainActivity : AppCompatActivity() {
         }
         when (item.itemId) {
             R.id.m1_home -> {
-                currentFragment = M1Home.newInstance()
+                currentFragment = HomeFragment.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m2_explore -> {
-                currentFragment = M2Explore.newInstance()
+                currentFragment = ExploreFragment.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.m3_search -> {
-                currentFragment = M3Search.newInstance()
+                currentFragment = SearchFragment.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -87,12 +84,12 @@ class MainActivity : AppCompatActivity() {
                 // check if user is logged in
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user == null) {
-                    currentFragment = M4x2RegisterLogin.newInstance()
+                    currentFragment = RegisterLoginFragment.newInstance()
                     openFragment(currentFragment)
                     return@OnNavigationItemSelectedListener true
                 }
 
-                currentFragment = M4x1profile.newInstance()
+                currentFragment = ProfileFragment.newInstance()
                 openFragment(currentFragment)
                 return@OnNavigationItemSelectedListener true
             }
