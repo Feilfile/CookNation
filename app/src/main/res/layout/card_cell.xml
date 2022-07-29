@@ -30,6 +30,7 @@
                 android:src="@drawable/buffer2" />
 
             <TextView
+                android:maxLines="1"
                 android:id="@+id/tvRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
