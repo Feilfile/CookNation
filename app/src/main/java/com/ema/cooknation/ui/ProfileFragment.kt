@@ -49,6 +49,12 @@ class ProfileFragment : Fragment() {
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        tempRecipeArrayList.clear()
+        loadAdapter()
+    }
+
     companion object {
         fun newInstance() = ProfileFragment().apply {}
     }
@@ -59,7 +65,7 @@ class ProfileFragment : Fragment() {
         setupRecyclerView()
     }
 
-    // fetches username and sets up upload and signout button
+    // fetches username and sets up upload and sign out button
     private fun setUpElements() {
         //dc.document.toObject((Recipe::class.java))
         db.collection("user")
@@ -108,10 +114,9 @@ class ProfileFragment : Fragment() {
         cardAdapter.notifyDataSetChanged()
     }
 
-    //TODO: ADVANCED: Refresh specific item after returning from recipeview with notifyItemChanged(updateIndex)
     private fun loadAdapter() {
         recipeArrayList.clear()
-        runBlocking (Dispatchers.IO){
+        runBlocking (){
             //generate all objects where uid == mAuth.uid of the list and load it into the CardAdapter
             val recipes = db.collection("recipes")
                 .whereEqualTo("uid", mAuth.uid)

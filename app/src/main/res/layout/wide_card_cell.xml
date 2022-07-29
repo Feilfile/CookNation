@@ -42,6 +42,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:maxLines="1"
                 android:id="@+id/tvWideCardRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,6 +57,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:maxLines="1"
                 android:id="@+id/tvWideCardAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

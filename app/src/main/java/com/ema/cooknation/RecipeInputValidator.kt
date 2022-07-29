@@ -18,12 +18,12 @@ object RecipeInputValidator {
             errorMessages("Title must have at least 5 digits", context)
             retVal = false
         }
-        if (ingredients.length < 30) {
-            errorMessages("Ingredients must have at least 30 digits", context)
+        if (ingredients.length < 2) {
+            errorMessages("Ingredients must have at least 2 digits", context)
             retVal = false
         }
-        if (directions.length < 30) {
-            errorMessages("Directions must have at least 30 digits", context)
+        if (directions.length < 2) {
+            errorMessages("Directions must have at least 2 digits", context)
             retVal = false
         }
         if (!pictureInitialized) {

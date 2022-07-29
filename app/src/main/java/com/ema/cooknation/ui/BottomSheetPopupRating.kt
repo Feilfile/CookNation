@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.ema.cooknation.R
 import com.ema.cooknation.data.Rating
 import com.ema.cooknation.data.Recipe
@@ -61,17 +62,35 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
     }
 
     /**
+     * if rating is < 1 return false
+     * */
+    private fun minRating(): Boolean {
+        if(ratingStars.rating == 0f) {
+            Toast.makeText(
+                (activity as RecipeViewActivity),
+                "Rating needs to be at least 1 Star",
+                Toast.LENGTH_SHORT
+            ).show()
+            toggleCommitButton(true)
+            return true
+        } else {
+            return false
+        }
+    }
+
+    /**
      * if the user has not rated the recipe yet, show 0 stars, otherwise show the existing rating
      * */
     private fun initializeRatingState() {
         if (!alreadyRated) {
-            ratingStars.rating = 5f
+            ratingStars.rating = 0f
         } else {
             ratingStars.rating = oldRating.toFloat()
         }
     }
 
     private fun addNewRating() {
+        if (minRating()) return
         val userRating = ratingStars.rating.toInt()
         recipe.addNewRating(userRating)
         runBlocking {
@@ -81,6 +100,7 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
     }
 
     private fun editRating() {
+        if (minRating()) return
         val userRating = ratingStars.rating.toInt()
         recipe.updateExistingRating(oldRating, userRating)
         runBlocking {
