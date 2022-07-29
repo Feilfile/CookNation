@@ -1,4 +1,4 @@
-package com.ema.cooknation
+package com.ema.cooknation.validator
 
 import android.content.Context
 import android.widget.Toast

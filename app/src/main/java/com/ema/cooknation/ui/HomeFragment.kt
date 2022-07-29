@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ema.cooknation.InternetValidator
+import com.ema.cooknation.validator.InternetValidator
 import com.ema.cooknation.R
 import com.ema.cooknation.adapter.LocalAdapter
 import com.ema.cooknation.adapter.WideCardAdapter

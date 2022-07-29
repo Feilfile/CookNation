@@ -1,5 +1,6 @@
 package com.ema.cooknation
 
+import com.ema.cooknation.validator.RegisterValidator
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

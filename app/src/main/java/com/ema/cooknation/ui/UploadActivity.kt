@@ -12,7 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.ema.cooknation.R
-import com.ema.cooknation.RecipeInputValidator
+import com.ema.cooknation.validator.RecipeInputValidator
 import com.ema.cooknation.data.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth

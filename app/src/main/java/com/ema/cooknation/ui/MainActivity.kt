@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.ema.cooknation.InternetValidator
+import com.ema.cooknation.validator.InternetValidator
 import com.ema.cooknation.R
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView

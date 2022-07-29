@@ -6,10 +6,9 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.ema.cooknation.InternetValidator
+import com.ema.cooknation.validator.InternetValidator
 import com.ema.cooknation.R
 import com.ema.cooknation.data.LocalRecipe
 import com.ema.cooknation.data.Recipe
