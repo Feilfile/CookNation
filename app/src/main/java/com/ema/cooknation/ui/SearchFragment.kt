@@ -2,6 +2,7 @@ package com.ema.cooknation.ui
 
 //import androidx.appcompat.widget.SearchView
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -53,6 +54,15 @@ class SearchFragment : Fragment() {
         popupMenu()
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadAdapter()
+        val x = searchBarText.query
+        searchBarText.setQuery("", false)
+        searchBarText.setQuery(x, false)
+        //cardAdapter.notifyItemChanged(0)
+    }
+
     private fun setupButtons() {
         sorter.setOnClickListener{
             tempRecipeArrayList.clear()
@@ -74,8 +84,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun loadAdapter() {
+        tempRecipeArrayList.clear()
         recipeArrayList.clear()
-        runBlocking (Dispatchers.IO){
+        runBlocking {
             //generate all objects to the list and load it into the CardAdapter
             val recipes = db.collection("recipes")
                 .get()

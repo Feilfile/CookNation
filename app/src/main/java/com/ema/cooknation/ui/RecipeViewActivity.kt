@@ -25,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -92,15 +94,19 @@ class RecipeViewActivity : AppCompatActivity() {
 
     // gets recipe collection and calls setContent()
     fun loadData() {
-        db.collection("recipes")
-            .document(recipeId)
-            .get()
-            .addOnSuccessListener { document ->
-                recipe = document.toObject((Recipe::class.java))!!
-                setContent()
-            } .addOnFailureListener{
-                finish()
-            }
+        runBlocking {
+            val document = db.collection("recipes")
+                .document(recipeId)
+                .get()
+                .await()
+                    Log.e("TEST", document.exists().toString())
+                    if (!document.exists()) {
+                        finish()
+                    } else {
+                        recipe = document.toObject((Recipe::class.java))!!
+                        setContent()
+                    }
+        }
     }
 
     private fun setContent() {
