@@ -24,7 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.sql.Timestamp
 import java.text.DateFormat
 
-class S2Upload : AppCompatActivity() {
+class UploadActivity : AppCompatActivity() {
     private lateinit var inputTitle:TextInputEditText
     private lateinit var inputDirections:TextInputEditText
     private lateinit var inputIngredients:TextInputEditText
@@ -42,7 +42,7 @@ class S2Upload : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_s2_upload)
+        setContentView(R.layout.activity_upload)
         initializeVariables()
         setContent()
         setUpDropdownTextBoxes()
