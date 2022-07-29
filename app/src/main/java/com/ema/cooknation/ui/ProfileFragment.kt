@@ -22,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
-class M4x1profile : Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
@@ -39,8 +39,7 @@ class M4x1profile : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val rootView = inflater.inflate(R.layout.fragment_m4_profile, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
         recyclerView = rootView.findViewById(R.id.rvProfileRecyclerView)
         btnSignOut = rootView.findViewById(R.id.btnSignOut)
         btnProfileUpload = rootView.findViewById(R.id.btnProfileUpload)
@@ -51,16 +50,16 @@ class M4x1profile : Fragment() {
     }
 
     companion object {
-        fun newInstance() = M4x1profile().apply {}
+        fun newInstance() = ProfileFragment().apply {}
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
         setupRecyclerView()
     }
-    // TODO: Rebuild nach upload
+
+    // fetches username and sets up upload and signout button
     private fun setUpElements() {
         //dc.document.toObject((Recipe::class.java))
         db.collection("user")
@@ -76,13 +75,13 @@ class M4x1profile : Fragment() {
         btnProfileUpload.setOnClickListener{
             (activity as MainActivity).openUploadFragment()
         }
-        // Setup SignOut Button when Loading Fragment
         btnSignOut.setOnClickListener{
             mAuth.signOut()
             (activity as MainActivity).performLogout()
         }
     }
 
+    // sets up RecyclerView and calls loadAdapter to generate objects for recyclerView
     private fun setupRecyclerView() {
         // 2 cards per row
         val layoutManager = GridLayoutManager(this.context, 2)

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ema.cooknation.R
 import com.ema.cooknation.adapter.WideCardAdapter
@@ -19,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
-class M2Explore : Fragment() {
+class ExploreFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recyclerViewWeekly: RecyclerView
     private lateinit var recyclerViewDaily: RecyclerView
@@ -33,7 +32,7 @@ class M2Explore : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_m2_explore, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_explore, container, false)
         ibButtonWebView = rootView.findViewById(R.id.ibButtonWebView)
         recyclerViewDaily = rootView.findViewById(R.id.exploreRecyclerViewDaily)
         recyclerViewWeekly = rootView.findViewById(R.id.exploreRecyclerViewWeekly)
@@ -105,6 +104,6 @@ class M2Explore : Fragment() {
     }
 
     companion object {
-        fun newInstance() = M2Explore().apply {}
+        fun newInstance() = ExploreFragment().apply {}
     }
 }

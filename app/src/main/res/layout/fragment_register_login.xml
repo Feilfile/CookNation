@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.M4x2RegisterLogin">
+    tools:context=".ui.M4x2RegisterLogin"
+    android:background="#eeeeee">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#eeeeee">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_gravity="center"

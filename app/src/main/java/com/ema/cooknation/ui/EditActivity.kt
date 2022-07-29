@@ -22,7 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.sql.Timestamp
 
-class S3Edit : AppCompatActivity() {
+class EditActivity : AppCompatActivity() {
     private lateinit var oldRecipe: Recipe
     private lateinit var editPicture : ImageButton
     private lateinit var editRecipeTitle : TextInputEditText
@@ -42,7 +42,7 @@ class S3Edit : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_s3_edit)
+        setContentView(R.layout.activity_edit)
         initializeVariable()
         setValues()
         setUpDropdownTextBoxes()

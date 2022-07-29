@@ -23,7 +23,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.s5_register)
+        setContentView(R.layout.activity_register)
         etRegEmail = findViewById(R.id.etRegEmail)
         etRegUsername = findViewById(R.id.etRegUsername)
         etRegPassword = findViewById(R.id.etRegPass)
