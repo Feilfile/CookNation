@@ -29,11 +29,11 @@ class RecipeInputValidatorTest {
     }
 
     @Test
-    fun `ingredients must have at least 30 digits` () {
+    fun `ingredients must have at least 5 digits` () {
         val result = RecipeInputValidator.validateInputs(null,
             "12345",
             "123456789012345678901234567890",
-            "12345678901234567890123456789",
+            "1234",
             true
         )
         assertThat(result).isFalse()

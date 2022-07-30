@@ -128,7 +128,7 @@ class LoadingScreenActivity : AppCompatActivity() {
                             recipe.uid.toString(),
                             recipe.title.toString(),
                             recipe.author.toString(),
-                            recipe.date.toString(),
+                            recipe.date!!.time,
                             bos.toByteArray(),
                             recipe.directions.toString(),
                             recipe.ingredients.toString(),

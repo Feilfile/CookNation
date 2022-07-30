@@ -141,7 +141,8 @@ class UploadActivity : AppCompatActivity() {
 
     private fun writeInFirestore() {
         val uid = mAuth.uid.toString()
-        val date = DateFormat.getDateInstance().format(getCurrentDate())
+        //val date = DateFormat.getDateInstance().format(getCurrentDate())
+        val date = getCurrentDate()
         val recipe = hashMapOf(
             //TODO: add current date -> Date Format and ingredients -> Array Format
             "uid" to uid,

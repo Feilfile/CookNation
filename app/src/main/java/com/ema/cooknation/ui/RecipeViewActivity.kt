@@ -30,6 +30,7 @@ import kotlinx.coroutines.tasks.await
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.text.DateFormat
 
 class RecipeViewActivity : AppCompatActivity() {
     private lateinit var recipeId: String
@@ -115,7 +116,7 @@ class RecipeViewActivity : AppCompatActivity() {
         recipeAuthor.text = recipe.author
         recipeIngredients.text = recipe.ingredients
         recipeDirections.text = recipe.directions
-        recipeDate.text = recipe.date.toString()
+        recipeDate.text = DateFormat.getDateInstance().format(recipe.date)
         recipeDifficulty.text = recipe.difficulty
         recipePrepTime.text = recipe.prepTime
         numRating.text = recipe.ratingCount.toString()
@@ -129,7 +130,7 @@ class RecipeViewActivity : AppCompatActivity() {
             deleteButten.isClickable = true
             ratingButton.visibility = View.INVISIBLE
 
-            // opens edit acticity
+            // opens edit activity
             editButton.setOnClickListener {
                 intent = Intent(this@RecipeViewActivity, EditActivity::class.java)
                 intent.putExtra("recipe", recipe)
@@ -153,8 +154,12 @@ class RecipeViewActivity : AppCompatActivity() {
 
         // adds or deletes recipe locally and toggles favorite button
         favButton.setOnClickListener {
+            if (mAuth.uid != null) {
             addToLocalDataBase()
             toggleFavoriteButton()
+            } else {
+                Toast.makeText(this,"You need to log in first to bookmark a recipe.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -225,7 +230,7 @@ class RecipeViewActivity : AppCompatActivity() {
             recipe.uid.toString(),
             recipe.title.toString(),
             recipe.author.toString(),
-            recipe.date.toString(),
+            recipe.date!!.time,
             bos.toByteArray(),
             recipe.directions.toString(),
             recipe.ingredients.toString(),

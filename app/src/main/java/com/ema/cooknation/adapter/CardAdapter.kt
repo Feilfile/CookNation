@@ -33,7 +33,6 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : Recipe = recipes[position]
         holder.title.text = recipe.title
-        //holder.author.text = recipe.author
         holder.rating.rating = recipe.avgRating
         loadPictureInContainer(recipe, holder)
         setupOnClickListener(holder, position)
@@ -68,9 +67,7 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
             // parse recipe to the activity
             intent.putExtra("recipeId", recipes[position].docId)
             v.context.startActivity(intent)
-            // (v.context as MainActivity).overridePendingTransition(R.anim.zoom_in, R.anim.static_animation)
             (v.context as MainActivity).overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-            // activity.supportFragmentManager.beginTransaction().replace(R.id.clScreenWindow, recipeView).commit()
         }
     }
 }

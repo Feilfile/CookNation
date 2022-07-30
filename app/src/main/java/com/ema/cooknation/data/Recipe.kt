@@ -8,7 +8,7 @@ data class Recipe(
     var uid: String? = null,
     var title: String? = null,
     var author: String? = null,
-    var date: String? = null,
+    var date: Date? = null,
     var picturePath: String? = null,
     var directions: String? = null,
     var ingredients: String? = null,

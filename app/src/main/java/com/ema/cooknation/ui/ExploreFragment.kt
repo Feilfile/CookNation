@@ -73,7 +73,7 @@ class ExploreFragment : Fragment() {
         recipeArrayListDaily.clear()
         runBlocking (Dispatchers.IO) {
             val recipes = db.collection("recipes")
-                .whereEqualTo("docId", "6rXhMcMKqkimsh1S9E7Y")
+                .whereEqualTo("docId", "An4ExFfamVQBKOolJbCe")
                 .get()
                 .await()
             for (foundDailyRecipe in recipes.documents) {

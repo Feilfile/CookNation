@@ -18,6 +18,7 @@ import com.ema.cooknation.data.Recipe
 import com.google.firebase.storage.FirebaseStorage
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.File
+import java.text.DateFormat
 
 class WideCardAdapter(private val recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<WideCardAdapter.ViewHolder>()
@@ -35,7 +36,7 @@ class WideCardAdapter(private val recipes: ArrayList<Recipe>)
 
         holder.title.text = recipe.title
         holder.author.text = recipe.author
-        holder.date.text = recipe.date
+        holder.date.text = DateFormat.getDateInstance().format(recipe.date)
         holder.difficulty.text = recipe.difficulty
         holder.prepTime.text = recipe.prepTime
         holder.rating.rating = recipe.avgRating

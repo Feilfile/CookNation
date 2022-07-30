@@ -15,6 +15,7 @@ import com.ema.cooknation.R
 import com.ema.cooknation.ui.RecipeViewActivityOffline
 import com.ema.cooknation.data.LocalRecipe
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
+import java.text.DateFormat
 
 class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
 
@@ -44,7 +45,7 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
         val currentItem = localRecipeList[position]
         holder.title.text = currentItem.title
         holder.author.text = currentItem.author
-        holder.date.text = currentItem.date
+        holder.date.text = DateFormat.getDateInstance().format(currentItem.date)
         holder.difficulty.text = currentItem.difficulty
         holder.prepTime.text = currentItem.prepTime
         holder.rating.rating = currentItem.avgRating

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ema.cooknation.R
 import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
+import java.text.DateFormat
 
 class RecipeViewActivityOffline: AppCompatActivity() {
 
@@ -57,7 +58,7 @@ class RecipeViewActivityOffline: AppCompatActivity() {
             recipeAuthor.text = it.author
             recipeIngredients.text = it.ingredients
             recipeDirections.text = it.directions
-            recipeDate.text = it.date.toString()
+            recipeDate.text = DateFormat.getDateInstance().format(it.date)
             recipeDifficulty.text = it.difficulty
             recipePrepTime.text = it.prepTime
             numRating.text = it.ratingCount.toString()
