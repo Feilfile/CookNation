@@ -39,7 +39,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // check if login was successful and if so, change activity
+     /**
+     * Check if login was successful and if so, change activity
+     * */
     private fun loginUser(email: String, password: String) {
         when {
             TextUtils.isEmpty(email) -> {

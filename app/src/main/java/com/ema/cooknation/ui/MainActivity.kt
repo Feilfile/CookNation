@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         openFragment(HomeFragment.newInstance())
     }
 
+    /**
+     * Replaces current fragment with new fragment by swapping them out in the fragmentContainerView1
+     * */
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerView1, fragment)
@@ -57,6 +60,9 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
+    /**
+     * onItemSelectedListener for the navigation bar to change fragments
+     * */
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val connectedToInternet = InternetValidator.isInternetAvailable(this)
         if (!connectedToInternet && item.itemId != R.id.m1_home) {

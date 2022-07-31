@@ -93,7 +93,9 @@ class RecipeViewActivity : AppCompatActivity() {
         favButton = findViewById(R.id.fabFavButton)
     }
 
-    // gets recipe collection and calls setContent()
+    /**
+     * gets recipe collection and calls setContent()
+     * */
     fun loadData() {
         runBlocking {
             val document = db.collection("recipes")
@@ -163,8 +165,10 @@ class RecipeViewActivity : AppCompatActivity() {
         }
     }
 
-    // checks if currently viewed document is in favorites collection
-    // of user and if so, sets flag to true and sets image resource
+    /**
+     * checks if currently viewed document is in favorites collection
+     * of user and if so, sets flag to true and sets image resource
+     * */
     private fun checkFavorite() {
         val docRef = db.collection("favorites")
             .document(mAuth.uid.toString())
@@ -179,7 +183,9 @@ class RecipeViewActivity : AppCompatActivity() {
         }
     }
 
-    // checks flag, toggles the drawable and either deletes or adds them to favorites ( + locally )
+    /**
+     * checks flag, toggles the drawable and either deletes or adds them to favorites ( + locally )
+     * */
     private fun toggleFavoriteButton() {
         if (isFavorite) {
             isFavorite = false
@@ -220,7 +226,9 @@ class RecipeViewActivity : AppCompatActivity() {
     }
 
 
-    // TODO: Matthias comment pls
+    /**
+     * adds recipe to local database and compresses the recipe image
+     */
     private fun addToLocalDataBase() {
         val bos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
@@ -251,7 +259,6 @@ class RecipeViewActivity : AppCompatActivity() {
             .set(data)
     }
 
-    // TODO: Matthias comment pls
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             // There are no request codes
@@ -264,7 +271,9 @@ class RecipeViewActivity : AppCompatActivity() {
         }
     }
 
-    // TODO: Matthias comment pls
+    /**
+     * loads recipe picture in imageView
+     */
     private fun loadPictureInContainer (recipe: Recipe, view: ImageView) {
         //drop 1 to prevent a double "/"
         val storageRef = FirebaseStorage.getInstance().getReference(recipe.picturePath.toString().drop(1))

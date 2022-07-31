@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ema.cooknation.R
 
+/**
+ * Activity opens in case you don't have a internet connection
+ * */
+
 class OfflineScreen : Fragment() {
 
     override fun onCreateView(

@@ -62,7 +62,9 @@ class UploadActivity : AppCompatActivity() {
         prepTimeDropdownMenu = findViewById(R.id.prepTimeDropdownMenuUpload)
     }
 
-    // Populates Dropdown Text Box with options to chose from
+    /**
+     * Populates Dropdown Text Box with options to chose from
+     */
     private fun setUpDropdownTextBoxes() {
         val difficulties = resources.getStringArray(R.array.difficulties)
         val arrayAdapterDifficulties = ArrayAdapter(this, R.layout.dropdown_item, difficulties)
@@ -103,6 +105,9 @@ class UploadActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * validates inputs and calls writeInFirestore function to upload Recipe
+     */
     private fun uploadRecipe() {
         val validation = RecipeInputValidator.validateInputs(
             applicationContext,
@@ -139,6 +144,9 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Uploads recipe into firestore
+     */
     private fun writeInFirestore() {
         val uid = mAuth.uid.toString()
         //val date = DateFormat.getDateInstance().format(getCurrentDate())

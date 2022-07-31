@@ -11,6 +11,10 @@ import com.ema.cooknation.viewmodel.LocalRecipeViewModel
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.text.DateFormat
 
+/**
+ * Offline version of RecipeViewActivity, that opens if you don't have a internet connection
+ */
+
 class RecipeViewActivityOffline: AppCompatActivity() {
 
     private lateinit var recipeId: String

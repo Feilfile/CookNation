@@ -112,11 +112,6 @@ class RegisterActivity : AppCompatActivity() {
         )
         db.collection("user").document(mAuth.currentUser?.uid.toString())
             .set(newUser)
-            .addOnSuccessListener {
-                //TODO implement success listener
-            } .addOnFailureListener{
-
-            }
     }
 
     override fun onBackPressed() {

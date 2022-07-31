@@ -20,7 +20,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
-import java.sql.Timestamp
+
 
 class EditActivity : AppCompatActivity() {
     private lateinit var oldRecipe: Recipe
@@ -64,7 +64,10 @@ class EditActivity : AppCompatActivity() {
         prepTimeDropdownMenu = findViewById(R.id.prepTimeDropdownMenuEdit)
     }
 
-    // Populates Dropdown Text Box with options to chose from
+
+    /**
+     * Populates Dropdown Text Box with options to chose from
+     * */
     private fun setUpDropdownTextBoxes() {
         val difficulties = resources.getStringArray(R.array.difficulties)
         val arrayAdapterDifficulties = ArrayAdapter(this, R.layout.dropdown_item, difficulties)
@@ -75,13 +78,15 @@ class EditActivity : AppCompatActivity() {
         prepTimeDropdownMenu.setAdapter(arrayAdapterPrepTime)
     }
 
+     /**
+     * Sets values pre-edit into input containers and sets onClickListeners
+     * */
     private fun setValues() {
         editRecipeTitle.setText(oldRecipe.title)
         editIngredients.setText(oldRecipe.ingredients)
         editDirections.setText(oldRecipe.directions)
         loadPictureInContainer(oldRecipe, editPicture)
 
-        // leon
         difficultyDropdownMenu.setText(oldRecipe.difficulty)
         prepTimeDropdownMenu.setText(oldRecipe.prepTime)
 
@@ -106,6 +111,7 @@ class EditActivity : AppCompatActivity() {
                 Log.e("pictureQuery", "error while loading picture from Firestore storage")
             }
     }
+
     private fun selectImage() {
         val i = Intent()
         i.type = "image/*"
@@ -113,6 +119,9 @@ class EditActivity : AppCompatActivity() {
         startActivityForResult(i, 100)
     }
 
+    /**
+     * After successfully selecting a image the picture is saved to the bitmap variable and gets displayed in the previewView
+     * */
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -124,10 +133,9 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteOldPicture() {
-        FirebaseStorage.getInstance().getReference("Recipes/$oldRecipeTitle").delete()
-    }
-
+    /**
+     * Uploads picture to firebase storage
+     * */
     private fun uploadPicture() {
         val storageRef = FirebaseStorage.getInstance().getReference("Recipes/${uid}/${oldRecipe.docId}")
         //checks if all text fields are filled
@@ -154,6 +162,9 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Edits existing recipe document with new values
+     * */
     private fun editDocumentInfFirestore() {
         db.collection("recipes").document(oldRecipe.docId.toString())
             .update(
@@ -177,22 +188,6 @@ class EditActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        //db.collection("recipes").document("${uid}.${editRecipeTitle.text}").update("directions", editDirections.text)
-            /*.addOnSuccessListener {
-                Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
-                Toast.makeText(
-                    this,
-                    "Recipe successfully updated!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e)
-                Toast.makeText(
-                    this,
-                    "Error: Recipe couldn't be updated",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }*/
     }
 
     private fun completeActivity() {
@@ -202,14 +197,8 @@ class EditActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getCurrentDate(): Timestamp {
-        val tsLong : Long = System.currentTimeMillis()
-        return Timestamp(tsLong)
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
-
 }

@@ -65,7 +65,9 @@ class ProfileFragment : Fragment() {
         setupRecyclerView()
     }
 
-    // fetches username and sets up upload and sign out button
+    /**
+     * fetches username and sets up upload and sign out button
+     * */
     private fun setUpElements() {
         //dc.document.toObject((Recipe::class.java))
         db.collection("user")
@@ -87,7 +89,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    // sets up RecyclerView and calls loadAdapter to generate objects for recyclerView
+    /**
+     * sets up RecyclerView and calls loadAdapter to generate objects for recyclerView
+     * */
     private fun setupRecyclerView() {
         // 2 cards per row
         val layoutManager = GridLayoutManager(this.context, 2)
@@ -101,6 +105,9 @@ class ProfileFragment : Fragment() {
         loadAdapter()
     }
 
+    /**
+     * sorts elements by newest and refreshes adapter
+     * */
     private fun sortElementsByNewest(){
         val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
             it.date
@@ -114,6 +121,9 @@ class ProfileFragment : Fragment() {
         cardAdapter.notifyDataSetChanged()
     }
 
+    /**
+     * fills recyclerview with recipe objects of the user
+     * */
     private fun loadAdapter() {
         recipeArrayList.clear()
         runBlocking (){
@@ -151,7 +161,7 @@ class ProfileFragment : Fragment() {
                             recipeArrayList.add(dc.document.toObject((Recipe::class.java)))
                         }
                     }
-                    temprecipeArrayList.addAll(recipeArrayList)
+                    tempRecipeArrayList.addAll(recipeArrayList)
                     sortElementsByNewest()
                 }
             })

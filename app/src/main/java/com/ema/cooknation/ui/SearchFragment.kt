@@ -1,8 +1,7 @@
 package com.ema.cooknation.ui
 
-//import androidx.appcompat.widget.SearchView
 import android.os.Bundle
-import android.util.Log
+
 import android.view.*
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -83,6 +82,9 @@ class SearchFragment : Fragment() {
         loadAdapter()
     }
 
+    /**
+     * fills recyclerView with recipe objects
+     */
     private fun loadAdapter() {
         tempRecipeArrayList.clear()
         recipeArrayList.clear()
@@ -126,6 +128,9 @@ class SearchFragment : Fragment() {
             })
     }*/
 
+    /**
+     * activates various way to search for recipes
+     */
     private fun activateSearchBar() {
 
         searchBarText.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -173,7 +178,9 @@ class SearchFragment : Fragment() {
         })
     }
 
-    // sets up popupmenu-options for various ways to sort recipes
+    /**
+     * sets up popupmenu-options for various ways to sort recipes
+     */
     private fun popupMenu() {
         val popupMenu = PopupMenu(activity as MainActivity, sorter)
         popupMenu.inflate(R.menu.search_menu)
@@ -252,8 +259,9 @@ class SearchFragment : Fragment() {
         inflater.inflate(R.menu.search_menu, menu)
     }
 
-    /* sorting functions for popup menu */
-
+    /**
+     * sorting functions for popup menu
+     */
     private fun sortElementsByNewest(){
         val sortedList = tempRecipeArrayList.sortedWith(compareByDescending {
             it.date
@@ -298,7 +306,9 @@ class SearchFragment : Fragment() {
         }
     */
 
-    // current output list gets cleared and refilled with the sorted one
+    /**
+     * current output list gets cleared and refilled with the sorted one
+     */
     private fun refreshAdapter(sortedList: List<Recipe>){
         tempRecipeArrayList.clear()
         tempRecipeArrayList.addAll(sortedList)

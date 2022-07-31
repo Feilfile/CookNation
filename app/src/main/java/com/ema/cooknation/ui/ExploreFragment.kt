@@ -69,6 +69,9 @@ class ExploreFragment : Fragment() {
         loadAdapter()
     }
 
+     /**
+     * loads cards into recyclerview. Daily recipe by docId and weekly recipe by uid
+     * */
     private fun loadAdapter() {
         recipeArrayListDaily.clear()
         runBlocking (Dispatchers.IO) {
@@ -94,6 +97,9 @@ class ExploreFragment : Fragment() {
         }
     }
 
+     /**
+     * Sorts list by newest and refreshes adapter
+     * */
     private fun sortListByNewest() {
         val sortedList = recipeArrayListWeekly.sortedWith(compareByDescending {
             it.date
