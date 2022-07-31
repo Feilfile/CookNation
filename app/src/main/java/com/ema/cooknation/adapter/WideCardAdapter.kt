@@ -23,14 +23,17 @@ import java.text.DateFormat
 class WideCardAdapter(private val recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<WideCardAdapter.ViewHolder>()
 {
-
-    //loads card_cell
+    /**
+     * loads card_cell
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.wide_card_cell, parent, false)
         return ViewHolder(itemView)
     }
 
-    // current card gets loaded / updated on the right position
+    /**
+     * current card gets loaded / updated on the right position
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : Recipe = recipes[position]
 
@@ -45,7 +48,9 @@ class WideCardAdapter(private val recipes: ArrayList<Recipe>)
         setupOnClickListener(holder, position)
     }
 
-    //references the elements inside the card_cell
+    /**
+     * references the elements inside the card_cell
+     */
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var picture : ImageView = itemView.findViewById(R.id.ivWideCardRecipeImg)
         val title : TextView = itemView.findViewById(R.id.tvWideCardRecipeName)

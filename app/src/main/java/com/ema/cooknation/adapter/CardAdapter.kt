@@ -23,13 +23,17 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
     : RecyclerView.Adapter<CardAdapter.ViewHolder>()
 {
 
-    // loads card_cell
+    /**
+     * loads card_cell
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_cell, parent, false)
         return ViewHolder(itemView)
     }
 
-    // current card gets loaded / updated on the right position
+    /**
+     * current card gets loaded / updated on the right position
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : Recipe = recipes[position]
         holder.title.text = recipe.title
@@ -38,7 +42,9 @@ class CardAdapter(private var recipes: ArrayList<Recipe>)
         setupOnClickListener(holder, position)
     }
 
-    //references the elements inside the card_cell
+    /**
+     * references the elements inside the card_cell
+     */
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val title : TextView = itemView.findViewById(R.id.tvRecipeName)
         var picture : ImageView = itemView.findViewById(R.id.ivRecipeImg)
