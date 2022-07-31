@@ -45,13 +45,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadRequiredAdapter()
+    }
+
+    private fun loadRequiredAdapter() {
         if (InternetValidator.isInternetAvailable(requireContext())){
             loadOnlineCards()
         } else {
             loadOfflineCards()
         }
     }
-
 
     private fun loadOnlineCards() {
         //initialize elements for online CardAdapter

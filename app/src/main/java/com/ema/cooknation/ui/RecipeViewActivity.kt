@@ -102,7 +102,6 @@ class RecipeViewActivity : AppCompatActivity() {
                 .document(recipeId)
                 .get()
                 .await()
-                    Log.e("TEST", document.exists().toString())
                     if (!document.exists()) {
                         finish()
                     } else {

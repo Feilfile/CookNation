@@ -122,7 +122,6 @@ class BottomSheetPopupRating : BottomSheetDialogFragment() {
             .document(recipe.docId.toString())
             .get()
             .await()
-            Log.e("TESTsfe", document.exists().toString())
         return document.exists()
     }
 

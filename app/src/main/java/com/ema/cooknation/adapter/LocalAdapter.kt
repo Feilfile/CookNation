@@ -1,5 +1,6 @@
 package com.ema.cooknation.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -54,6 +55,7 @@ class LocalAdapter: RecyclerView.Adapter<LocalAdapter.MyViewHolder>() {
         setupOnClickListener(holder, position)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(localRecipe: List<LocalRecipe>){
         this.localRecipeList = localRecipe
         notifyDataSetChanged()
